@@ -7,11 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.content.Intent;
-import android.util.Log;
 
-public class MainActivity extends AppCompatActivity {
 
-    public static final int test = 1;
+public class ProfilePageActivity extends AppCompatActivity {
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -20,9 +19,9 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    returnHome();
                     return true;
                 case R.id.navigation_profilePage:
-                    createProfilePageActivity();
                     return true;
                 case R.id.navigation_notifications:
                     return true;
@@ -34,16 +33,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_profilepage);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
-    private void createProfilePageActivity() {
-        Intent i = new Intent(this, ProfilePageActivity.class);
+    private void returnHome() {
+        Intent i = new Intent();
+        setResult(RESULT_OK, i);
 
-        startActivityForResult(i, test);
+        finish();
     }
+
 
 }
