@@ -25,6 +25,8 @@ public class ProfilePageActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_notifications:
                     return true;
+                case R.id.navigation_complaints:
+                    return true;
             }
             return false;
         }
