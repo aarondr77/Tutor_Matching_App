@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private ComplaintsFunctions compalintsFunctions = new ComplaintsFunctions(this);
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    /*private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
@@ -37,25 +37,31 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         }
-    };
+    };*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-    }
-
-    private void createProfilePageActivity() {
-        Intent i = new Intent(this, ProfilePageActivity.class);
-
-        startActivityForResult(i, test);
+        /*BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);*/
     }
 
     public void onLaunchComplaintButtonClick(View view) {
         compalintsFunctions.onLaunchComplaintButtonClick(view);
+    }
+
+    public void onHomeClick(View view) {
+        setContentView(R.layout.activity_main);
+    }
+
+    public void onComplaintClick(View view) {
+        setContentView(R.layout.activity_complaints);
+    }
+
+    public void onProfilePageCLick(View view) {
+        setContentView(R.layout.activity_profilepage);
     }
 
 }
