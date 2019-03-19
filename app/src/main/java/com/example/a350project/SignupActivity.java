@@ -8,13 +8,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.content.Context;
+
 
 // import android.view.View.OnClickListener;
 
 
 public class SignupActivity extends AppCompatActivity {
 
-    private static final String username = "";
+    private String email = "";
+    private String name = "";
+    private String password = "";
+    private String userType = "";
+    public static Context context;
 
 
     @Override
@@ -22,37 +28,116 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_page);
 
-        //button to sign up
-        Button signupButton = (Button) findViewById(R.id.signup_button);
-        signupButton.setOnClickListener(new View.OnClickListener() {
+        MainActivity.context = getApplicationContext();
+
+        //button to sign up as a student
+        Button studentSignupButton = (Button) findViewById(R.id.signup_student_button);
+        studentSignupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 //get email field
                 EditText emailField = (EditText) findViewById(R.id.email);
                 Editable emailEditable = emailField.getText();
-                String email = emailEditable.toString();
+                email = emailEditable.toString();
 
                 //get password field
                 EditText passwordField = (EditText) findViewById(R.id.password);
                 Editable passwordEditable = passwordField.getText();
-                String password = passwordEditable.toString();
+                password = passwordEditable.toString();
 
                 //get name field
                 EditText nameField = (EditText) findViewById(R.id.name);
                 Editable nameEditable = passwordField.getText();
-                String name = passwordEditable.toString();
+                name = passwordEditable.toString();
+
+                userType = "student";
 
                 //check if the fields are value
                 if (email.equals("") || password.equals("") || name.equals("")) {
                     Log.e("error", "Please fill out all fields and enter a valid email address");
                     return;
                 } else {
+                    MainActivity.currentUserEmail = email;
+                    //DataManagement.registerNewUser(name, email, password, userType, context);
                     launchMainActivity();
                 }
             }
 
         });
+
+        //button to sign up as a tutor
+        Button tutorSignupButton = (Button) findViewById(R.id.signup_tutor_button);
+        tutorSignupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //get email field
+                EditText emailField = (EditText) findViewById(R.id.email);
+                Editable emailEditable = emailField.getText();
+                email = emailEditable.toString();
+
+                //get password field
+                EditText passwordField = (EditText) findViewById(R.id.password);
+                Editable passwordEditable = passwordField.getText();
+                password = passwordEditable.toString();
+
+                //get name field
+                EditText nameField = (EditText) findViewById(R.id.name);
+                Editable nameEditable = passwordField.getText();
+                name = passwordEditable.toString();
+
+                userType = "tutor";
+
+                //check if the fields are value
+                if (email.equals("") || password.equals("") || name.equals("")) {
+                    Log.e("error", "Please fill out all fields and enter a valid email address");
+                    return;
+                } else {
+                    MainActivity.currentUserEmail = email;
+                    //DataManagement.registerNewUser(name, email, password, userType, context);
+                    launchMainActivity();
+                }
+            }
+
+        });
+
+        //button to sign up as both
+        Button bothSignupButton = (Button) findViewById(R.id.signup_both_button);
+        bothSignupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //get email field
+                EditText emailField = (EditText) findViewById(R.id.email);
+                Editable emailEditable = emailField.getText();
+                email = emailEditable.toString();
+
+                //get password field
+                EditText passwordField = (EditText) findViewById(R.id.password);
+                Editable passwordEditable = passwordField.getText();
+                password = passwordEditable.toString();
+
+                //get name field
+                EditText nameField = (EditText) findViewById(R.id.name);
+                Editable nameEditable = passwordField.getText();
+                name = passwordEditable.toString();
+
+                userType = "both";
+
+                //check if the fields are value
+                if (email.equals("") || password.equals("") || name.equals("")) {
+                    Log.e("error", "Please fill out all fields and enter a valid email address");
+                    return;
+                } else {
+                    MainActivity.currentUserEmail = email;
+                    //DataManagement.registerNewUser(name, email, password, userType, context);
+                    launchMainActivity();
+                }
+            }
+
+        });
+
 
         //button to return to sign in page
         Button loginButton = (Button) findViewById(R.id.login_button);

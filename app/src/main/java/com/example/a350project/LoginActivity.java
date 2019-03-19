@@ -48,19 +48,19 @@ public class LoginActivity extends AppCompatActivity {
                 if (password.equals("") || email.equals("")) {
                     Log.e("tag1", "Must enter a username and password");
                     return;
+                } else {
+                    MainActivity.currentUserEmail = email;
+                    //reset fields and launch MainActivity
+                    emailField.setText("");
+                    passwordField.setText("");
+                    launchMainActivity();
                 }
-
-
-                //reset fields and launch MainActivity
-                emailField.setText("");
-                passwordField.setText("");
-                launchMainActivity();
             }
 
         });
 
         // add onClick listener for the login button
-        Button signupButton = (Button) findViewById(R.id.signup_student_button);
+        Button signupButton = (Button) findViewById(R.id.signup_button);
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

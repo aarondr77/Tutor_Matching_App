@@ -64,28 +64,13 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/signup_student_button"
+            android:id="@+id/signup_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sign Up as a Student"
+            android:text="Sign Up"
             tools:layout_editor_absoluteX="161dp"
             tools:layout_editor_absoluteY="434dp" />
 
-        <Button
-            android:id="@+id/signup_tutor_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sign Up as a Tutor"
-            tools:layout_editor_absoluteX="161dp"
-            tools:layout_editor_absoluteY="434dp" />
-
-        <Button
-            android:id="@+id/signup_both_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sign Up as Both"
-            tools:layout_editor_absoluteX="161dp"
-            tools:layout_editor_absoluteY="434dp" />
 
 
     </LinearLayout>
