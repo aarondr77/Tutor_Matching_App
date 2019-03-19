@@ -91,6 +91,8 @@ public class ComplaintsFragment extends Fragment {
         //text_entry is an Layout XML file containing two text field to display in alert dialog
         final EditText content = (EditText) textEntryView.findViewById(R.id.enterContent);
         final EditText target = (EditText) textEntryView.findViewById(R.id.enterTarget);
+        content.setText("example@sample.com");
+        target.setText(("I think..."));
         final AlertDialog.Builder alert = new AlertDialog.Builder(c);
 
         AlertDialog dialog = new AlertDialog.Builder(c)
