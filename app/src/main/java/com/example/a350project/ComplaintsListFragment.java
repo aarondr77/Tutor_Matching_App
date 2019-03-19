@@ -32,7 +32,7 @@ public class ComplaintsListFragment extends Fragment {
 
     private static MyComplaintsRecyclerViewAdapter mAdapter;
 
-    static List<ComplaintsObject> testList = new LinkedList<ComplaintsObject>();
+    static List<ComplaintsObject> complaintsList = new LinkedList<ComplaintsObject>();
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -52,8 +52,8 @@ public class ComplaintsListFragment extends Fragment {
     }
 
     public static void updateComplaints() {
-        testList = ComplaintsFunctions.getAllComplaints();
-        mAdapter.updateData(testList);
+        complaintsList = ComplaintsFunctions.getAllComplaints();
+        mAdapter.updateData(complaintsList);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -64,13 +64,14 @@ public class ComplaintsListFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
+        complaintsList = ComplaintsFunctions.getAllComplaints();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_complaints_list, container, false);
-
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -81,7 +82,7 @@ public class ComplaintsListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter( mAdapter = new MyComplaintsRecyclerViewAdapter(testList, mListener));
+            recyclerView.setAdapter( mAdapter = new MyComplaintsRecyclerViewAdapter(complaintsList, mListener));
         }
         return view;
     }
