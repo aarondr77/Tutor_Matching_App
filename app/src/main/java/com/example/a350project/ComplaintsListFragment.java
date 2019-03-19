@@ -10,9 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.a350project.dummy.DummyContent;
 import com.example.a350project.dummy.DummyContent.DummyItem;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -60,6 +60,11 @@ public class ComplaintsListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_complaints_list, container, false);
 
+
+        List<ComplaintsObject> testList = new LinkedList<ComplaintsObject>();
+        testList.add(new ComplaintsObject("'Ha'","John","Approved","Aaron"));
+        testList.add(new ComplaintsObject("'Ha'","Aaron","Denied","Chris"));
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -69,7 +74,7 @@ public class ComplaintsListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyComplaintsRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyComplaintsRecyclerViewAdapter(testList, mListener));
         }
         return view;
     }

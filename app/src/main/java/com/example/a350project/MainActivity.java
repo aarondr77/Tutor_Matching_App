@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements ComplaintsListFra
 
     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {};
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {}
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements ComplaintsListFra
         ft.addToBackStack(null);
         ft.commit();
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
