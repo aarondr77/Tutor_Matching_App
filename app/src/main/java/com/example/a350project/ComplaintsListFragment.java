@@ -65,7 +65,7 @@ public class ComplaintsListFragment extends Fragment {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
 
-        complaintsList = ComplaintsFunctions.getAllComplaints();
+
     }
 
     @Override
@@ -84,6 +84,7 @@ public class ComplaintsListFragment extends Fragment {
             }
             recyclerView.setAdapter( mAdapter = new MyComplaintsRecyclerViewAdapter(complaintsList, mListener));
         }
+        this.updateComplaints();
         return view;
     }
 

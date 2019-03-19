@@ -34,7 +34,6 @@ public class ComplaintsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ComplaintsFunctions cp = new ComplaintsFunctions();
 
     public ComplaintsFragment() {
         // Required empty public constructor
@@ -65,6 +64,8 @@ public class ComplaintsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        ComplaintsFunctions.loadComplaints();
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

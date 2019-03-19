@@ -18,6 +18,10 @@ public class ComplaintsFunctions {
     private static LinkedList<ComplaintsObject> allComplaints = new LinkedList<ComplaintsObject>();
 
     ComplaintsFunctions() {
+
+    }
+
+    public static void loadComplaints() {
         allComplaints.add(new ComplaintsObject("'Hahaha, you suck'","John","Approved","Aaron"));
         allComplaints.add(new ComplaintsObject("'What a terrible tutor!'","Aaron","Denied","Chris"));
     }
