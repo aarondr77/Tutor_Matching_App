@@ -24,4 +24,6 @@ public class ComplaintsObject {
     public String getStatus() {
         return status;
     }
+
+    public String getSubmitter() {return submitter;}
 }

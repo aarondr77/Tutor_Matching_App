@@ -24,13 +24,16 @@ public class ComplaintsFunctions {
     public static void loadComplaints() {
         allComplaints.add(new ComplaintsObject("'Hahaha, you suck'","John","Approved","Aaron"));
         allComplaints.add(new ComplaintsObject("'What a terrible tutor!'","Aaron","Denied","Chris"));
+        DataManagement.writeComplaint(MainActivity.context , new ComplaintsObject("'Hahaha, you suck'","John","Approved","Aaron"));
     }
 
 
 
 
     public static void addComplaint(String submitter, String content, String target) {
-        allComplaints.add(new ComplaintsObject(content, submitter, "Pending", target));
+        ComplaintsObject newComplaint = new ComplaintsObject(content, submitter, "Pending", target);
+        allComplaints.add(newComplaint);
+        DataManagement.writeComplaint(MainActivity.context , newComplaint);
     }
 
     public static LinkedList<ComplaintsObject> getAllComplaints() {

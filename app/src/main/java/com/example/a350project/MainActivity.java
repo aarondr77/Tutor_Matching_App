@@ -1,5 +1,6 @@
 package com.example.a350project;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -20,6 +21,8 @@ import com.example.a350project.dummy.DummyContent;
 public class MainActivity extends AppCompatActivity implements ComplaintsListFragment.OnListFragmentInteractionListener {
 
     public static final int test = 1;
+
+    public static Context context;
 
     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
@@ -66,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements ComplaintsListFra
         ft.replace(R.id.frame_container, ProfilePageFragment.newInstance("","") );
         ft.addToBackStack(null);
         ft.commit();
+
+        MainActivity.context = getApplicationContext();
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

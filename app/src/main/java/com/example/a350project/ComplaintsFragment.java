@@ -89,7 +89,6 @@ public class ComplaintsFragment extends Fragment {
         LayoutInflater factory = LayoutInflater.from(c);
         final View textEntryView = factory.inflate(R.layout.complaint_entry_popup, null);
         //text_entry is an Layout XML file containing two text field to display in alert dialog
-        final EditText submitter = (EditText) textEntryView.findViewById(R.id.enterSubmitter);
         final EditText content = (EditText) textEntryView.findViewById(R.id.enterContent);
         final EditText target = (EditText) textEntryView.findViewById(R.id.enterTarget);
         final AlertDialog.Builder alert = new AlertDialog.Builder(c);
@@ -100,7 +99,7 @@ public class ComplaintsFragment extends Fragment {
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ComplaintsFunctions.addComplaint(String.valueOf(submitter.getText()),
+                        ComplaintsFunctions.addComplaint("DUMMY",
                                 String.valueOf(content.getText()), String.valueOf(target.getText()));
 
                         ComplaintsListFragment.updateComplaints();
