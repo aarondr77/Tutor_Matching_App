@@ -78,7 +78,6 @@
         android:ems="10"
         android:hint="@string/search_message"
         android:inputType="textPersonName"
-        android:text="Subject"
         app:layout_constraintEnd_toStartOf="@+id/button5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
