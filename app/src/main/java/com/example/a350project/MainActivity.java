@@ -1,6 +1,7 @@
 package com.example.a350project;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
@@ -14,6 +15,14 @@ import android.widget.TextView;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +50,10 @@ public class MainActivity extends AppCompatActivity {
                     ft.commit();
                     return true;
                 case R.id.navigation_notifications:
-
+                    ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.frame_container, MarketplaceFragment.newInstance("This", "Marketplace"));
+                    ft.addToBackStack(null);
+                    ft.commit();
                     return true;
                 case R.id.navigation_complaints:
                     ft = getSupportFragmentManager().beginTransaction();
@@ -65,10 +77,9 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
     }
 
-    public void onSearchClick(View view) {
-        setContentView(R.layout.activity_complaints);
-    }
+
 
 }
