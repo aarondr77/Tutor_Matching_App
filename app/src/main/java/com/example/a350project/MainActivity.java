@@ -61,9 +61,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
         ft.replace(R.id.frame_container, ProfilePageFragment.newInstance("","") );
         ft.addToBackStack(null);
         ft.commit();
@@ -76,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void onLaunchComplaintButtonClick(View view) {
         complaintsFunctions.onLaunchComplaintButtonClick(view);
+    }
+
+    public void onPressSignInButton(View view) {
+
     }
 
 }
