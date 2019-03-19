@@ -25,7 +25,7 @@ public class ComplaintsFunctions {
         //allComplaints.add(new ComplaintsObject("'Hahaha, you suck'","John","Approved","Aaron"));
         //allComplaints.add(new ComplaintsObject("'What a terrible tutor!'","Aaron","Denied","Chris"));
         //DataManagement.writeComplaint(MainActivity.context , new ComplaintsObject("'What a terrible tutor!'","DUMMY","Denied","Chris"));
-        //DataManagement.writeComplaint(MainActivity.context , new ComplaintsObject("'Hahaha, you suck'","DUMMY","Approved","Aaron"));
+        DataManagement.writeComplaint(MainActivity.context , new ComplaintsObject("'Hahaha, you suck'","No Show","Approved","Aaron"));
         allComplaints.clear();
         allComplaints.addAll(DataManagement.loadComplaints());
     }
