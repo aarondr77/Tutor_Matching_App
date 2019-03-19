@@ -19,8 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int test = 1;
 
-    private ComplaintsFunctions complaintsFunctions = new ComplaintsFunctions(this);
-
     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -67,12 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-
-    }
-
-    public void onLaunchComplaintButtonClick(View view) {
-        complaintsFunctions.onLaunchComplaintButtonClick(view);
     }
 
     public void onPressSignInButton(View view) {
