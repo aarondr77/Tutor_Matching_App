@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onHomeClick(View view) {
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_marketplace);
     }
 
     public void onComplaintClick(View view) {
@@ -62,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void onProfilePageCLick(View view) {
         setContentView(R.layout.activity_profilepage);
+    }
+
+    public void onSearchClick(View view) {
+        setContentView(R.layout.activity_complaints);
     }
 
 }
