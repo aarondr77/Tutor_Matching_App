@@ -1,13 +1,20 @@
 package com.example.a350project;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -28,6 +35,8 @@ public class ComplaintsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+
+    private ComplaintsListFragment complaintsList;
 
     public ComplaintsFragment() {
         // Required empty public constructor
@@ -58,6 +67,9 @@ public class ComplaintsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        ComplaintsFunctions.loadComplaints();
+        insertNestedFragment();
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,17 +81,62 @@ public class ComplaintsFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ComplaintsFunctions.onLaunchComplaintButtonClick(v);
+                showAddItemDialog(v.getContext());
             }
         });
+
         return v;
+    }
+
+
+    private void showAddItemDialog(Context c) {
+
+        LayoutInflater factory = LayoutInflater.from(c);
+        final View textEntryView = factory.inflate(R.layout.complaint_entry_popup, null);
+        //text_entry is an Layout XML file containing two text field to display in alert dialog
+        final EditText content = (EditText) textEntryView.findViewById(R.id.enterContent);
+        final EditText target = (EditText) textEntryView.findViewById(R.id.enterTarget);
+        content.setText("example@sample.com");
+        target.setText(("I think..."));
+        final AlertDialog.Builder alert = new AlertDialog.Builder(c);
+
+        AlertDialog dialog = new AlertDialog.Builder(c)
+                .setTitle("Submit Complaint")
+                .setView(textEntryView)
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ComplaintsFunctions.addComplaint(MainActivity.currentUserEmail,
+                                String.valueOf(content.getText()), String.valueOf(target.getText()));
+
+                        insertNestedFragment();
+                    }
+
+
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
+    }
+
+
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+
+    }
+
+    private void insertNestedFragment() {
+        Fragment childFragment = ComplaintsListFragment.newInstance(1);
+        complaintsList = (ComplaintsListFragment)childFragment;
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.complaint_child_fragment_container, childFragment).addToBackStack(null).commit();
+        Log.d("Loading Child", "Here");
     }
 
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
-     * activity.
+     * activity.                        (ComplaintsListFragment)complaintsList.                        (ComplaintsListFragment)complaintsList.
      * <p>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
