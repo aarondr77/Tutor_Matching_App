@@ -13,14 +13,12 @@ import android.widget.Toast;
 
 public class ComplaintsFunctions {
 
-    private Context context;
+    ComplaintsFunctions() {
 
-    ComplaintsFunctions(Context context) {
-        this.context = context;
     }
 
-    public void onLaunchComplaintButtonClick(View view) {
-        Toast.makeText(context, "Hello", Toast.LENGTH_LONG).show();
+    public static void onLaunchComplaintButtonClick(View view) {
+        Toast.makeText(view.getContext(), "Hello", Toast.LENGTH_LONG).show();
     }
 
 
