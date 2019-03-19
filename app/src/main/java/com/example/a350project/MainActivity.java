@@ -19,8 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int test = 1;
 
-    private ComplaintsFunctions complaintsFunctions = new ComplaintsFunctions(this);
-
     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -61,21 +59,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
         ft.replace(R.id.frame_container, ProfilePageFragment.newInstance("","") );
         ft.addToBackStack(null);
         ft.commit();
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-
-    }
-
-    public void onLaunchComplaintButtonClick(View view) {
-        complaintsFunctions.onLaunchComplaintButtonClick(view);
     }
 
 }
