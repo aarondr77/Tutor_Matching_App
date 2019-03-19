@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,6 @@ public class ComplaintsListFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
-    private static MyComplaintsRecyclerViewAdapter mAdapter;
 
     static List<ComplaintsObject> complaintsList = new LinkedList<ComplaintsObject>();
 
@@ -51,10 +51,8 @@ public class ComplaintsListFragment extends Fragment {
         return fragment;
     }
 
-    public static void updateComplaints() {
+    public void updateComplaints() {
         complaintsList = ComplaintsFunctions.getAllComplaints();
-        mAdapter.updateData(complaintsList);
-        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -73,6 +71,10 @@ public class ComplaintsListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_complaints_list, container, false);
 
+        MyComplaintsRecyclerViewAdapter mAdapter;
+
+        this.updateComplaints();
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -82,9 +84,11 @@ public class ComplaintsListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter( mAdapter = new MyComplaintsRecyclerViewAdapter(complaintsList, mListener));
+            mAdapter = new MyComplaintsRecyclerViewAdapter(complaintsList, mListener);
+            recyclerView.setAdapter( mAdapter);
+            Log.d("COMPLISTFRAG", "Creating new adapter");
         }
-        this.updateComplaints();
+
         return view;
     }
 

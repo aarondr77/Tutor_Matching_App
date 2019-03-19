@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements ComplaintsListFra
 
     public static Context context;
 
+    public static String currentUserEmail = "DUMMY";
+
     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
     public void onListFragmentInteraction(DummyContent.DummyItem item) {}

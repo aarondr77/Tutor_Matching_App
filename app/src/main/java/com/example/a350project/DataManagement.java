@@ -67,6 +67,7 @@ public class DataManagement {
 
         BufferedReader fos = null;
 
+        List<ComplaintsObject> tempList = new LinkedList<ComplaintsObject>();
         List<ComplaintsObject> returnVal = new LinkedList<ComplaintsObject>();
 
         try {
@@ -75,9 +76,16 @@ public class DataManagement {
             while (fos.ready()) {
                 String curLine = fos.readLine();
                 Log.d("READ VALUE", curLine.split(":")[0]);
-                returnVal.add(new ComplaintsObject(curLine.split(":")[0], curLine.split(":")[1], curLine.split(":")[2], curLine.split(":")[3]));
+                tempList.add(new ComplaintsObject(curLine.split(":")[0], curLine.split(":")[1], curLine.split(":")[2], curLine.split(":")[3]));
             }
             fos.close();
+
+            for (ComplaintsObject curComplaint : tempList) {
+                if (curComplaint.getSubmitter().equals(MainActivity.currentUserEmail)) {
+                    returnVal.add(curComplaint);
+                }
+            }
+
             return returnVal;
         } catch (IOException e) {
             Log.d("PRINT", e.toString());

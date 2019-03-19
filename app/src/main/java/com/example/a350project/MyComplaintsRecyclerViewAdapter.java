@@ -3,6 +3,7 @@ package com.example.a350project;
 import android.arch.lifecycle.ViewModel;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,7 @@ public class MyComplaintsRecyclerViewAdapter extends RecyclerView.Adapter<MyComp
             holder.statusView.setTextColor(Color.parseColor("red"));
         holder.contentView.setText(mValues.get(position).getContent());
         holder.targetView.setText(mValues.get(position).getTarget());
+        Log.d("ADAPTER", "Binding");
     }
 
     @Override
@@ -78,7 +80,7 @@ public class MyComplaintsRecyclerViewAdapter extends RecyclerView.Adapter<MyComp
     public void updateData(List<ComplaintsObject> newList) {
         mValues.clear();
         mValues.addAll(newList);
-        notifyDataSetChanged();
+        this.notifyDataSetChanged();
     }
 
 }

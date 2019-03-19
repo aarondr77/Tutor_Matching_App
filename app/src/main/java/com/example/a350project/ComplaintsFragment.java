@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,8 @@ public class ComplaintsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+
+    private ComplaintsListFragment complaintsList;
 
     public ComplaintsFragment() {
         // Required empty public constructor
@@ -66,6 +69,7 @@ public class ComplaintsFragment extends Fragment {
         }
 
         ComplaintsFunctions.loadComplaints();
+        insertNestedFragment();
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,6 +84,7 @@ public class ComplaintsFragment extends Fragment {
                 showAddItemDialog(v.getContext());
             }
         });
+
         return v;
     }
 
@@ -101,10 +106,10 @@ public class ComplaintsFragment extends Fragment {
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ComplaintsFunctions.addComplaint("DUMMY",
+                        ComplaintsFunctions.addComplaint(MainActivity.currentUserEmail,
                                 String.valueOf(content.getText()), String.valueOf(target.getText()));
 
-                        ComplaintsListFragment.updateComplaints();
+                        insertNestedFragment();
                     }
 
 
@@ -116,20 +121,22 @@ public class ComplaintsFragment extends Fragment {
 
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        insertNestedFragment();
+
     }
 
     private void insertNestedFragment() {
         Fragment childFragment = ComplaintsListFragment.newInstance(1);
+        complaintsList = (ComplaintsListFragment)childFragment;
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.complaint_child_fragment_container, childFragment).commit();
+        transaction.replace(R.id.complaint_child_fragment_container, childFragment).addToBackStack(null).commit();
+        Log.d("Loading Child", "Here");
     }
 
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
-     * activity.
+     * activity.                        (ComplaintsListFragment)complaintsList.                        (ComplaintsListFragment)complaintsList.
      * <p>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
