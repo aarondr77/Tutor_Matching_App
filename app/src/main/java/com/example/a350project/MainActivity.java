@@ -18,6 +18,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     public static final int test = 1;
+    private static final String username = "";
 
     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
@@ -41,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
                     ft.commit();
                     return true;
                 case R.id.navigation_notifications:
-
                     return true;
                 case R.id.navigation_complaints:
                     ft = getSupportFragmentManager().beginTransaction();
@@ -67,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
-    public void onPressSignInButton(View view) {
 
-    }
 
 }

@@ -22,7 +22,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:hint="@string/email" />
+                android:text="Name" />
+
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:text="Email" />
 
             <EditText
                 android:id="@+id/email"
@@ -39,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:hint="@string/password" />
+                android:text="Password" />
 
 
             <EditText
@@ -47,6 +65,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/signup_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign Up"
+                tools:layout_editor_absoluteX="161dp"
+                tools:layout_editor_absoluteY="434dp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -57,35 +90,11 @@
                 android:id="@+id/login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login"
+                android:text="Back to Sign In"
                 tools:layout_editor_absoluteX="161dp"
                 tools:layout_editor_absoluteY="434dp" />
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/signup_student_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sign Up as a Student"
-            tools:layout_editor_absoluteX="161dp"
-            tools:layout_editor_absoluteY="434dp" />
-
-        <Button
-            android:id="@+id/signup_tutor_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sign Up as a Tutor"
-            tools:layout_editor_absoluteX="161dp"
-            tools:layout_editor_absoluteY="434dp" />
-
-        <Button
-            android:id="@+id/signup_both_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sign Up as Both"
-            tools:layout_editor_absoluteX="161dp"
-            tools:layout_editor_absoluteY="434dp" />
 
 
     </LinearLayout>
