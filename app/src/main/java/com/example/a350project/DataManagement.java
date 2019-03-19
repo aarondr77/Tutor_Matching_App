@@ -25,13 +25,12 @@ public class DataManagement {
 
     }
 
-    public static List<SessionObject> searchTutoringSessions (String subject) {
+    public static List<SessionObject> loadSessions () {
         String FILENAME = "Sessions.txt";
         //String string = newComplaint.getContent() + "," + newComplaint.getSubmitter() + "," + newComplaint.getStatus() + "," + newComplaint.getTarget();
 
         BufferedReader fos = null;
 
-        List<SessionObject> tempList = new LinkedList<SessionObject>();
         List<SessionObject> returnVal = new LinkedList<SessionObject>();
 
         try {
@@ -40,16 +39,10 @@ public class DataManagement {
             while (fos.ready()) {
                 String curLine = fos.readLine();
                 Log.d("READ VALUE", curLine.split(":")[0]);
-                tempList.add(new SessionObject(curLine.split(":")[0], curLine.split(":")[1], curLine.split(":")[2], curLine.split(":")[3],
+                returnVal.add(new SessionObject(curLine.split(":")[0], curLine.split(":")[1], curLine.split(":")[2], curLine.split(":")[3],
                         curLine.split(":")[4], curLine.split(":")[5], curLine.split(":")[6]));
             }
             fos.close();
-
-            for (SessionObject currentSession : tempList) {
-                if (currentSession.getSubject().equals(subject)) {
-                    returnVal.add(currentSession);
-                }
-            }
 
             return returnVal;
         } catch (IOException e) {
