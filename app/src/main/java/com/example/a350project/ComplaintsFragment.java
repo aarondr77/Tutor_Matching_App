@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +74,16 @@ public class ComplaintsFragment extends Fragment {
             }
         });
         return v;
+    }
+
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        insertNestedFragment();
+    }
+
+    private void insertNestedFragment() {
+        Fragment childFragment = ComplaintsListFragment.newInstance(1);
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.complaint_child_fragment_container, childFragment).commit();
     }
 
     /**

@@ -15,11 +15,15 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.a350project.dummy.DummyContent;
+
+public class MainActivity extends AppCompatActivity implements ComplaintsListFragment.OnListFragmentInteractionListener {
 
     public static final int test = 1;
 
     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {};
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
