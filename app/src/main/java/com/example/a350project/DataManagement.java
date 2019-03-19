@@ -19,6 +19,17 @@ import java.util.List;
 
 public class DataManagement {
 
+    String sessionDatabase;
+
+    public DataManagement(String sessionDatabase) {
+
+    }
+
+    public void searchTutoringSessions () {
+
+    }
+
+
 
     public static void writeComplaint(Context context, ComplaintsObject newComplaint) {
 

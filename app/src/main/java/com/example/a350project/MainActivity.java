@@ -2,6 +2,7 @@ package com.example.a350project;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
@@ -15,7 +16,6 @@ import android.widget.TextView;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.example.a350project.dummy.DummyContent;
 
 public class MainActivity extends AppCompatActivity implements ComplaintsListFragment.OnListFragmentInteractionListener {
@@ -50,7 +50,10 @@ public class MainActivity extends AppCompatActivity implements ComplaintsListFra
                     ft.commit();
                     return true;
                 case R.id.navigation_notifications:
-
+                    ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.frame_container, MarketplaceFragment.newInstance("This", "Marketplace"));
+                    ft.addToBackStack(null);
+                    ft.commit();
                     return true;
                 case R.id.navigation_complaints:
                     ft = getSupportFragmentManager().beginTransaction();
@@ -76,6 +79,9 @@ public class MainActivity extends AppCompatActivity implements ComplaintsListFra
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
     }
+
+
 
 }
