@@ -10,16 +10,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.LinkedList;
+
 
 public class ComplaintsFunctions {
 
+    private static LinkedList<ComplaintsObject> allComplaints = new LinkedList<ComplaintsObject>();
+
     ComplaintsFunctions() {
-
-    }
-
-    public static void onLaunchComplaintButtonClick(View view) {
-        Toast.makeText(view.getContext(), "Hello", Toast.LENGTH_LONG).show();
+        allComplaints.add(new ComplaintsObject("'Hahaha, you suck'","John","Approved","Aaron"));
+        allComplaints.add(new ComplaintsObject("'What a terrible tutor!'","Aaron","Denied","Chris"));
     }
 
 
+
+
+    public static void addComplaint(String submitter, String content, String target) {
+        allComplaints.add(new ComplaintsObject(content, submitter, "Pending", target));
+    }
+
+    public static LinkedList<ComplaintsObject> getAllComplaints() {
+        return allComplaints;
+    }
 }

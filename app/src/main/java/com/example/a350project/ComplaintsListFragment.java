@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.a350project.dummy.DummyContent.DummyItem;
 
@@ -29,6 +30,10 @@ public class ComplaintsListFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
+    private static MyComplaintsRecyclerViewAdapter mAdapter;
+
+    static List<ComplaintsObject> testList = new LinkedList<ComplaintsObject>();
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -46,6 +51,12 @@ public class ComplaintsListFragment extends Fragment {
         return fragment;
     }
 
+    public static void updateComplaints() {
+        testList = ComplaintsFunctions.getAllComplaints();
+        mAdapter.updateData(testList);
+        mAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +72,6 @@ public class ComplaintsListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_complaints_list, container, false);
 
 
-        List<ComplaintsObject> testList = new LinkedList<ComplaintsObject>();
-        testList.add(new ComplaintsObject("'Ha'","John","Approved","Aaron"));
-        testList.add(new ComplaintsObject("'Ha'","Aaron","Denied","Chris"));
-
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -74,7 +81,7 @@ public class ComplaintsListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyComplaintsRecyclerViewAdapter(testList, mListener));
+            recyclerView.setAdapter( mAdapter = new MyComplaintsRecyclerViewAdapter(testList, mListener));
         }
         return view;
     }

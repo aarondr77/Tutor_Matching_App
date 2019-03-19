@@ -1,5 +1,6 @@
 package com.example.a350project;
 
+import android.arch.lifecycle.ViewModel;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.example.a350project.ComplaintsListFragment.OnListFragmentInteractionListener;
 import com.example.a350project.dummy.DummyContent.DummyItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,6 +73,12 @@ public class MyComplaintsRecyclerViewAdapter extends RecyclerView.Adapter<MyComp
     @Override
     public int getItemCount() {
         return mValues.size();
+    }
+
+    public void updateData(List<ComplaintsObject> newList) {
+        mValues.clear();
+        mValues.addAll(newList);
+        notifyDataSetChanged();
     }
 
 }

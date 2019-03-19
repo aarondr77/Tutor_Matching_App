@@ -1,6 +1,8 @@
 package com.example.a350project;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -29,6 +34,7 @@ public class ComplaintsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private ComplaintsFunctions cp = new ComplaintsFunctions();
 
     public ComplaintsFragment() {
         // Required empty public constructor
@@ -70,11 +76,42 @@ public class ComplaintsFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ComplaintsFunctions.onLaunchComplaintButtonClick(v);
+                showAddItemDialog(v.getContext());
             }
         });
         return v;
     }
+
+
+    private void showAddItemDialog(Context c) {
+
+        LayoutInflater factory = LayoutInflater.from(c);
+        final View textEntryView = factory.inflate(R.layout.complaint_entry_popup, null);
+        //text_entry is an Layout XML file containing two text field to display in alert dialog
+        final EditText submitter = (EditText) textEntryView.findViewById(R.id.enterSubmitter);
+        final EditText content = (EditText) textEntryView.findViewById(R.id.enterContent);
+        final EditText target = (EditText) textEntryView.findViewById(R.id.enterTarget);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(c);
+
+        AlertDialog dialog = new AlertDialog.Builder(c)
+                .setTitle("Submit Complaint")
+                .setView(textEntryView)
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ComplaintsFunctions.addComplaint(String.valueOf(submitter.getText()),
+                                String.valueOf(content.getText()), String.valueOf(target.getText()));
+
+                        ComplaintsListFragment.updateComplaints();
+                    }
+
+
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
+    }
+
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         insertNestedFragment();
