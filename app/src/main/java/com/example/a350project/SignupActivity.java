@@ -6,9 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.content.Context;
+import android.widget.Spinner;
 
 
 // import android.view.View.OnClickListener;
@@ -53,6 +56,40 @@ public class SignupActivity extends AppCompatActivity {
 
                 userType = "student";
 
+
+                boolean[] days = new boolean[7];
+
+                CheckBox mon = (CheckBox) findViewById(R.id.checkbox_mon);
+                if (mon.isChecked()) {
+                    days[0] = true;
+                }
+                CheckBox tues = (CheckBox) findViewById(R.id.checkbox_tues);
+                if (tues.isChecked()) {
+                    days[1] = true;
+                }
+                CheckBox weds = (CheckBox) findViewById(R.id.checkbox_weds);
+                if (weds.isChecked()) {
+                    days[2] = true;
+                }
+                CheckBox thurs = (CheckBox) findViewById(R.id.checkbox_thurs);
+                if (thurs.isChecked()) {
+                    days[3] = true;
+                }
+                CheckBox fri = (CheckBox) findViewById(R.id.checkbox_fri);
+                if (fri.isChecked()) {
+                    days[4] = true;
+                }
+                CheckBox sat = (CheckBox) findViewById(R.id.checkbox_sat);
+                if (sat.isChecked()) {
+                    days[5] = true;
+                }
+                CheckBox sun = (CheckBox) findViewById(R.id.checkbox_sun);
+                if (sun.isChecked()) {
+                    days[6] = true;
+                }
+
+                for (boolean b: days) Log.d("days", b + "");
+
                 //check if the fields are value
                 if (email.equals("") || password.equals("") || name.equals("")) {
                     Log.e("error", "Please fill out all fields and enter a valid email address");
@@ -74,6 +111,8 @@ public class SignupActivity extends AppCompatActivity {
                 launchLoginActivity();
             }
         });
+
+
     }
 
     // sends you to the main activity after you login
