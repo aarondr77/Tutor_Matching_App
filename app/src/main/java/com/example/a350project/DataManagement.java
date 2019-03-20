@@ -111,11 +111,11 @@ public class DataManagement {
 
     }
 
-    public static void registerNewUser(String name, String email, String password, String userType, Context context) {
+    public static void registerNewUser(String name, String email, String password, String userType, String price, Context context) {
         String FILENAME = "Users.txt";
 
         String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +
-                ",userType:" + userType + "}\n";
+                ",userType:" + userType + ",price:" + price + "}\n";
 
 
         BufferedWriter  w = null;
