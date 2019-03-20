@@ -16,6 +16,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.LinkedList;
 import java.util.List;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 
 public class DataManagement {
@@ -116,7 +118,8 @@ public class DataManagement {
         String FILENAME = "Users.txt";
 
         String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +
-                ",userType:" + userType + ",price:" + price + "}\n";
+                ",userType:" + userType + ",price:" + price + ",tutorRating:" +  "0" +
+                ",studentRating:" + "0" + ",balance:" + "100}" + "\n";
 
 
         BufferedWriter  w = null;
@@ -127,6 +130,23 @@ public class DataManagement {
         } catch (IOException e) {
             Log.d("PRINT", e.toString());
         }
+    }
+
+    public static String findUser(String email) {
+        List<String> allUsers = loadUsers();
+        String result = "";
+        try{
+            for(String user : allUsers) {
+                JSONObject userJson = new JSONObject(user);
+
+                if (userJson.getString("email").equals(email)) {
+                    result = userJson.getString("email");
+                }
+            }
+        } catch(JSONException e) {
+            Log.e("unexpected JSON error", "error");
+        }
+        return result;
     }
 
     public static List<String> loadUsers() {
