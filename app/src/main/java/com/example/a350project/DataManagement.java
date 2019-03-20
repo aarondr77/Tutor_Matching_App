@@ -17,6 +17,7 @@ import java.io.OutputStreamWriter;
 import java.util.LinkedList;
 import java.util.List;
 
+
 public class DataManagement {
 
     String sessionDatabase;
@@ -109,6 +110,46 @@ public class DataManagement {
         }
 
     }
+
+    public static void registerNewUser(String name, String email, String password, String userType, String price, Context context) {
+        String FILENAME = "Users.txt";
+
+        String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +
+                ",userType:" + userType + ",price:" + price + "}\n";
+
+
+        BufferedWriter  w = null;
+        try {
+            w = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_APPEND)));
+            w.write(JSONobj);
+            w.close();
+        } catch (IOException e) {
+            Log.d("PRINT", e.toString());
+        }
+    }
+
+    public static List<String> loadUsers() {
+        String FILENAME = "Users.txt";
+
+        BufferedReader w;
+
+        List<String> tempList = new LinkedList<>();
+
+        try {
+            w = new BufferedReader(new InputStreamReader(LoginActivity.context.openFileInput(FILENAME)));
+
+            while (w.ready()) {
+                String curLine = w.readLine();
+                tempList.add(curLine);
+            }
+            w.close();
+        } catch (IOException e) {
+            Log.d("PRINT", e.toString());
+        }
+
+        return tempList;
+    }
+
 
     public static List<ComplaintsObject> loadComplaints() {
         String FILENAME = "ComplaintsFile.txt";

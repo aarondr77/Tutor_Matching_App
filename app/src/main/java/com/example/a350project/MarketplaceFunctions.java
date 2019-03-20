@@ -14,7 +14,7 @@ public class MarketplaceFunctions {
     public MarketplaceFunctions() { }
 
     public static void onSearchButtonClick(View view, TextView searchResultsView, String searchString) {
-        //Toast.makeText(view.getContext(), searchString, Toast.LENGTH_LONG).show();
+        Toast.makeText(view.getContext(), searchString, Toast.LENGTH_LONG).show();
     }
 
 

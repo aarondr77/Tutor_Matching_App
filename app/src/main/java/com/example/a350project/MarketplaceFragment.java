@@ -1,5 +1,8 @@
 package com.example.a350project;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -71,8 +74,8 @@ public class MarketplaceFragment extends Fragment {
 
         final EditText searchInput = (EditText) v.findViewById(R.id.SearchText);
         final TextView searchResultsBox = (TextView) v.findViewById(R.id.textView);
-        final Button searchButton = (Button) v.findViewById(R.id.Button_Search_Marketplace);
-        searchButton.setOnClickListener(new View.OnClickListener() {
+        Button searchButton = (Button) v.findViewById(R.id.Button_Search_Marketplace);
+        searchButton.setOnClickListener(new View.OnClickListener () {
             @Override
             public void onClick(View v) {
                 String searchString = searchInput.getText().toString();
@@ -80,8 +83,9 @@ public class MarketplaceFragment extends Fragment {
             }
         });
         return v;
-    }
 
+    }
+    
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
