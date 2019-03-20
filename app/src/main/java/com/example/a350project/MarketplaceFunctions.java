@@ -14,7 +14,21 @@ public class MarketplaceFunctions {
     public MarketplaceFunctions() { }
 
     public static void onSearchButtonClick(View view, TextView searchResultsView, String searchString) {
-        Toast.makeText(view.getContext(), searchString, Toast.LENGTH_LONG).show();
+        //Toast.makeText(view.getContext(), searchString, Toast.LENGTH_LONG).show();
+        SessionFunctions.loadSessions();
+        allSessions = SessionFunctions.getAllSessions();
+        LinkedList<SessionObject> relevantSessions = new LinkedList<SessionObject>();
+        if (allSessions != null) {
+            for (SessionObject currentSession : allSessions) {
+                if (currentSession.getSubject().equals(searchString)) {
+                    relevantSessions.add(currentSession);
+                    Toast.makeText(view.getContext(), "FOUND " + searchString, Toast.LENGTH_LONG).show();
+
+                }
+            }
+        }
+        // Now Display the Relevant Sessions
+
     }
 
 
