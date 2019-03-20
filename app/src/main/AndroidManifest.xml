@@ -30,6 +30,10 @@
             android:label="Sign Up">
         </activity>
 
+        <activity android:name=".SignupTutorActivity"
+            android:label="Sign Up">
+        </activity>
+
 
         <activity android:name=".ProfilePageActivity"
             android:label="350Project">

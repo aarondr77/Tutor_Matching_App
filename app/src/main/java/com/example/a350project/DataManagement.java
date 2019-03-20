@@ -114,11 +114,11 @@ public class DataManagement {
     public static void registerNewUser(String name, String email, String password, String userType, Context context) {
         String FILENAME = "Users.txt";
 
-        String JSONobj = "{ name:" + name + ", email:" + email + ", password: " + password +
-                ", userType: " + userType + "}\n";
+        String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +
+                ",userType:" + userType + "}\n";
 
 
-        BufferedWriter w = null;
+        BufferedWriter  w = null;
         try {
             w = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_APPEND)));
             w.write(JSONobj);
@@ -136,11 +136,10 @@ public class DataManagement {
         List<String> tempList = new LinkedList<>();
 
         try {
-            w = new BufferedReader(new InputStreamReader(MainActivity.context.openFileInput(FILENAME)));
+            w = new BufferedReader(new InputStreamReader(LoginActivity.context.openFileInput(FILENAME)));
 
             while (w.ready()) {
                 String curLine = w.readLine();
-                Log.d("READ VALUE", curLine.split(":")[0]);
                 tempList.add(curLine);
             }
             w.close();
