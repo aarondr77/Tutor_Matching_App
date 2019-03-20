@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
 // import android.view.View.OnClickListener;
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                TextView error = (TextView) findViewById(R.id.error);
 
                 //get username field
                 EditText emailField = (EditText) findViewById(R.id.email);
@@ -52,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 if (password.equals("") || email.equals("")) {
+                    error.setText("Error: Must enter a valid username and password");
                     Log.e("tag1", "Must enter a username and password");
                     return;
                 } else {
@@ -68,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
                     }
+                    error.setText("Error: Incorrect email/password combination");
                     Log.e("tag1", "Incorrect email/password combination");
                     return;
                 }
