@@ -26,7 +26,7 @@ public class SessionFunctions {
         allSessions.addAll(DataManagement.loadSessions());
     }
 
-    public static void addComplaint(String tutor, String student, String subject, String date, String duration, String price, String status) {
+    public static void addSession(String tutor, String student, String subject, String date, String duration, String price, String status) {
         SessionObject newSession = new SessionObject(tutor, student, subject, date, duration, price, status);
         allSessions.add(newSession);
         DataManagement.writeSession(MainActivity.context , newSession);
