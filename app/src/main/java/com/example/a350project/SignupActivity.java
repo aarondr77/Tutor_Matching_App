@@ -58,7 +58,7 @@ public class SignupActivity extends AppCompatActivity {
                 userType = "student";
 
 
-                String days = "";
+                String days = "-";
 
                 CheckBox mon = (CheckBox) findViewById(R.id.checkbox_mon);
                 if (mon.isChecked()) {
@@ -91,7 +91,7 @@ public class SignupActivity extends AppCompatActivity {
                     days += "sunday-";
                 }
 
-                String times = "";
+                String times = "-";
 
                 CheckBox morning = (CheckBox) findViewById(R.id.checkbox_morning);
                 if (morning.isChecked()) {
@@ -113,7 +113,7 @@ public class SignupActivity extends AppCompatActivity {
                     return;
                 } else {
                     MainActivity.currentUserEmail = email;
-                    DataManagement.registerNewUser(name, email, password, userType, "", days, times, context);
+                    DataManagement.registerNewUser(name, email, password, userType, "-1", days, times, context);
                     launchMainActivity();
                 }
             }

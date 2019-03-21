@@ -61,7 +61,7 @@ public class SignupTutorActivity extends AppCompatActivity {
 
                 userType = "tutor";
 
-                String days = "";
+                String days = "-";
 
                 CheckBox mon = (CheckBox) findViewById(R.id.checkbox_mon);
                 if (mon.isChecked()) {
@@ -94,7 +94,7 @@ public class SignupTutorActivity extends AppCompatActivity {
                     days += "sunday-";
                 }
 
-                String times = "";
+                String times = "-";
 
                 CheckBox morning = (CheckBox) findViewById(R.id.checkbox_morning);
                 if (morning.isChecked()) {
