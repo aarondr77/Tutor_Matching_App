@@ -39,7 +39,7 @@ public class DataManagement {
 
             while (fos.ready()) {
                 String curLine = fos.readLine();
-                Log.d("READ VALUE", curLine.split(":")[0]);
+                Log.e("READ VALUE", curLine.split(":")[0]);
                 returnVal.add(new SessionObject(curLine.split(":")[0], curLine.split(":")[1], curLine.split(":")[2], curLine.split(":")[3],
                         curLine.split(":")[4], curLine.split(":")[5], curLine.split(":")[6]));
             }
@@ -54,7 +54,7 @@ public class DataManagement {
     }
 
     public static void writeSession(Context context, SessionObject newSession) {
-        String FILENAME = "Session.txt";
+        String FILENAME = "Sessions.txt";
         String sessionString = newSession.getTutor() + ":" + newSession.getStudent() + ":" + newSession.getSubject() + ":" +
                 newSession.getDate() + ":" + newSession.getDuration() + ":" + newSession.getPrice() + ":" + newSession.getStatus();
 
@@ -63,6 +63,7 @@ public class DataManagement {
             fos = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_APPEND)));
             fos.write(sessionString);
             fos.close();
+            Log.e("PRINT", "wrote session to database");
         } catch (IOException e) {
             Log.d("PRINT", e.toString());
         }

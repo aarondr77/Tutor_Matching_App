@@ -2,23 +2,14 @@ package com.example.a350project;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.FragmentManager;
-import android.widget.TextView;
-import android.content.Intent;
-import android.util.Log;
-import android.widget.Toast;
 import com.example.a350project.dummy.DummyContent;
 
-public class MainActivity extends AppCompatActivity implements ComplaintsListFragment.OnListFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements ComplaintsListFragment.OnListFragmentInteractionListener, MarketplaceListFragment.OnListFragmentInteractionListener {
 
     public static final int test = 1;
 
@@ -71,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements ComplaintsListFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ft.replace(R.id.frame_container, ProfilePageFragment.newInstance("","") );
+        ft.replace(R.id.frame_container, ProfilePageFragment.newInstance("", ""));
         ft.addToBackStack(null);
         ft.commit();
 
@@ -81,7 +72,4 @@ public class MainActivity extends AppCompatActivity implements ComplaintsListFra
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }
-
-
-
 }

@@ -21,28 +21,22 @@ public class SessionFunctions {
     public SessionFunctions() { }
 
     public static void loadSessions() {
-        DataManagement.writeSession(MainActivity.context , new SessionObject("Petra","Terry","MATH114","3PM 03/25/19", "60", "15", "pending"));
+        // add Fake Starting Data to Database
+        addSession("Petra","Terry","MATH114","3PM 03/25/19", "60", "15", "pending");
+        addSession("Aaron","Terry","MATH114","3PM 03/25/19", "60", "15", "pending");
+        addSession("Chris","Terry","MATH240","3PM 03/25/19", "60", "15", "pending");
+
         allSessions.clear();
         allSessions.addAll(DataManagement.loadSessions());
     }
 
-    public static void addComplaint(String tutor, String student, String subject, String date, String duration, String price, String status) {
+    public static void addSession(String tutor, String student, String subject, String date, String duration, String price, String status) {
         SessionObject newSession = new SessionObject(tutor, student, subject, date, duration, price, status);
         allSessions.add(newSession);
         DataManagement.writeSession(MainActivity.context , newSession);
     }
-/*
-    public static void onSearchButtonClick(View view, TextView searchResultsView, String searchString) {
-        Toast.makeText(view.getContext(), searchString, Toast.LENGTH_LONG).show();
-        Toast.makeText(view.getContext(), databasePath, Toast.LENGTH_LONG).show();
+
+    public static LinkedList<SessionObject> getAllSessions () {
+        return allSessions;
     }
-    */
-
-
-
-
-
-
-
-
 }
