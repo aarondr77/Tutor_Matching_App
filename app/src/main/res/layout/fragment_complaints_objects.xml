@@ -38,11 +38,12 @@
     <TextView
         android:id="@+id/target"
         android:layout_width="83dp"
-        android:layout_height="79dp"
+        android:layout_height="77dp"
         android:layout_margin="@dimen/text_margin"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="25dp"
+        android:maxHeight="50dp"
         android:textAppearance="?attr/textAppearanceListItem"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

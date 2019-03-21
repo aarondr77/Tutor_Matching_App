@@ -11,8 +11,8 @@
     <FrameLayout
         android:id="@+id/marketplace_child_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="569dp"
-        android:layout_marginTop="166dp"
+        android:layout_height="609dp"
+        android:layout_marginTop="120dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,6 +47,22 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/SearchText"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Results_Text"
+        android:layout_width="118dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Results:"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/marketplace_child_fragment_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/SearchText"
+        app:layout_constraintVertical_bias="0.866" />
 
 </android.support.constraint.ConstraintLayout>
 
