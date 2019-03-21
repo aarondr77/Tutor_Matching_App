@@ -72,13 +72,22 @@ public class ProfilePageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_profile_page, container, false);
+
+        // Set currUser field
         findCurrentUser();
 
+        // Set values of all views related to current user
         final TextView userBalance = (TextView) v.findViewById(R.id.balanceView);
+        final TextView userName = (TextView) v. findViewById(R.id.nameView);
+        final TextView userRating = (TextView) v. findViewById(R.id.ratingView);
+        final TextView userPosition = (TextView) v. findViewById(R.id.positionView);
         try {
-            userBalance.setText("Balance" + currUser.getDouble("balance"));
+            userBalance.setText("Balance: " + currUser.getDouble("balance"));
+            userName.setText("Name: " + currUser.getString("name"));
+            userPosition.setText("Position: " + currUser.getString("userType"));
+            userRating.setText("Rating: " + currUser.getDouble("tutorRating"));
         } catch(JSONException e) {
-            Log.e("tag4", "Error getting balance");
+            Log.e("tag4", "Error getting user info");
         }
         return v;
     }

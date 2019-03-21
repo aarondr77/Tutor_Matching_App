@@ -115,7 +115,7 @@ public class DataManagement {
     }
 
     public static void registerNewUser(String name, String email, String password, String userType, String price, Context context) {
-        String FILENAME = "Users.txt";
+        String FILENAME = "Users1.txt";
 
         String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +
                 ",userType:" + userType + ",price:" + price + ",tutorRating:" +  "0" +
@@ -132,25 +132,27 @@ public class DataManagement {
         }
     }
 
+    // find user by email, used for finding current user
     public static JSONObject findUser(String email) {
         List<String> allUsers = loadUsers();
         JSONObject result = null;
         try{
+            // loop through users and find matching email
             for(String user : allUsers) {
                 JSONObject userJson = new JSONObject(user);
-
                 if (userJson.getString("email").equals(email)) {
                     result = userJson;
                 }
             }
         } catch(JSONException e) {
-            Log.e("unexpected JSON error", "error");
+            Log.e("json error", "unexpected JSON error");
         }
+        // return matching json object
         return result;
     }
 
     public static List<String> loadUsers() {
-        String FILENAME = "Users.txt";
+        String FILENAME = "Users1.txt";
 
         BufferedReader w;
 
