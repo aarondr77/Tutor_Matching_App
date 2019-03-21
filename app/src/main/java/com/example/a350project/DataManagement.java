@@ -111,7 +111,7 @@ public class DataManagement {
 
     }
 
-    public static void registerNewUser(String name, String email, String password, String userType, String price, Context context) {
+    public static void registerNewUser(String name, String email, String password, String userType, String price, String days, String times, Context context) {
         String FILENAME = "Users.txt";
 
         String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +

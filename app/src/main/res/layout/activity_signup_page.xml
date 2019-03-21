@@ -75,6 +75,11 @@
             android:orientation="horizontal"
             android:text="Choose which days you are most available" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
         <CheckBox
         android:id="@+id/checkbox_mon"
         android:layout_width="wrap_content"
@@ -96,7 +101,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Thursday" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
         <CheckBox
             android:id="@+id/checkbox_fri"
             android:layout_width="wrap_content"
@@ -113,13 +123,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sunday" />
+    </LinearLayout>
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:text="Enter the time you are most available" />
+            android:text="Enter the times you are most available" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/checkbox_morning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Morning" />
+            <CheckBox
+                android:id="@+id/checkbox_afternoon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Afternoon" />
+
+            <CheckBox
+                android:id="@+id/checkbox_evening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Evening" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

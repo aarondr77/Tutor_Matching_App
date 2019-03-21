@@ -65,7 +65,7 @@ public class SignupTutorActivity extends AppCompatActivity {
                     return;
                 } else {
                     MainActivity.currentUserEmail = email;
-                    DataManagement.registerNewUser(name, email, password, userType, price, context);
+                    DataManagement.registerNewUser(name, email, password, userType, price, "", "", context);
                     launchMainActivity();
                 }
             }
@@ -101,7 +101,7 @@ public class SignupTutorActivity extends AppCompatActivity {
                     return;
                 } else {
                     MainActivity.currentUserEmail = email;
-                    DataManagement.registerNewUser(name, email, password, userType, price, context);
+                    DataManagement.registerNewUser(name, email, password, userType, price, "", "", context);
                     launchMainActivity();
                 }
             }
