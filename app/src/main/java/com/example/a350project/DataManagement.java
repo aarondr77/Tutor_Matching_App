@@ -132,15 +132,15 @@ public class DataManagement {
         }
     }
 
-    public static String findUser(String email) {
+    public static JSONObject findUser(String email) {
         List<String> allUsers = loadUsers();
-        String result = "";
+        JSONObject result = null;
         try{
             for(String user : allUsers) {
                 JSONObject userJson = new JSONObject(user);
 
                 if (userJson.getString("email").equals(email)) {
-                    result = userJson.getString("email");
+                    result = userJson;
                 }
             }
         } catch(JSONException e) {

@@ -7,12 +7,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.util.Log;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ProfilePageFragment.OnFragmentInteractionListener} interface
+ * {@link ProfilePageFragment OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link ProfilePageFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -26,6 +30,9 @@ public class ProfilePageFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
+    public static JSONObject currUser;
 
 
 
@@ -64,7 +71,20 @@ public class ProfilePageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_page, container, false);
+        View v = inflater.inflate(R.layout.fragment_profile_page, container, false);
+        findCurrentUser();
+
+        final TextView userBalance = (TextView) v.findViewById(R.id.balanceView);
+        try {
+            userBalance.setText("Balance" + currUser.getDouble("balance"));
+        } catch(JSONException e) {
+            Log.e("tag4", "Error getting balance");
+        }
+        return v;
+    }
+
+    public void findCurrentUser() {
+        currUser = DataManagement.findUser(MainActivity.currentUserEmail);
     }
 
     // This event is triggered soon after onCreateView().
@@ -74,4 +94,5 @@ public class ProfilePageFragment extends Fragment {
         // Setup any handles to view objects here
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
     }
+
 }
