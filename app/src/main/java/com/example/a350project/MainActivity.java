@@ -28,19 +28,14 @@ public class MainActivity extends AppCompatActivity implements ComplaintsListFra
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-
-                    //fragment = ProfilePageFragment.newInstance("This", "my title");
-                    //ft.replace(R.id.frame_container, fragment, "CURRENT_FRAG");
-                    //ft.commit();
-                    return true;
                 case R.id.navigation_profilePage:
+
                     ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.frame_container, ProfilePageFragment.newInstance("This", "my title"));
                     ft.addToBackStack(null);
                     ft.commit();
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_marketplace:
                     ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.frame_container, MarketplaceFragment.newInstance("This", "Marketplace"));
                     ft.addToBackStack(null);
