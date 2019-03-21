@@ -16,6 +16,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.LinkedList;
 import java.util.List;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 
 public class DataManagement {
@@ -113,11 +115,11 @@ public class DataManagement {
     }
 
     public static void registerNewUser(String name, String email, String password, String userType, String price, String days, String times, Context context) {
-        String FILENAME = "Users.txt";
+        String FILENAME = "Users1.txt";
 
         String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +
                 ",userType:" + userType + ",price:" + price + ",days:" + days + ",times"
-                + times + "}\n";
+                + times + ",tutorRating:" +  "0" + ",studentRating:" + "0" + ",balance:" + "100}" + "\n";;
         Log.d("day", days);
         Log.d("time", times);
 
@@ -131,8 +133,27 @@ public class DataManagement {
         }
     }
 
+    // find user by email, used for finding current user
+    public static JSONObject findUser(String email) {
+        List<String> allUsers = loadUsers();
+        JSONObject result = null;
+        try{
+            // loop through users and find matching email
+            for(String user : allUsers) {
+                JSONObject userJson = new JSONObject(user);
+                if (userJson.getString("email").equals(email)) {
+                    result = userJson;
+                }
+            }
+        } catch(JSONException e) {
+            Log.e("json error", "unexpected JSON error");
+        }
+        // return matching json object
+        return result;
+    }
+
     public static List<String> loadUsers() {
-        String FILENAME = "Users.txt";
+        String FILENAME = "Users1.txt";
 
         BufferedReader w;
 
