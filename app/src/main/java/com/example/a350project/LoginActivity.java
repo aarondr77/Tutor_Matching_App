@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
 // import android.view.View.OnClickListener;
@@ -53,7 +54,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 if (password.equals("") || email.equals("")) {
-                    Log.e("tag1", "Must enter a username and password");
+                    TextView error = (TextView) findViewById(R.id.error_login);
+                    error.setText("Please fill out all fields");
                     return;
                 } else {
                     List<String> users = DataManagement.loadUsers();
@@ -69,7 +71,8 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
                     }
-                    Log.e("tag1", "Incorrect email/password combination");
+                    TextView error = (TextView) findViewById(R.id.error_login);
+                    error.setText("Invalid email/password combination");
                     return;
                 }
             }

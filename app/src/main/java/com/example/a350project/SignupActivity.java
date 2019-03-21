@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.content.Context;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 
 // import android.view.View.OnClickListener;
@@ -107,7 +108,8 @@ public class SignupActivity extends AppCompatActivity {
 
                 //check if the fields are value
                 if (email.equals("") || password.equals("") || name.equals("")) {
-                    Log.e("error", "Please fill out all fields and enter a valid email address");
+                    TextView error = (TextView) findViewById(R.id.error_student_signup);
+                    error.setText("Please fill out all fields");
                     return;
                 } else {
                     MainActivity.currentUserEmail = email;

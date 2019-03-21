@@ -116,8 +116,10 @@ public class DataManagement {
         String FILENAME = "Users.txt";
 
         String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +
-                ",userType:" + userType + ",price:" + price + "}\n";
-
+                ",userType:" + userType + ",price:" + price + ",days:" + days + ",times"
+                + times + "}\n";
+        Log.d("day", days);
+        Log.d("time", times);
 
         BufferedWriter  w = null;
         try {
