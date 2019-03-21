@@ -35,8 +35,8 @@ public class MyMarketplaceRecyclerViewAdapter extends RecyclerView.Adapter<MyMar
             view = v;
             Tutor = (TextView) view.findViewById(R.id.Tutor);
             Time = (TextView) view.findViewById(R.id.Time);
-            Price = (TextView) view.findViewById(R.id.Duration);
             Duration = (TextView) view.findViewById(R.id.Duration);
+            Price = (TextView) view.findViewById(R.id.Price);
 
         }
         /*
@@ -70,6 +70,8 @@ public class MyMarketplaceRecyclerViewAdapter extends RecyclerView.Adapter<MyMar
         holder.Tutor.setText(mValues.get(position).getTutor());
         holder.Price.setText(mValues.get(position).getPrice());
         holder.Time.setText(mValues.get(position).getDate());
+        holder.Duration.setText(mValues.get(position).getDuration());
+
 
 
         String pos = Integer.toString(position);
