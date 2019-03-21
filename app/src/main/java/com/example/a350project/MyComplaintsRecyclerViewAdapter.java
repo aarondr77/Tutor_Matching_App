@@ -33,9 +33,9 @@ public class MyComplaintsRecyclerViewAdapter extends RecyclerView.Adapter<MyComp
         public MyViewHolder(View v) {
             super(v);
             view = v;
-            statusView = (TextView) view.findViewById(R.id.Duration);
+            statusView = (TextView) view.findViewById(R.id.status);
             contentView = (TextView) view.findViewById(R.id.content);
-            targetView = (TextView) view.findViewById(R.id.Tutor);
+            targetView = (TextView) view.findViewById(R.id.target);
         }
         @Override
         public String toString() {
