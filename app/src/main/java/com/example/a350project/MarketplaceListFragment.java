@@ -22,7 +22,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class ComplaintsListFragment extends Fragment {
+public class MarketplaceListFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -31,27 +31,30 @@ public class ComplaintsListFragment extends Fragment {
     private OnListFragmentInteractionListener mListener;
 
 
-    static List<ComplaintsObject> complaintsList = new LinkedList<ComplaintsObject>();
+    static List<SessionObject> sessionList = new LinkedList<SessionObject>();
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ComplaintsListFragment() {
+    public MarketplaceListFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static ComplaintsListFragment newInstance(int columnCount) {
-        ComplaintsListFragment fragment = new ComplaintsListFragment();
+    public static MarketplaceListFragment newInstance(int columnCount) {
+        MarketplaceListFragment fragment = new MarketplaceListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public void updateComplaints() {
-        complaintsList = ComplaintsFunctions.getAllComplaints();
+    public void updateSessions() {
+
+        sessionList = MarketplaceFunctions.getFoundSessions();
+        Log.d("Called", "Called MarketplaceListFragment");
+
     }
 
     @Override
@@ -68,11 +71,14 @@ public class ComplaintsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_complaints_list, container, false);
 
-        MyComplaintsRecyclerViewAdapter mAdapter;
+        Log.d("CALLED", "Called onCreateView of MarketplaceListFragment!");
 
-        this.updateComplaints();
+        View view = inflater.inflate(R.layout.fragment_marketplace_list, container, false);
+
+        MyMarketplaceRecyclerViewAdapter mAdapter;
+
+        this.updateSessions();
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -83,7 +89,7 @@ public class ComplaintsListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            mAdapter = new MyComplaintsRecyclerViewAdapter(complaintsList, mListener);
+            mAdapter = new MyMarketplaceRecyclerViewAdapter(sessionList, mListener);
             recyclerView.setAdapter( mAdapter);
             Log.d("COMPLISTFRAG", "Creating new adapter");
         }

@@ -26,13 +26,14 @@
         android:layout_margin="@dimen/text_margin"
         android:layout_marginStart="2dp"
         android:layout_marginLeft="2dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="2dp"
         android:layout_marginRight="2dp"
         android:gravity="center_horizontal|top"
         android:textAppearance="?attr/textAppearanceListItem"
-        app:layout_constraintEnd_toStartOf="@+id/status"
+        app:layout_constraintEnd_toStartOf="@+id/Duration"
         app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toEndOf="@+id/target"
+        app:layout_constraintStart_toEndOf="@+id/Tutor"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -52,5 +53,5 @@
         android:layout_height="0dp"
         android:layout_marginTop="18dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/status" />
+        app:layout_constraintTop_toBottomOf="@+id/Duration" />
 </android.support.constraint.ConstraintLayout>

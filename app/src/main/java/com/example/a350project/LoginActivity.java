@@ -10,7 +10,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.EditText;
+<<<<<<< HEAD
 import android.widget.TextView;
+=======
+>>>>>>> marketplace
 import android.widget.Toast;
 import android.view.View;
 // import android.view.View.OnClickListener;
@@ -40,7 +43,10 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+<<<<<<< HEAD
                 TextView error = (TextView) findViewById(R.id.error);
+=======
+>>>>>>> marketplace
 
                 //get username field
                 EditText emailField = (EditText) findViewById(R.id.email);
@@ -54,7 +60,10 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 if (password.equals("") || email.equals("")) {
+<<<<<<< HEAD
                     error.setText("Error: Must enter a valid username and password");
+=======
+>>>>>>> marketplace
                     Log.e("tag1", "Must enter a username and password");
                     return;
                 } else {
@@ -71,7 +80,10 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
                     }
+<<<<<<< HEAD
                     error.setText("Error: Incorrect email/password combination");
+=======
+>>>>>>> marketplace
                     Log.e("tag1", "Incorrect email/password combination");
                     return;
                 }
