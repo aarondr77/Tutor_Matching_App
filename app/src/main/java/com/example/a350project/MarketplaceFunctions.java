@@ -1,7 +1,6 @@
 package com.example.a350project;
 
 import java.util.LinkedList;
-import android.os.Environment;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,13 +32,6 @@ public class MarketplaceFunctions {
     public static LinkedList<SessionObject> getFoundSessions () {
         return foundSessions;
     }
-
-
-
-
-
-
-
 
 
 }

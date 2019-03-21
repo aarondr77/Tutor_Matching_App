@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.Toast;
 import com.example.a350project.dummy.DummyContent.DummyItem;
 
 import java.util.LinkedList;
@@ -68,15 +67,18 @@ public class MarketplaceListFragment extends Fragment {
 
 
     }
-/*
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_complaints_list, container, false);
 
-        MyComplaintsRecyclerViewAdapter mAdapter;
+        Log.d("CALLED", "Called onCreateView of MarketplaceListFragment!");
 
-        //this.updateComplaints();
+        View view = inflater.inflate(R.layout.fragment_marketplace_list, container, false);
+
+        MyMarketplaceRecyclerViewAdapter mAdapter;
+
+        this.updateSessions();
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -87,14 +89,14 @@ public class MarketplaceListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            mAdapter = new MyComplaintsRecyclerViewAdapter(complaintsList, mListener);
+            mAdapter = new MyMarketplaceRecyclerViewAdapter(sessionList, mListener);
             recyclerView.setAdapter( mAdapter);
             Log.d("COMPLISTFRAG", "Creating new adapter");
         }
 
         return view;
     }
-*/
+
 
     @Override
     public void onAttach(Context context) {
