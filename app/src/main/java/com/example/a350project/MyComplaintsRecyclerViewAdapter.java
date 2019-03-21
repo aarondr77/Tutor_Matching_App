@@ -1,6 +1,5 @@
 package com.example.a350project;
 
-import android.arch.lifecycle.ViewModel;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 import com.example.a350project.ComplaintsListFragment.OnListFragmentInteractionListener;
 import com.example.a350project.dummy.DummyContent.DummyItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,9 +33,9 @@ public class MyComplaintsRecyclerViewAdapter extends RecyclerView.Adapter<MyComp
         public MyViewHolder(View v) {
             super(v);
             view = v;
-            statusView = (TextView) view.findViewById(R.id.status);
+            statusView = (TextView) view.findViewById(R.id.Price);
             contentView = (TextView) view.findViewById(R.id.content);
-            targetView = (TextView) view.findViewById(R.id.target);
+            targetView = (TextView) view.findViewById(R.id.Tutor);
         }
         @Override
         public String toString() {

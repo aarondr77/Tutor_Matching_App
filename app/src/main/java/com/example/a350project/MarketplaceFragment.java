@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +37,7 @@ public class MarketplaceFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private MarketplaceListFragment marketplaceList;
 
     public MarketplaceFragment() {
         // Required empty public constructor
@@ -80,10 +83,20 @@ public class MarketplaceFragment extends Fragment {
             public void onClick(View v) {
                 String searchString = searchInput.getText().toString();
                 MarketplaceFunctions.onSearchButtonClick(v, searchResultsBox, searchString);
+                insertNestedFragment();
+                marketplaceList.updateSessions();
             }
         });
         return v;
 
+    }
+
+    private void insertNestedFragment() {
+        Fragment childFragment = MarketplaceListFragment.newInstance(1);
+        marketplaceList = (MarketplaceListFragment)childFragment;
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.marketplace_child_fragment_container, childFragment).addToBackStack(null).commit();
+        Log.d("Loading Child", "Here");
     }
 
     /**

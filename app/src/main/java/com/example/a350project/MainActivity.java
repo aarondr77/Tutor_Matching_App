@@ -18,7 +18,7 @@ import android.util.Log;
 import android.widget.Toast;
 import com.example.a350project.dummy.DummyContent;
 
-public class MainActivity extends AppCompatActivity implements ComplaintsListFragment.OnListFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements ComplaintsListFragment.OnListFragmentInteractionListener, MarketplaceListFragment.OnListFragmentInteractionListener {
 
     public static final int test = 1;
 
