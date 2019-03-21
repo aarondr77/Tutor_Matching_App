@@ -56,7 +56,7 @@ public class DataManagement {
     public static void writeSession(Context context, SessionObject newSession) {
         String FILENAME = "Sessions.txt";
         String sessionString = newSession.getTutor() + ":" + newSession.getStudent() + ":" + newSession.getSubject() + ":" +
-                newSession.getDate() + ":" + newSession.getDuration() + ":" + newSession.getPrice() + ":" + newSession.getStatus();
+                newSession.getDate() + ":" + newSession.getDuration() + ":" + newSession.getPrice() + ":" + newSession.getStatus() + "\n";
 
         BufferedWriter fos = null;
         try {
