@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.content.Context;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 
 // import android.view.View.OnClickListener;
@@ -57,47 +58,63 @@ public class SignupActivity extends AppCompatActivity {
                 userType = "student";
 
 
-                boolean[] days = new boolean[7];
+                String days = "-";
 
                 CheckBox mon = (CheckBox) findViewById(R.id.checkbox_mon);
                 if (mon.isChecked()) {
-                    days[0] = true;
+                    days += "monday-";
                 }
+
                 CheckBox tues = (CheckBox) findViewById(R.id.checkbox_tues);
                 if (tues.isChecked()) {
-                    days[1] = true;
+                    days += "tuesday-";
                 }
+
                 CheckBox weds = (CheckBox) findViewById(R.id.checkbox_weds);
                 if (weds.isChecked()) {
-                    days[2] = true;
+                    days += "wednesday-";
                 }
                 CheckBox thurs = (CheckBox) findViewById(R.id.checkbox_thurs);
                 if (thurs.isChecked()) {
-                    days[3] = true;
+                    days += "thursday-";
                 }
                 CheckBox fri = (CheckBox) findViewById(R.id.checkbox_fri);
                 if (fri.isChecked()) {
-                    days[4] = true;
+                    days += "friday-";
                 }
                 CheckBox sat = (CheckBox) findViewById(R.id.checkbox_sat);
                 if (sat.isChecked()) {
-                    days[5] = true;
+                    days += "saturday-";
                 }
                 CheckBox sun = (CheckBox) findViewById(R.id.checkbox_sun);
                 if (sun.isChecked()) {
-                    days[6] = true;
+                    days += "sunday-";
                 }
 
-                for (boolean b: days) Log.d("days", b + "");
+                String times = "-";
+
+                CheckBox morning = (CheckBox) findViewById(R.id.checkbox_morning);
+                if (morning.isChecked()) {
+                    times += "morning-";
+                }
+                CheckBox afternoon = (CheckBox) findViewById(R.id.checkbox_afternoon);
+                if (afternoon.isChecked()) {
+                    times += "afternoon-";
+                }
+                CheckBox evening = (CheckBox) findViewById(R.id.checkbox_evening);
+                if (evening.isChecked()) {
+                    times += "evening-";
+                }
 
                 //check if the fields are value
                 if (email.equals("") || password.equals("") || name.equals("")) {
-                    Log.e("error", "Please fill out all fields and enter a valid email address");
+                    TextView error = (TextView) findViewById(R.id.error_student_signup);
+                    error.setText("Please fill out all fields");
                     return;
                 } else {
                     MainActivity.currentUserEmail = email;
-                    DataManagement.registerNewUser(name, email, password, userType,"0", context);
-                    launchMainActivity();
+                    DataManagement.registerNewUser(name, email, password, userType,"0", days, times, context);
+
                 }
             }
 

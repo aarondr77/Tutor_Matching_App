@@ -114,13 +114,14 @@ public class DataManagement {
 
     }
 
-    public static void registerNewUser(String name, String email, String password, String userType, String price, Context context) {
+    public static void registerNewUser(String name, String email, String password, String userType, String price, String days, String times, Context context) {
         String FILENAME = "Users1.txt";
 
         String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +
-                ",userType:" + userType + ",price:" + price + ",tutorRating:" +  "0" +
-                ",studentRating:" + "0" + ",balance:" + "100}" + "\n";
-
+                ",userType:" + userType + ",price:" + price + ",days:" + days + ",times"
+                + times + ",tutorRating:" +  "0" + ",studentRating:" + "0" + ",balance:" + "100}" + "\n";;
+        Log.d("day", days);
+        Log.d("time", times);
 
         BufferedWriter  w = null;
         try {

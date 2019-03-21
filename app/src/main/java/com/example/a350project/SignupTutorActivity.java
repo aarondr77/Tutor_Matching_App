@@ -8,7 +8,9 @@ import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 
 // import android.view.View.OnClickListener;
@@ -59,13 +61,62 @@ public class SignupTutorActivity extends AppCompatActivity {
 
                 userType = "tutor";
 
+                String days = "-";
+
+                CheckBox mon = (CheckBox) findViewById(R.id.checkbox_mon);
+                if (mon.isChecked()) {
+                    days += "monday-";
+                }
+
+                CheckBox tues = (CheckBox) findViewById(R.id.checkbox_tues);
+                if (tues.isChecked()) {
+                    days += "tuesday-";
+                }
+
+                CheckBox weds = (CheckBox) findViewById(R.id.checkbox_weds);
+                if (weds.isChecked()) {
+                    days += "wednesday-";
+                }
+                CheckBox thurs = (CheckBox) findViewById(R.id.checkbox_thurs);
+                if (thurs.isChecked()) {
+                    days += "thursday-";
+                }
+                CheckBox fri = (CheckBox) findViewById(R.id.checkbox_fri);
+                if (fri.isChecked()) {
+                    days += "friday-";
+                }
+                CheckBox sat = (CheckBox) findViewById(R.id.checkbox_sat);
+                if (sat.isChecked()) {
+                    days += "saturday-";
+                }
+                CheckBox sun = (CheckBox) findViewById(R.id.checkbox_sun);
+                if (sun.isChecked()) {
+                    days += "sunday-";
+                }
+
+                String times = "-";
+
+                CheckBox morning = (CheckBox) findViewById(R.id.checkbox_morning);
+                if (morning.isChecked()) {
+                    times += "morning-";
+                }
+                CheckBox afternoon = (CheckBox) findViewById(R.id.checkbox_afternoon);
+                if (afternoon.isChecked()) {
+                    times += "afternoon-";
+                }
+                CheckBox evening = (CheckBox) findViewById(R.id.checkbox_evening);
+                if (evening.isChecked()) {
+                    times += "evening-";
+                }
+
                 //check if the fields are value
                 if (email.equals("") || password.equals("") || name.equals("")) {
-                    Log.e("error", "Please fill out all fields");
+                    TextView error = (TextView) findViewById(R.id.error_tutor_signup);
+                    error.setText("Please fill out all fields");
                     return;
                 } else {
                     MainActivity.currentUserEmail = email;
-                    DataManagement.registerNewUser(name, email, password, userType, price, context);
+                    DataManagement.registerNewUser(name, email, password, userType, price, days, times, context);
                     launchMainActivity();
                 }
             }
@@ -95,13 +146,62 @@ public class SignupTutorActivity extends AppCompatActivity {
 
                 userType = "both";
 
+                String days = "";
+
+                CheckBox mon = (CheckBox) findViewById(R.id.checkbox_mon);
+                if (mon.isChecked()) {
+                    days += "monday-";
+                }
+
+                CheckBox tues = (CheckBox) findViewById(R.id.checkbox_tues);
+                if (tues.isChecked()) {
+                    days += "tuesday-";
+                }
+
+                CheckBox weds = (CheckBox) findViewById(R.id.checkbox_weds);
+                if (weds.isChecked()) {
+                    days += "wednesday-";
+                }
+                CheckBox thurs = (CheckBox) findViewById(R.id.checkbox_thurs);
+                if (thurs.isChecked()) {
+                    days += "thursday-";
+                }
+                CheckBox fri = (CheckBox) findViewById(R.id.checkbox_fri);
+                if (fri.isChecked()) {
+                    days += "friday-";
+                }
+                CheckBox sat = (CheckBox) findViewById(R.id.checkbox_sat);
+                if (sat.isChecked()) {
+                    days += "saturday-";
+                }
+                CheckBox sun = (CheckBox) findViewById(R.id.checkbox_sun);
+                if (sun.isChecked()) {
+                    days += "sunday-";
+                }
+
+                String times = "";
+
+                CheckBox morning = (CheckBox) findViewById(R.id.checkbox_morning);
+                if (morning.isChecked()) {
+                    times += "morning-";
+                }
+                CheckBox afternoon = (CheckBox) findViewById(R.id.checkbox_afternoon);
+                if (afternoon.isChecked()) {
+                    times += "afternoon-";
+                }
+                CheckBox evening = (CheckBox) findViewById(R.id.checkbox_evening);
+                if (evening.isChecked()) {
+                    times += "evening-";
+                }
+
                 //check if the fields are value
                 if (email.equals("") || password.equals("") || name.equals("")) {
-                    Log.e("error", "Please fill out all fields and enter a valid email address");
+                    TextView error = (TextView) findViewById(R.id.error_tutor_signup);
+                    error.setText("Please fill out all fields");
                     return;
                 } else {
                     MainActivity.currentUserEmail = email;
-                    DataManagement.registerNewUser(name, email, password, userType, price, context);
+                    DataManagement.registerNewUser(name, email, password, userType, price, days, times, context);
                     launchMainActivity();
                 }
             }
