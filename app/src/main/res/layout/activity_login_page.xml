@@ -48,7 +48,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
         </LinearLayout>
-<<<<<<< HEAD
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,23 +63,6 @@
 
         </LinearLayout>
 
-=======
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/login_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Login"
-                tools:layout_editor_absoluteX="161dp"
-                tools:layout_editor_absoluteY="434dp" />
-
-        </LinearLayout>
-
->>>>>>> marketplace
         <Button
             android:id="@+id/signup_student_button"
             android:layout_width="wrap_content"
@@ -96,21 +78,6 @@
             tools:layout_editor_absoluteX="161dp"
             tools:layout_editor_absoluteY="434dp" />
 
-<<<<<<< HEAD
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:text=""
-            android:textColor="@color/colorPrimary"/>
-    </LinearLayout>
-=======
->>>>>>> marketplace
 
     </LinearLayout>
 
