@@ -128,7 +128,7 @@ public class SignupTutorActivity extends AppCompatActivity {
                     TextView error = (TextView) findViewById(R.id.error_tutor_signup);
                     error.setText("The email you chose is taken");
                     return;
-                }else {
+                } else {
                     MainActivity.currentUserEmail = email;
                     DataManagement.registerNewUser(firstName, lastName, email, password, userType, price, days, times, context);
                     launchMainActivity();

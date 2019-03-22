@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.EditText;
 
 import android.widget.TextView;
@@ -54,9 +55,13 @@ public class  LoginActivity extends AppCompatActivity {
                     List<String> users = DataManagement.loadUsers();
                     for (String user: users) {
                         String[] info = user.split(",");
-                        String userEmail = info[1].split(":")[1];
-                        String userPassword = info[2].split(":")[1];
+                        String userEmail = info[2].split(":")[1];
+                        String userPassword = info[3].split(":")[1];
+                        Log.d("email", userEmail);
+                        Log.d("input_email", email);
 
+                        Log.d("password", userPassword);
+                        Log.d("input_password", password);
                         if (email.equals(userEmail) && password.equals(userPassword)) {
                             MainActivity.currentUserEmail = email;
                             emailField.setText("");
