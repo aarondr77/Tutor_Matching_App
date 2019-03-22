@@ -1,11 +1,15 @@
 package com.example.a350project;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,7 +23,8 @@ import android.widget.TextView;
 public class SignupTutorActivity extends AppCompatActivity {
 
     private String email = "";
-    private String name = "";
+    private String firstName = "";
+    private String lastName = "";
     private String password = "";
     private String userType = "";
     private String price = "";
@@ -50,9 +55,14 @@ public class SignupTutorActivity extends AppCompatActivity {
                 password = passwordEditable.toString();
 
                 //get name field
-                EditText nameField = (EditText) findViewById(R.id.name);
-                Editable nameEditable = nameField.getText();
-                name = nameEditable.toString();
+                EditText firstNameField = (EditText) findViewById(R.id.first_name);
+                Editable firstNameEditable = firstNameField.getText();
+                firstName = firstNameEditable.toString();
+
+                //get name field
+                EditText lastNameField = (EditText) findViewById(R.id.last_name);
+                Editable lastNameEditable = lastNameField.getText();
+                lastName = lastNameEditable.toString();
 
                 //get name field
                 EditText priceField = (EditText) findViewById(R.id.price);
@@ -110,104 +120,37 @@ public class SignupTutorActivity extends AppCompatActivity {
                 }
 
                 //check if the fields are value
-                if (email.equals("") || password.equals("") || name.equals("")) {
+                if (email.equals("") || password.equals("") || firstName.equals("") || lastName.equals("")) {
                     TextView error = (TextView) findViewById(R.id.error_tutor_signup);
                     error.setText("Please fill out all fields");
                     return;
                 } else {
                     MainActivity.currentUserEmail = email;
-                    DataManagement.registerNewUser(name, email, password, userType, price, days, times, context);
+                    DataManagement.registerNewUser(firstName, lastName, email, password, userType, price, days, times, context);
                     launchMainActivity();
                     finish();
                 }
             }
+
 
         });
 
-        //button to sign up as both
-        Button bothSignupButton = (Button) findViewById(R.id.signup_both_button);
-        bothSignupButton.setOnClickListener(new View.OnClickListener() {
+        /*Button qualificationsButton = (Button) findViewById(R.id.qualifications);
+        qualificationsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //get email field
-                EditText emailField = (EditText) findViewById(R.id.email);
-                Editable emailEditable = emailField.getText();
-                email = emailEditable.toString();
-
-                //get password field
-                EditText passwordField = (EditText) findViewById(R.id.password);
-                Editable passwordEditable = passwordField.getText();
-                password = passwordEditable.toString();
-
-                //get name field
-                EditText nameField = (EditText) findViewById(R.id.name);
-                Editable nameEditable = nameField.getText();
-                name = nameEditable.toString();
-
-                userType = "both";
-
-                String days = "";
-
-                CheckBox mon = (CheckBox) findViewById(R.id.checkbox_mon);
-                if (mon.isChecked()) {
-                    days += "monday-";
-                }
-
-                CheckBox tues = (CheckBox) findViewById(R.id.checkbox_tues);
-                if (tues.isChecked()) {
-                    days += "tuesday-";
-                }
-
-                CheckBox weds = (CheckBox) findViewById(R.id.checkbox_weds);
-                if (weds.isChecked()) {
-                    days += "wednesday-";
-                }
-                CheckBox thurs = (CheckBox) findViewById(R.id.checkbox_thurs);
-                if (thurs.isChecked()) {
-                    days += "thursday-";
-                }
-                CheckBox fri = (CheckBox) findViewById(R.id.checkbox_fri);
-                if (fri.isChecked()) {
-                    days += "friday-";
-                }
-                CheckBox sat = (CheckBox) findViewById(R.id.checkbox_sat);
-                if (sat.isChecked()) {
-                    days += "saturday-";
-                }
-                CheckBox sun = (CheckBox) findViewById(R.id.checkbox_sun);
-                if (sun.isChecked()) {
-                    days += "sunday-";
-                }
-
-                String times = "";
-
-                CheckBox morning = (CheckBox) findViewById(R.id.checkbox_morning);
-                if (morning.isChecked()) {
-                    times += "morning-";
-                }
-                CheckBox afternoon = (CheckBox) findViewById(R.id.checkbox_afternoon);
-                if (afternoon.isChecked()) {
-                    times += "afternoon-";
-                }
-                CheckBox evening = (CheckBox) findViewById(R.id.checkbox_evening);
-                if (evening.isChecked()) {
-                    times += "evening-";
-                }
-
-                //check if the fields are value
-                if (email.equals("") || password.equals("") || name.equals("")) {
-                    TextView error = (TextView) findViewById(R.id.error_tutor_signup);
-                    error.setText("Please fill out all fields");
-                    return;
-                } else {
-                    MainActivity.currentUserEmail = email;
-                    DataManagement.registerNewUser(name, email, password, userType, price, days, times, context);
-                    launchMainActivity();
-                    finish();
-                }
+                // custom dialog
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.dialog);
+                dialog.setTitle("Enter Your Subject Qualifications");
             }
+        });*/
 
+        Button btn = (Button) findViewById(R.id.qualifications);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
         });
 
 
@@ -232,5 +175,7 @@ public class SignupTutorActivity extends AppCompatActivity {
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
     }
+
+
 
 }

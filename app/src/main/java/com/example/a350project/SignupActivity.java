@@ -21,7 +21,8 @@ import android.widget.TextView;
 public class SignupActivity extends AppCompatActivity {
 
     private String email = "";
-    private String name = "";
+    private String firstName = "";
+    private String lastName = "";
     private String password = "";
     private String userType = "";
     public static Context context;
@@ -51,9 +52,14 @@ public class SignupActivity extends AppCompatActivity {
                 password = passwordEditable.toString();
 
                 //get name field
-                EditText nameField = (EditText) findViewById(R.id.name);
+                EditText firstNameField = (EditText) findViewById(R.id.first_name);
+                Editable firstNameEditable = firstNameField.getText();
+                firstName = firstNameEditable.toString();
+
+                //get name field
+                EditText nameField = (EditText) findViewById(R.id.last_name);
                 Editable nameEditable = nameField.getText();
-                name = nameEditable.toString();
+                lastName = nameEditable.toString();
 
                 userType = "student";
 
@@ -107,13 +113,13 @@ public class SignupActivity extends AppCompatActivity {
                 }
 
                 //check if the fields are value
-                if (email.equals("") || password.equals("") || name.equals("")) {
+                if (email.equals("") || password.equals("") || firstName.equals("") || lastName.equals("")) {
                     TextView error = (TextView) findViewById(R.id.error_student_signup);
                     error.setText("Please fill out all fields");
                     return;
                 } else {
                     MainActivity.currentUserEmail = email;
-                    DataManagement.registerNewUser(name, email, password, userType,"0", days, times, context);
+                    DataManagement.registerNewUser(firstName, lastName, email, password, userType,"0", days, times, context);
                     launchMainActivity();
                     finish();
                 }

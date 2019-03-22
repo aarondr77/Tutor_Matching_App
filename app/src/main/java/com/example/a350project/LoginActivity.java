@@ -63,6 +63,7 @@ public class  LoginActivity extends AppCompatActivity {
                         String[] info = user.split(",");
                         String userEmail = info[1].split(":")[1];
                         String userPassword = info[2].split(":")[1];
+
                         if (email.equals(userEmail) && password.equals(userPassword)) {
                             MainActivity.currentUserEmail = email;
                             emailField.setText("");

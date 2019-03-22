@@ -20,11 +20,18 @@
 
 
             <EditText
-                android:id="@+id/name"
+                android:id="@+id/first_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Name"/>
+                android:hint="First Name"/>
+
+            <EditText
+                android:id="@+id/last_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Last Name"/>
         </LinearLayout>
 
         <LinearLayout

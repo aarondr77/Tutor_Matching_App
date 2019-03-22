@@ -100,11 +100,11 @@ public class DataManagement {
 
     }
 
-    public static void registerNewUser(String name, String email, String password, String userType, String price, String days, String times, Context context) {
-        String FILENAME = "new_users1.txt";
+    public static void registerNewUser(String firstName, String lastName, String email, String password, String userType, String price, String days, String times, Context context) {
+        String FILENAME = "users5.txt";
 
         List<String> allUsers = loadUsers();
-        String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +
+        String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + email + ",password:" + password +
                 ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
                 + times + ",tutorRating:" +  "0" + ",studentRating:" + "0" + ",balance:" + "100}" + "\n";
         allUsers.add(JSONobj);
@@ -169,7 +169,7 @@ public class DataManagement {
         Log.e("Updating Balance", emailAddress);
         Log.e("Updating Balance", Double.toString(newBalance));
 
-        String FILENAME = "new_users1.txt";
+        String FILENAME = "users5.txt";
 
         // get up to date list of allUsers as String
         List<String> allUsers = loadUsers();
@@ -180,7 +180,8 @@ public class DataManagement {
                 if (userJson.get("email").equals(emailAddress)) {
                     Log.e("Updating Balance", "FOUND " + emailAddress);
 
-                    String name = userJson.getString("name");
+                    String firstName = userJson.getString("firstName");
+                    String lastName = userJson.getString("lastName");
                     String password = userJson.getString("password");
                     String userType = userJson.getString("userType");
                     String price = userJson.getString("price");
@@ -190,7 +191,7 @@ public class DataManagement {
                     String studentRating = userJson.getString("studentRating");
                     String balance = Double.toString(newBalance);
 
-                    String JSONobj = "{ name:" + name + ",email:" + emailAddress + ",password:" + password +
+                    String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + emailAddress + ",password:" + password +
                             ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
                             + times + ",tutorRating:" + tutorRating + ",studentRating:" + studentRating + ",balance:" + balance + "}" + "\n";
 
@@ -225,7 +226,7 @@ public class DataManagement {
     }
 
     public static List<String> loadUsers() {
-        String FILENAME = "new_users1.txt";
+        String FILENAME = "users5.txt";
 
         BufferedReader w;
 
