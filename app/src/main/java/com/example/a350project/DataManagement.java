@@ -27,8 +27,7 @@ public class DataManagement {
     }
 
     public static List<SessionObject> loadSessions () {
-        String FILENAME = "Sessions.txt";
-        //String string = newComplaint.getContent() + "," + newComplaint.getSubmitter() + "," + newComplaint.getStatus() + "," + newComplaint.getTarget();
+        String FILENAME = "Session.txt";
 
         BufferedReader fos = null;
 
@@ -39,11 +38,13 @@ public class DataManagement {
 
             while (fos.ready()) {
                 String curLine = fos.readLine();
-                Log.e("READ VALUE", curLine.split(":")[0]);
+
+                Log.e("READ VALUE", curLine);
                 returnVal.add(new SessionObject(curLine.split(":")[0], curLine.split(":")[1], curLine.split(":")[2], curLine.split(":")[3],
                         curLine.split(":")[4], curLine.split(":")[5], curLine.split(":")[6], curLine.split(":")[7]));
             }
             fos.close();
+
 
             return returnVal;
         } catch (IOException e) {
@@ -53,20 +54,30 @@ public class DataManagement {
         return null;
     }
 
-    public static void writeSession(Context context, SessionObject newSession) {
-        String FILENAME = "Sessions.txt";
-        String sessionString = newSession.getTutor() + ":" + newSession.getStudent() + ":" + newSession.getSubject() + ":" +
-                newSession.getDate() + ":" + newSession.getDuration() + ":" + newSession.getPrice() + ":" + newSession.getStatus() + "\n";
-
-        BufferedWriter fos = null;
+    public static void writeSession(Context context, LinkedList<SessionObject> writeSession) {
+        String FILENAME = "Session.txt";
+        Log.e("WRITE SESSION SIZE: ", Integer.toString(writeSession.size()));
         try {
-            fos = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_APPEND)));
-            fos.write(sessionString);
+            BufferedWriter fos = null;
+            fos = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
+
+            for (SessionObject currentSession : writeSession) {
+                String sessionString = currentSession.getSessionID() + ":" + currentSession.getTutor() + ":" + currentSession.getStudent() + ":" + currentSession.getSubject() + ":" +
+                        currentSession.getDate() + ":" + currentSession.getDuration() + ":" + currentSession.getPrice() + ":" + currentSession.getStatus() + "\n";
+                try {
+                    Log.i("ADDING TO DATABASE", sessionString);
+                    fos.write(sessionString);
+                    Log.e("PRINT", "wrote session to database");
+                } catch (IOException e) {
+                    Log.d("PRINT", e.toString());
+                }
+            }
             fos.close();
-            Log.e("PRINT", "wrote session to database");
         } catch (IOException e) {
             Log.d("PRINT", e.toString());
+
         }
+
     }
 
 

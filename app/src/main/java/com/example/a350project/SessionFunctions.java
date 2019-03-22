@@ -28,15 +28,16 @@ public class SessionFunctions {
 
     public static void addSession(String tutor, String student, String subject, String date, String duration, String price, String status) {
 
-        String sessionID = Calendar.getInstance().getTime().toString();
+        String sessionID = Double.toString(Math.random());
         Log.e("RANDOM SESSION ID: ", sessionID);
         SessionObject newSession = new SessionObject(sessionID, tutor, student, subject, date, duration, price, status);
         allSessions.add(newSession);
+        Log.e("SESSION ADDED ", newSession.getSessionID());
         Log.e("ADD SESSIONS ", "Size: " + allSessions.size());
-        DataManagement.writeSession(MainActivity.context , newSession);
+        DataManagement.writeSession(MainActivity.context , allSessions);
     }
 
-    public static void claimSession() {
+    public static void claimSession(String sessionID) {
 
     }
 
