@@ -83,16 +83,22 @@ public class MyMarketplaceRecyclerViewAdapter extends RecyclerView.Adapter<MyMar
         holder.Time.setText(mValues.get(position).getDate());
         holder.Duration.setText(mValues.get(position).getDuration());
         final String sessionID = mValues.get(position).getSessionID();
+        final double price = Double.parseDouble(mValues.get(position).getPrice());
 
         holder.ClaimButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("CLAIM CLICKED", sessionID);
-                SessionFunctions.claimSession(sessionID);
-                holder.ClaimButton.setClickable(false);
-                holder.ClaimButton.setTextSize(15);
-                holder.ClaimButton.setBackgroundColor(Color.rgb(0,153,0));
-                holder.ClaimButton.setText(":)");
+                double userBalance = MarketplaceFunctions.getBalance(MainActivity.currentUserEmail);
+                if (userBalance >= price) {
+                    Log.i("CLAIM CLICKED", sessionID);
+                    SessionFunctions.claimSession(sessionID);
+                    holder.ClaimButton.setClickable(false);
+                    holder.ClaimButton.setTextSize(15);
+                    holder.ClaimButton.setBackgroundColor(Color.rgb(0,153,0));
+                    holder.ClaimButton.setText(":)");
+                } else {
+                    Toast.makeText(context, "Insufficient funds in account", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -106,11 +112,5 @@ public class MyMarketplaceRecyclerViewAdapter extends RecyclerView.Adapter<MyMar
     public int getItemCount() {
         return mValues.size();
     }
-/*
-    public void updateData(List<ComplaintsObject> newList) {
-        mValues.clear();
-        mValues.addAll(newList);
-        this.notifyDataSetChanged();
-    }
-*/
+
 }

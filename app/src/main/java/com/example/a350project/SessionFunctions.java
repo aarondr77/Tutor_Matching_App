@@ -14,12 +14,14 @@ public class SessionFunctions {
 
     public static void loadSessions() {
         // add Fake Starting Data to Database
-        addSession("Petra","Terry","MATH114","3PM 03/25/19", "60", "15", "pending");
-        addSession("Aaron","Terry","MATH114","3PM 03/25/19", "60", "15", "pending");
-        addSession("Chris","Terry","MATH240","3PM 03/25/19", "60", "15", "pending");
+        addSession("Petra","Terry","MATH114","3PM 03/25/19", "60", "15", "accpeted");
+        addSession("Aaron","Terry","MATH114","3PM 03/25/19", "60", "15", "accepted");
+        addSession("Chris","Terry","MATH240","3PM 03/25/19", "60", "15", "accepted");
         addSession("Petra","unclaimed","MATH114","3PM 03/25/19", "60", "15", "pending");
         addSession("Aaron","unclaimed","MATH114","3PM 03/25/19", "60", "15", "pending");
         addSession("Chris","unclaimed","MATH240","3PM 03/25/19", "60", "15", "pending");
+        addSession("Chris","unclaimed","MATH114","3PM 03/25/19", "60", "200", "pending");
+
         Log.e("LOAD SESSIONS", "CALLED ADD SESSION: SIZE = " + allSessions.size());
         allSessions.clear();
         allSessions.addAll(DataManagement.loadSessions());
@@ -49,7 +51,7 @@ public class SessionFunctions {
                 Log.i("FOUND SESSION TO CLAIM", "FOUND");
                 allSessions.remove(currentSession);
                 // CHANGE CURRENT USER EMAIL TO CURRENT USER NAME
-                addSession(targetSessionID, currentSession.getTutor(), MainActivity.currentUserEmail, currentSession.getSubject(), currentSession.getDate(), currentSession.getDuration(), currentSession.getPrice(), "ACCEPTED");
+                addSession(targetSessionID, currentSession.getTutor(), MainActivity.currentUserEmail, currentSession.getSubject(), currentSession.getDate(), currentSession.getDuration(), currentSession.getPrice(), "accepted");
                 break;
             }
         }

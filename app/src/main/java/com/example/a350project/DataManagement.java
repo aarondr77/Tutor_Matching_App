@@ -86,31 +86,6 @@ public class DataManagement {
 
     public static void writeComplaint(Context context, ComplaintsObject newComplaint) {
 
-        /*private String complaintsFile = context.getFilesDir().getPath().toString() + "/ComplaintsFile.txt";
-
-        private File complaints = new File(complaintsFile);
-
-        if (!complaints.exists()) {
-            try {complaints.createNewFile();}
-            catch (IOException e) {
-                Log.d("Create File", e.toString());
-            }
-
-        }
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(complaintsFile));
-            writer.write(newComplaint.getContent() + "," + newComplaint.getSubmitter() + "," + newComplaint.getStatus() + "," + newComplaint.getTarget());
-            writer.close();
-        } catch (IOException e) {
-            Log.d("PRINT", e.toString());
-        } */
-
-
-        /*String complaintsFile = context.getFilesDir().getPath().toString() + "/ComplaintsFile.txt";
-        File complaints = new File(complaintsFile);
-        complaints.delete();*/
-
-
         String FILENAME = "ComplaintsFile.txt";
         String string = newComplaint.getContent() + ":" + newComplaint.getSubmitter() + ":" + newComplaint.getStatus() + ":" + newComplaint.getTarget() + "\n";
 
