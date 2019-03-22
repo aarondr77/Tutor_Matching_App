@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.a350project.dummy.DummyContent.DummyItem;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -52,6 +53,12 @@ public class ComplaintsListFragment extends Fragment {
 
     public void updateComplaints() {
         complaintsList = ComplaintsFunctions.getAllComplaints();
+        Iterator<ComplaintsObject> itr = complaintsList.iterator();
+        while(itr.hasNext()) {
+            if (itr.next().getTarget().equals("admin@adr.com")) {
+                itr.remove();
+            }
+        }
     }
 
     @Override

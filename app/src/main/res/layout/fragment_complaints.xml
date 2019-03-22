@@ -8,17 +8,13 @@
 
     <Button
         android:id="@+id/launchComplaintButton"
-        android:layout_width="263dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="306dp"
         android:layout_height="47dp"
-        android:layout_marginStart="74dp"
-        android:layout_marginLeft="74dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="74dp"
-        android:layout_marginRight="74dp"
-        android:onClick="onLaunchComplaintButtonClick"
-        android:text="Launch a Complaint"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="64dp"
+        android:text="Launch a Complaint against a user"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,9 +30,9 @@
         android:id="@+id/textView2"
         android:layout_width="48dp"
         android:layout_height="22dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="128dp"
         android:text="Target"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -45,7 +41,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="128dp"
         android:layout_marginEnd="84dp"
         android:layout_marginRight="84dp"
         android:text="Content"
@@ -56,11 +52,25 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="128dp"
         android:layout_marginEnd="72dp"
         android:layout_marginRight="72dp"
         android:text="Status"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/sendFeedbackButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="306dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Send feedback to admin"
+        app:layout_constraintBottom_toTopOf="@+id/launchComplaintButton"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

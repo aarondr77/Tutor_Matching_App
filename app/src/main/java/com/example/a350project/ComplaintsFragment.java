@@ -82,6 +82,14 @@ public class ComplaintsFragment extends Fragment {
             }
         });
 
+        Button feedbackBtn = (Button) v.findViewById(R.id.sendFeedbackButton);
+        feedbackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAddItemDialogFeedback(v.getContext());
+            }
+        });
+
         return v;
     }
 
@@ -93,8 +101,8 @@ public class ComplaintsFragment extends Fragment {
         //text_entry is an Layout XML file containing two text field to display in alert dialog
         final EditText content = (EditText) textEntryView.findViewById(R.id.enterContent);
         final EditText target = (EditText) textEntryView.findViewById(R.id.enterTarget);
-        content.setText("example@sample.com");
-        target.setText(("I think..."));
+        target.setHint("example@sample.com");
+        content.setHint(("I think..."));
         final AlertDialog.Builder alert = new AlertDialog.Builder(c);
 
         AlertDialog dialog = new AlertDialog.Builder(c)
@@ -105,6 +113,34 @@ public class ComplaintsFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         ComplaintsFunctions.addComplaint(MainActivity.currentUserEmail,
                                 String.valueOf(content.getText()), String.valueOf(target.getText()));
+
+                        insertNestedFragment();
+                    }
+
+
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
+    }
+
+    private void showAddItemDialogFeedback(Context c) {
+
+        LayoutInflater factory = LayoutInflater.from(c);
+        final View textEntryView = factory.inflate(R.layout.send_feedback_popup, null);
+        //text_entry is an Layout XML file containing two text field to display in alert dialog
+        final EditText content = (EditText) textEntryView.findViewById(R.id.enterFeedback);
+        content.setHint("I love how you...");
+        final AlertDialog.Builder alert = new AlertDialog.Builder(c);
+
+        AlertDialog dialog = new AlertDialog.Builder(c)
+                .setTitle("Submit Feedback")
+                .setView(textEntryView)
+                .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ComplaintsFunctions.addComplaint(MainActivity.currentUserEmail,
+                                String.valueOf(content.getText()), "admin@adr.com");
 
                         insertNestedFragment();
                     }
