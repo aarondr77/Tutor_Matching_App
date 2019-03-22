@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/Tutor"
+        android:id="@+id/Subject"
         android:layout_width="67dp"
         android:layout_height="29dp"
         android:layout_marginStart="8dp"
@@ -36,8 +36,8 @@
         android:layout_height="34dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/Tutor"
-        app:layout_constraintStart_toEndOf="@+id/Tutor"
+        app:layout_constraintBaseline_toBaselineOf="@+id/Subject"
+        app:layout_constraintStart_toEndOf="@+id/Subject"
         tools:layout_editor_absoluteX="83dp" />
 
     <TextView
@@ -50,7 +50,7 @@
         app:layout_constraintStart_toEndOf="@+id/Time" />
 
     <TextView
-        android:id="@+id/Price"
+        android:id="@+id/Tutor"
         android:layout_width="70dp"
         android:layout_height="30dp"
         android:layout_marginStart="8dp"
@@ -59,7 +59,7 @@
         app:layout_constraintStart_toEndOf="@+id/Duration" />
 
     <Button
-        android:id="@+id/Claim"
+        android:id="@+id/Rate"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="65dp"
         android:layout_height="42dp"
@@ -67,10 +67,10 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="Claim"
+        android:text="Rate"
         android:textSize="12sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/Price"
+        app:layout_constraintBaseline_toBaselineOf="@+id/Tutor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/Price" />
+        app:layout_constraintStart_toEndOf="@+id/Tutor" />
 
 </android.support.constraint.ConstraintLayout>
