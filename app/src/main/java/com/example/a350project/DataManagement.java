@@ -150,7 +150,7 @@ public class DataManagement {
                 }
             }
         } catch(JSONException e) {
-            Log.e("json error", "unexpected JSON error");
+            Log.e("json error", e.getMessage());
         }
         // return matching json object
         return result;
