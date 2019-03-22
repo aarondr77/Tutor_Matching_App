@@ -84,9 +84,10 @@ public class ProfilePageFragment extends Fragment {
         final TextView userRating = (TextView) v.findViewById(R.id.ratingView);
         final TextView userPosition = (TextView) v.findViewById(R.id.positionView);
         final TextView userAvgCost = (TextView) v.findViewById(R.id.avgCostView);
+        Log.d("user", currUser.toString());
         try {
             userBalance.setText("Balance: " + currUser.getDouble("balance"));
-            userName.setText("Name: " + currUser.getString("name"));
+            userName.setText("Name: " + currUser.getString("firstName") + " " + currUser.getString("lastName"));
             userPosition.setText("Position: " + currUser.getString("userType"));
             userRating.setText("Rating: " + currUser.getDouble("tutorRating"));
             userAvgCost.setText("Average Session Cost: " + currUser.getDouble("avgCost"));

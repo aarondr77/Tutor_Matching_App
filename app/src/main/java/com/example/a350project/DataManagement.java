@@ -102,7 +102,7 @@ public class DataManagement {
     }
 
     public static void registerNewUser(String firstName, String lastName, String email, String password, String userType, String price, String days, String times, Context context) {
-        String FILENAME = "users5.txt";
+        String FILENAME = userDatabase;
 
         List<String> allUsers = loadUsers();
         String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + email + ",password:" + password +
@@ -147,15 +147,14 @@ public class DataManagement {
     // find user by email, used for finding current user
     public static JSONObject findUser(String email) {
         List<String> allUsers = loadUsers();
+        for (String e: allUsers) Log.d("u", e);
 
         JSONObject result = null;
-
+        Log.d("input_email", email);
         try{
             // loop through users and find matching email
             for(String user : allUsers) {
-                Log.d("user", user);
                 JSONObject userJson = new JSONObject(user);
-                //Log.d("email", userJson.getString("email"));
                 if (userJson.getString("email").equals(email)) {
                     result = userJson;
                 }
@@ -230,7 +229,7 @@ public class DataManagement {
     }
 
     public static List<String> loadUsers() {
-        String FILENAME = "users5.txt";
+        String FILENAME = userDatabase;
 
         BufferedReader w;
 
