@@ -22,7 +22,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class SessionsListFragment extends Fragment {
+public class SessionListFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -37,13 +37,13 @@ public class SessionsListFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public SessionsListFragment() {
+    public SessionListFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static SessionsListFragment newInstance(int columnCount) {
-        SessionsListFragment fragment = new SessionsListFragment();
+    public static SessionListFragment newInstance(int columnCount) {
+        SessionListFragment fragment = new SessionListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -52,8 +52,8 @@ public class SessionsListFragment extends Fragment {
 
     public void updateSessions() {
         // TODO: make function to find all sessions for currUser
-//        sessionList = MarketplaceFunctions.getFoundSessions();
-        Log.d("Called", "Called SessionsListFragment");
+        sessionList = SessionFunctions.getAllSessions();
+        Log.d("Called", "Called SessionListFragment");
 
     }
 
@@ -72,11 +72,11 @@ public class SessionsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Log.d("CALLED", "Called onCreateView of SessionsListFragment!");
+        Log.d("CALLED", "Called onCreateView of SessionListFragment!");
 
-        View view = inflater.inflate(R.layout.fragment_sessions_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_session_list, container, false);
 
-        MyMarketplaceRecyclerViewAdapter mAdapter;
+        MySessionRecyclerViewAdapter mAdapter;
 
         this.updateSessions();
 
@@ -89,7 +89,7 @@ public class SessionsListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            mAdapter = new MyMarketplaceRecyclerViewAdapter(sessionList, mListener, context);
+            mAdapter = new MySessionRecyclerViewAdapter(sessionList, mListener, context);
             recyclerView.setAdapter( mAdapter);
             Log.d("COMPLISTFRAG", "Creating new adapter");
         }

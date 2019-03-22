@@ -9,7 +9,7 @@
     <Space
         android:id="@+id/space"
         android:layout_width="448dp"
-        android:layout_height="69dp"
+        android:layout_height="64dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
@@ -34,10 +34,8 @@
         android:id="@+id/Time"
         android:layout_width="82dp"
         android:layout_height="34dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/Tutor"
-        app:layout_constraintStart_toEndOf="@+id/Tutor" />
+        tools:layout_editor_absoluteX="83dp" />
 
     <TextView
         android:id="@+id/Duration"
