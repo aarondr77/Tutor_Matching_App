@@ -9,8 +9,10 @@ public class SessionObject {
     private String duration;    // minutes
     private String price;       // dollars
     private String status;
+    private String tutorEmail;
+    private String studentEmail;
 
-    public SessionObject (String tutor, String student,
+    public SessionObject (String tutor, String student,  String tutorEmail, String studentEmail,
         String subject, String date, String duration, String price, String status) {
 
         this.tutor = tutor;
@@ -20,11 +22,17 @@ public class SessionObject {
         this.duration = duration;
         this.price = price;
         this.status = status;
+        this.studentEmail = studentEmail;
+        this.tutorEmail = tutorEmail;
     }
 
     public String getTutor () {
         return this.tutor;
     }
+
+    public String getStudentEmail() { return this.studentEmail;}
+
+    public String getTutorEmail() { return this.tutorEmail;}
 
     public String getStudent () {
         return this.student;

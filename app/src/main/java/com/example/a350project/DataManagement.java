@@ -29,7 +29,7 @@ public class DataManagement {
     }
 
     public static List<SessionObject> loadSessions () {
-        String FILENAME = "Sessions.txt";
+        String FILENAME = "Sessions2.txt";
         //String string = newComplaint.getContent() + "," + newComplaint.getSubmitter() + "," + newComplaint.getStatus() + "," + newComplaint.getTarget();
 
         BufferedReader fos = null;
@@ -42,8 +42,9 @@ public class DataManagement {
             while (fos.ready()) {
                 String curLine = fos.readLine();
                 Log.e("READ VALUE", curLine.split(":")[0]);
+                Log.e("ALL VALUE", curLine);
                 returnVal.add(new SessionObject(curLine.split(":")[0], curLine.split(":")[1], curLine.split(":")[2], curLine.split(":")[3],
-                        curLine.split(":")[4], curLine.split(":")[5], curLine.split(":")[6]));
+                        curLine.split(":")[4], curLine.split(":")[5], curLine.split(":")[6], curLine.split(":")[7], curLine.split(":")[8]));
             }
             fos.close();
 
@@ -56,8 +57,8 @@ public class DataManagement {
     }
 
     public static void writeSession(Context context, SessionObject newSession) {
-        String FILENAME = "Sessions.txt";
-        String sessionString = newSession.getTutor() + ":" + newSession.getStudent() + ":" + newSession.getSubject() + ":" +
+        String FILENAME = "Sessions2.txt";
+        String sessionString = newSession.getTutor() + ":" + newSession.getStudent() + ":" + newSession.getStudentEmail() + ":" + newSession.getTutorEmail() + ":" + newSession.getSubject() + ":" +
                 newSession.getDate() + ":" + newSession.getDuration() + ":" + newSession.getPrice() + ":" + newSession.getStatus() + "\n";
 
         BufferedWriter fos = null;
@@ -115,12 +116,12 @@ public class DataManagement {
     }
 
     public static void registerNewUser(String name, String email, String password, String userType, String price, String days, String times, Context context) {
-        String FILENAME = "new_users1.txt";
+        String FILENAME = "new_users3.txt";
 
 
         String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +
                 ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                + times + ",tutorRating:" +  "0" + ",avgCost:" + "0"+ ",studentRating:" + "0" + ",totalSessions:" + "0" + ",totalCost:" + "0" + ",balance:" + "100}" + "\n";;
+                + times + ",tutorRating:" +  "0" + ",avgCost:" + "0"+ ",studentRating:" + "0" + ",totalSessions:" + "0" + ",totalCost:" + "0" + ",balance:" + "100 }" + "\n";;
         Log.d("day", days);
         Log.d("time", times);
 
@@ -158,7 +159,7 @@ public class DataManagement {
     }
 
     public static List<String> loadUsers() {
-        String FILENAME = "new_users1.txt";
+        String FILENAME = "new_users3.txt";
 
         BufferedReader w;
 

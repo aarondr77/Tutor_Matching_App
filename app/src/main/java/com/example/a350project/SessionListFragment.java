@@ -52,7 +52,8 @@ public class SessionListFragment extends Fragment {
 
     public void updateSessions() {
         // TODO: make function to find all sessions for currUser
-        sessionList = SessionFunctions.getAllSessions();
+        SessionFunctions.loadSessions();
+        sessionList = SessionFunctions.getMySessions();
         Log.d("Called", "Called SessionListFragment");
 
     }
