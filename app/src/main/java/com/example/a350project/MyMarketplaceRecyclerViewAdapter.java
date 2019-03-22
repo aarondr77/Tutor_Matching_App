@@ -2,6 +2,7 @@ package com.example.a350project;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -82,16 +83,16 @@ public class MyMarketplaceRecyclerViewAdapter extends RecyclerView.Adapter<MyMar
         holder.Time.setText(mValues.get(position).getDate());
         holder.Duration.setText(mValues.get(position).getDuration());
         final String sessionID = mValues.get(position).getSessionID();
-        final int positionToRemove = position;
 
         holder.ClaimButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i("CLAIM CLICKED", sessionID);
                 SessionFunctions.claimSession(sessionID);
-                mValues.remove(positionToRemove);
-                notifyItemRemoved(positionToRemove);
-
+                holder.ClaimButton.setClickable(false);
+                holder.ClaimButton.setTextSize(15);
+                holder.ClaimButton.setBackgroundColor(Color.rgb(0,153,0));
+                holder.ClaimButton.setText(":)");
             }
         });
 
