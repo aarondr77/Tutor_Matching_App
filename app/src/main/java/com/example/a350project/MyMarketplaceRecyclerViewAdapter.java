@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.content.Context;
+
 
 import com.example.a350project.MarketplaceListFragment.OnListFragmentInteractionListener;
 import com.example.a350project.dummy.DummyContent.DummyItem;
@@ -21,6 +23,7 @@ public class MyMarketplaceRecyclerViewAdapter extends RecyclerView.Adapter<MyMar
 
     private final List<SessionObject> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private Context context;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -48,10 +51,10 @@ public class MyMarketplaceRecyclerViewAdapter extends RecyclerView.Adapter<MyMar
     }
 
 
-
-    public MyMarketplaceRecyclerViewAdapter(List<SessionObject> items, OnListFragmentInteractionListener listener) {
+    public MyMarketplaceRecyclerViewAdapter(List<SessionObject> items, OnListFragmentInteractionListener listener, Context context) {
         mValues = items;
         mListener = listener;
+        this.context = context;
         Log.d("CALLED", "CALLED MyMarketplaceRecyclerViewAdapter");
 
     }
@@ -71,6 +74,20 @@ public class MyMarketplaceRecyclerViewAdapter extends RecyclerView.Adapter<MyMar
         holder.Price.setText(mValues.get(position).getPrice());
         holder.Time.setText(mValues.get(position).getDate());
         holder.Duration.setText(mValues.get(position).getDuration());
+
+/*
+        final String descr = mValues.get(position).getDescription();
+        holder.dscrButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            AlertDialog.Builder ad = new AlertDialog.Builder(context);
+            ad.setTitle("Description");
+            ad.setMessage(descr);
+            AlertDialog dialog = ad.create();
+            ad.show();
+        }
+*/
+
 
 
 

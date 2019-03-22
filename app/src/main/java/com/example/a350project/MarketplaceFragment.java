@@ -73,13 +73,13 @@ public class MarketplaceFragment extends Fragment {
         View v = inflater.inflate(R.layout.activity_marketplace, container, false);
 
         final EditText searchInput = (EditText) v.findViewById(R.id.SearchText);
-        final TextView searchResultsBox = (TextView) v.findViewById(R.id.textView);
+        //final TextView searchResultsBox = (TextView) v.findViewById(R.id.textView);
         Button searchButton = (Button) v.findViewById(R.id.Button_Search_Marketplace);
         searchButton.setOnClickListener(new View.OnClickListener () {
             @Override
             public void onClick(View v) {
                 String searchString = searchInput.getText().toString();
-                MarketplaceFunctions.onSearchButtonClick(v, searchResultsBox, searchString);
+                MarketplaceFunctions.onSearchButtonClick(v, searchString);
                 insertNestedFragment();
                 marketplaceList.updateSessions();
             }

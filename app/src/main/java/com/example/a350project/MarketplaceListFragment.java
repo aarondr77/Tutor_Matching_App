@@ -89,7 +89,7 @@ public class MarketplaceListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            mAdapter = new MyMarketplaceRecyclerViewAdapter(sessionList, mListener);
+            mAdapter = new MyMarketplaceRecyclerViewAdapter(sessionList, mListener, context);
             recyclerView.setAdapter( mAdapter);
             Log.d("COMPLISTFRAG", "Creating new adapter");
         }
