@@ -282,4 +282,14 @@ public class DataManagement {
 
         return null;
     }
+
+    public static boolean userExists(String email) {
+        List<String> allUsers = DataManagement.loadUsers();
+        for (String u: allUsers) {
+            String[] info = u.split(",");
+            String e = info[2].split(":")[1];
+            if (email.equals(e)) return true;
+        }
+        return false;
+    }
 }
