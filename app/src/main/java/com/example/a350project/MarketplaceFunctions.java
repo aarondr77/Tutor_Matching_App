@@ -14,7 +14,6 @@ public class MarketplaceFunctions {
     public MarketplaceFunctions() { }
 
     public static void onSearchButtonClick(View view, String searchString) {
-        //Toast.makeText(view.getContext(), searchString, Toast.LENGTH_LONG).show();
         SessionFunctions.loadSessions();
         foundSessions.clear();
         allSessions = SessionFunctions.getAllSessions();

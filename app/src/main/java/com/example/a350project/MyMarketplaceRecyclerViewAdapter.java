@@ -1,12 +1,18 @@
 package com.example.a350project;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.content.Context;
+import android.widget.Toast;
 
 
 import com.example.a350project.MarketplaceListFragment.OnListFragmentInteractionListener;
@@ -32,6 +38,7 @@ public class MyMarketplaceRecyclerViewAdapter extends RecyclerView.Adapter<MyMar
         public TextView Time;
         public TextView Price;
         public TextView Duration;
+        public Button ClaimButton;
         public SessionObject mItem;
         public MyViewHolder(View v) {
             super(v);
@@ -40,6 +47,7 @@ public class MyMarketplaceRecyclerViewAdapter extends RecyclerView.Adapter<MyMar
             Time = (TextView) view.findViewById(R.id.Time);
             Duration = (TextView) view.findViewById(R.id.Duration);
             Price = (TextView) view.findViewById(R.id.Price);
+            ClaimButton = (Button) view.findViewById(R.id.Claim);
 
         }
         /*
@@ -74,22 +82,19 @@ public class MyMarketplaceRecyclerViewAdapter extends RecyclerView.Adapter<MyMar
         holder.Price.setText(mValues.get(position).getPrice());
         holder.Time.setText(mValues.get(position).getDate());
         holder.Duration.setText(mValues.get(position).getDuration());
+        final String sessionID = mValues.get(position).getSessionID();
 
-/*
-        final String descr = mValues.get(position).getDescription();
-        holder.dscrButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            AlertDialog.Builder ad = new AlertDialog.Builder(context);
-            ad.setTitle("Description");
-            ad.setMessage(descr);
-            AlertDialog dialog = ad.create();
-            ad.show();
-        }
-*/
-
-
-
+        holder.ClaimButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("CLAIM CLICKED", sessionID);
+                SessionFunctions.claimSession(sessionID);
+                holder.ClaimButton.setClickable(false);
+                holder.ClaimButton.setTextSize(15);
+                holder.ClaimButton.setBackgroundColor(Color.rgb(0,153,0));
+                holder.ClaimButton.setText(":)");
+            }
+        });
 
         String pos = Integer.toString(position);
         Log.d("ADAPTER", pos);

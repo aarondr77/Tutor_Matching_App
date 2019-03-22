@@ -2,6 +2,7 @@ package com.example.a350project;
 
 public class SessionObject {
 
+    private String sessionID;
     private String tutor;
     private String student;
     private String subject;
@@ -10,9 +11,10 @@ public class SessionObject {
     private String price;       // dollars
     private String status;
 
-    public SessionObject (String tutor, String student,
+    public SessionObject (String sessionID, String tutor, String student,
         String subject, String date, String duration, String price, String status) {
 
+        this.sessionID = sessionID;
         this.tutor = tutor;
         this.student = student;
         this.subject = subject;
@@ -21,6 +23,8 @@ public class SessionObject {
         this.price = price;
         this.status = status;
     }
+
+    public String getSessionID () { return this.sessionID; }
 
     public String getTutor () {
         return this.tutor;

@@ -1,17 +1,8 @@
 package com.example.a350project;
 
-import android.os.Environment;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 
@@ -36,10 +27,32 @@ public class SessionFunctions {
     }
 
     public static void addSession(String tutor, String student, String subject, String date, String duration, String price, String status) {
-        SessionObject newSession = new SessionObject(tutor, student, subject, date, duration, price, status);
+        String sessionID = Double.toString(Math.random());
+        Log.e("RANDOM SESSION ID: ", sessionID);
+        SessionObject newSession = new SessionObject(sessionID, tutor, student, subject, date, duration, price, status);
         allSessions.add(newSession);
+        Log.e("SESSION ADDED ", newSession.getSessionID());
         Log.e("ADD SESSIONS ", "Size: " + allSessions.size());
-        DataManagement.writeSession(MainActivity.context , newSession);
+        DataManagement.writeSession(MainActivity.context , allSessions);
+    }
+
+    public static void addSession(String sessionID, String tutor, String student, String subject, String date, String duration, String price, String status) {
+        SessionObject newSession = new SessionObject(sessionID, tutor, student, subject, date, duration, price, status);
+        allSessions.add(newSession);
+        Log.e("SESSION ADDED ", newSession.getSessionID());
+        Log.e("ADD SESSIONS ", "Size: " + allSessions.size());
+        DataManagement.writeSession(MainActivity.context , allSessions);
+    }
+    public static void claimSession(String targetSessionID) {
+        for (SessionObject currentSession : allSessions) {
+            if (currentSession.getSessionID().equals(targetSessionID)) {
+                Log.i("FOUND SESSION TO CLAIM", "FOUND");
+                allSessions.remove(currentSession);
+                // CHANGE CURRENT USER EMAIL TO CURRENT USER NAME
+                addSession(targetSessionID, currentSession.getTutor(), MainActivity.currentUserEmail, currentSession.getSubject(), currentSession.getDate(), currentSession.getDuration(), currentSession.getPrice(), "ACCEPTED");
+                break;
+            }
+        }
     }
 
     public static LinkedList<SessionObject> getAllSessions () {
