@@ -120,8 +120,9 @@ public class DataManagement {
 
         String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +
                 ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                + times + ",tutorRating:" +  "0" + ",studentRating:" + "0" + ",balance:" + "100}" + "\n";;
-        Log.d("day", JSONobj);
+                + times + ",tutorRating:" +  "0" + ",avgCost:" + "0"+ ",studentRating:" + "0" + ",totalSessions:" + "0" + ",totalCost:" + "0" + ",balance:" + "100}" + "\n";;
+        Log.d("day", days);
+        Log.d("time", times);
 
         BufferedWriter  w = null;
         try {
