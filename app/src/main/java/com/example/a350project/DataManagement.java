@@ -22,14 +22,14 @@ import org.json.JSONException;
 
 public class DataManagement {
 
-    String sessionDatabase;
+    private static String sessionDatabase = "Sessions5.txt";
+    private static String userDatabase = "UserDatabase9.txt";
+    private static String complaintsDatabase = "ComplaintsFile.txt";
 
-    public DataManagement(String sessionDatabase) {
-
-    }
+    public DataManagement() { }
 
     public static List<SessionObject> loadSessions () {
-        String FILENAME = "Sessions2.txt";
+        String FILENAME = sessionDatabase;
         //String string = newComplaint.getContent() + "," + newComplaint.getSubmitter() + "," + newComplaint.getStatus() + "," + newComplaint.getTarget();
 
         BufferedReader fos = null;
@@ -58,7 +58,7 @@ public class DataManagement {
     }
 
     public static void writeSession(Context context, LinkedList<SessionObject> writeSession) {
-        String FILENAME = "Sessions2.txt";
+        String FILENAME = sessionDatabase;
         Log.e("WRITE SESSION SIZE: ", Integer.toString(writeSession.size()));
         try {
             BufferedWriter fos = null;
@@ -87,7 +87,7 @@ public class DataManagement {
 
     public static void writeComplaint(Context context, ComplaintsObject newComplaint) {
 
-        String FILENAME = "ComplaintsFile.txt";
+        String FILENAME = complaintsDatabase;
         String string = newComplaint.getContent() + ":" + newComplaint.getSubmitter() + ":" + newComplaint.getStatus() + ":" + newComplaint.getTarget() + "\n";
 
         BufferedWriter fos = null;
@@ -102,7 +102,7 @@ public class DataManagement {
     }
 
     public static void registerNewUser(String name, String email, String password, String userType, String price, String days, String times, Context context) {
-        String FILENAME = "new_users3.txt";
+        String FILENAME = userDatabase;
 
         List<String> allUsers = loadUsers();
         String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +
@@ -171,11 +171,12 @@ public class DataManagement {
         Log.e("Updating Balance", emailAddress);
         Log.e("Updating Balance", Double.toString(newBalance));
 
-        String FILENAME = "new_users1.txt";
+        String FILENAME = userDatabase;
 
         // get up to date list of allUsers as String
         List<String> allUsers = loadUsers();
-        List<String> updatedUsers = loadUsers();
+        List<String> updatedUsers =  new LinkedList<String>();
+        Log.e("Updating Balance", "allUsers Size " + allUsers.size());
         for (String currentUser : allUsers) {
             try {
                 JSONObject userJson = new JSONObject(currentUser);
@@ -206,6 +207,7 @@ public class DataManagement {
         }
         // overwrite old file and rewrite all new users
         BufferedWriter  w = null;
+        Log.e("Updating Balance", "updatedUsers Size " + updatedUsers.size());
         try {
             w = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
             for (String user : updatedUsers) {
@@ -223,11 +225,10 @@ public class DataManagement {
         } catch (JSONException e) {
 
         }
-
     }
 
     public static List<String> loadUsers() {
-        String FILENAME = "new_users3.txt";
+        String FILENAME = userDatabase;
 
         BufferedReader w;
 
@@ -249,7 +250,7 @@ public class DataManagement {
 
 
     public static List<ComplaintsObject> loadComplaints() {
-        String FILENAME = "ComplaintsFile.txt";
+        String FILENAME = complaintsDatabase;
         //String string = newComplaint.getContent() + "," + newComplaint.getSubmitter() + "," + newComplaint.getStatus() + "," + newComplaint.getTarget();
 
         BufferedReader fos = null;
