@@ -69,7 +69,7 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sign Up as Tutor or as a Student/tutor combo"
+            android:text="Sign Up as Tutor"
             tools:layout_editor_absoluteX="161dp"
             tools:layout_editor_absoluteY="434dp" />
 
