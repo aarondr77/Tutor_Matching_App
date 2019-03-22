@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import android.view.View;
 import android.widget.Toast;
 import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

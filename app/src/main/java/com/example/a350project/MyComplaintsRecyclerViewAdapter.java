@@ -7,10 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.example.a350project.ComplaintsListFragment.OnListFragmentInteractionListener;
 import com.example.a350project.dummy.DummyContent.DummyItem;
-
 import java.util.List;
 
 /**
