@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.support.v4.app.FragmentTransaction;
 import com.example.a350project.dummy.DummyContent;
 
-public class MainActivity extends AppCompatActivity implements ComplaintsListFragment.OnListFragmentInteractionListener, MarketplaceListFragment.OnListFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements ComplaintsListFragment.OnListFragmentInteractionListener, MarketplaceListFragment.OnListFragmentInteractionListener, SessionListFragment.OnListFragmentInteractionListener {
 
     public static final int test = 1;
 

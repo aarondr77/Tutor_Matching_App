@@ -1,10 +1,8 @@
 package com.example.a350project;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +10,6 @@ import android.widget.TextView;
 import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
-import android.widget.Button;
 
 
 /**
@@ -35,7 +32,7 @@ public class ProfilePageFragment extends Fragment {
 
 
     public static JSONObject currUser;
-
+    private SessionListFragment mySessions;
 
 
     public ProfilePageFragment() {
@@ -83,14 +80,16 @@ public class ProfilePageFragment extends Fragment {
 
         // Set values of all views related to current user
         final TextView userBalance = (TextView) v.findViewById(R.id.balanceView);
-        final TextView userName = (TextView) v. findViewById(R.id.nameView);
-        final TextView userRating = (TextView) v. findViewById(R.id.ratingView);
-        final TextView userPosition = (TextView) v. findViewById(R.id.positionView);
+        final TextView userName = (TextView) v.findViewById(R.id.nameView);
+        final TextView userRating = (TextView) v.findViewById(R.id.ratingView);
+        final TextView userPosition = (TextView) v.findViewById(R.id.positionView);
+        final TextView userAvgCost = (TextView) v.findViewById(R.id.avgCostView);
         try {
             userBalance.setText("Balance: " + currUser.getDouble("balance"));
             userName.setText("Name: " + currUser.getString("name"));
             userPosition.setText("Position: " + currUser.getString("userType"));
             userRating.setText("Rating: " + currUser.getDouble("tutorRating"));
+            userAvgCost.setText("Average Session Cost: " + currUser.getDouble("avgCost"));
         } catch(JSONException e) {
             Log.e("tag4", "Error getting user info");
         }
@@ -101,12 +100,21 @@ public class ProfilePageFragment extends Fragment {
         currUser = DataManagement.findUser(MainActivity.currentUserEmail);
     }
 
+    private void insertNestedFragment() {
+        Fragment childFragment = SessionListFragment.newInstance(1);
+        mySessions = (SessionListFragment)childFragment;
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.mySessionsContainer, childFragment).addToBackStack(null).commit();
+        Log.d("Loading Child", "Here");
+    }
+
     // This event is triggered soon after onCreateView().
     // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Setup any handles to view objects here
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
+        insertNestedFragment();
     }
 
 }

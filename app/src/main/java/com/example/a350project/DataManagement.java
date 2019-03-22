@@ -29,7 +29,8 @@ public class DataManagement {
     }
 
     public static List<SessionObject> loadSessions () {
-        String FILENAME = "Session.txt";
+        String FILENAME = "Sessions2.txt";
+        //String string = newComplaint.getContent() + "," + newComplaint.getSubmitter() + "," + newComplaint.getStatus() + "," + newComplaint.getTarget();
 
         BufferedReader fos = null;
 
@@ -40,10 +41,10 @@ public class DataManagement {
 
             while (fos.ready()) {
                 String curLine = fos.readLine();
-
-                Log.e("READ VALUE", curLine);
+                Log.e("READ VALUE", curLine.split(":")[0]);
+                Log.e("ALL VALUE", curLine);
                 returnVal.add(new SessionObject(curLine.split(":")[0], curLine.split(":")[1], curLine.split(":")[2], curLine.split(":")[3],
-                        curLine.split(":")[4], curLine.split(":")[5], curLine.split(":")[6], curLine.split(":")[7]));
+                        curLine.split(":")[4], curLine.split(":")[5], curLine.split(":")[6], curLine.split(":")[7], curLine.split(":")[8],  curLine.split(":")[9]));
             }
             fos.close();
 
@@ -57,14 +58,14 @@ public class DataManagement {
     }
 
     public static void writeSession(Context context, LinkedList<SessionObject> writeSession) {
-        String FILENAME = "Session.txt";
+        String FILENAME = "Sessions2.txt";
         Log.e("WRITE SESSION SIZE: ", Integer.toString(writeSession.size()));
         try {
             BufferedWriter fos = null;
             fos = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
 
             for (SessionObject currentSession : writeSession) {
-                String sessionString = currentSession.getSessionID() + ":" + currentSession.getTutor() + ":" + currentSession.getStudent() + ":" + currentSession.getSubject() + ":" +
+                String sessionString = currentSession.getSessionID() + ":" + currentSession.getTutor() + ":" + currentSession.getStudent() + ":" + currentSession.getTutorEmail() + ":" + currentSession.getStudentEmail() + ":" +  currentSession.getSubject() + ":" +
                         currentSession.getDate() + ":" + currentSession.getDuration() + ":" + currentSession.getPrice() + ":" + currentSession.getStatus() + "\n";
                 try {
                     Log.i("ADDING TO DATABASE", sessionString);
@@ -128,8 +129,9 @@ public class DataManagement {
 
         String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +
                 ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                + times + ",tutorRating:" +  "0" + ",studentRating:" + "0" + ",balance:" + "100}" + "\n";;
-        Log.d("day", JSONobj);
+                + times + ",tutorRating:" +  "0" + ",avgCost:" + "0"+ ",studentRating:" + "0" + ",totalSessions:" + "0" + ",totalCost:" + "0" + ",balance:" + "100 }" + "\n";;
+        Log.d("day", days);
+        Log.d("time", times);
 
         BufferedWriter  w = null;
         try {
@@ -159,7 +161,7 @@ public class DataManagement {
                 }
             }
         } catch(JSONException e) {
-            Log.e("json error", "unexpected JSON error");
+            Log.e("json error", e.getMessage());
         }
         // return matching json object
         return result;
