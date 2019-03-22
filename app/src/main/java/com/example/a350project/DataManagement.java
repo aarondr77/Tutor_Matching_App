@@ -41,7 +41,7 @@ public class DataManagement {
                 String curLine = fos.readLine();
                 Log.e("READ VALUE", curLine.split(":")[0]);
                 returnVal.add(new SessionObject(curLine.split(":")[0], curLine.split(":")[1], curLine.split(":")[2], curLine.split(":")[3],
-                        curLine.split(":")[4], curLine.split(":")[5], curLine.split(":")[6]));
+                        curLine.split(":")[4], curLine.split(":")[5], curLine.split(":")[6], curLine.split(":")[7]));
             }
             fos.close();
 

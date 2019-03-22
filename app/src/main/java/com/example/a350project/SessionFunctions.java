@@ -1,17 +1,8 @@
 package com.example.a350project;
 
-import android.os.Environment;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 
@@ -36,10 +27,17 @@ public class SessionFunctions {
     }
 
     public static void addSession(String tutor, String student, String subject, String date, String duration, String price, String status) {
-        SessionObject newSession = new SessionObject(tutor, student, subject, date, duration, price, status);
+
+        String sessionID = Calendar.getInstance().getTime().toString();
+        Log.e("RANDOM SESSION ID: ", sessionID);
+        SessionObject newSession = new SessionObject(sessionID, tutor, student, subject, date, duration, price, status);
         allSessions.add(newSession);
         Log.e("ADD SESSIONS ", "Size: " + allSessions.size());
         DataManagement.writeSession(MainActivity.context , newSession);
+    }
+
+    public static void claimSession() {
+
     }
 
     public static LinkedList<SessionObject> getAllSessions () {
