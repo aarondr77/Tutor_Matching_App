@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="395dp"
-        android:layout_height="248dp"
+        android:layout_height="162dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -25,31 +25,32 @@
         <TextView
             android:id="@+id/nameView"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="TextView" />
+            android:layout_height="33dp"
+            android:text="TextView"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/positionView"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="32dp"
             android:text="TextView" />
 
         <TextView
             android:id="@+id/balanceView"
             android:layout_width="match_parent"
-            android:layout_height="51dp"
+            android:layout_height="33dp"
             android:text="TextView" />
 
         <TextView
             android:id="@+id/ratingView"
             android:layout_width="match_parent"
-            android:layout_height="47dp"
+            android:layout_height="30dp"
             android:text="TextView" />
 
         <TextView
             android:id="@+id/avgCostView"
             android:layout_width="match_parent"
-            android:layout_height="54dp"
+            android:layout_height="29dp"
             android:text="TextView" />
 
     </LinearLayout>
@@ -57,35 +58,101 @@
     <FrameLayout
         android:id="@+id/mySessionsContainer"
         android:layout_width="395dp"
-        android:layout_height="360dp"
+        android:layout_height="257dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/newSession"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.428">
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent">
 
     </FrameLayout>
 
     <Button
         android:id="@+id/newSession"
-        android:layout_width="385dp"
-        android:layout_height="63dp"
+        android:layout_width="386dp"
+        android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="120dp"
         android:text="Make New Session"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="62dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginBottom="17dp"
+        android:text="Subject"
+        app:layout_constraintBottom_toTopOf="@+id/mySessionsContainer"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
+        android:text="Duration"
+        app:layout_constraintBottom_toTopOf="@+id/mySessionsContainer"
+        app:layout_constraintStart_toEndOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSessions"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textViewSessions"
+        android:layout_width="144dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="23dp"
+        android:text="My Sessions:"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
+        android:text="Time"
+        app:layout_constraintBottom_toTopOf="@+id/mySessionsContainer"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSessions"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
+        android:text="Tutor"
+        app:layout_constraintBottom_toTopOf="@+id/mySessionsContainer"
+        app:layout_constraintStart_toEndOf="@+id/textView12"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSessions"
+        app:layout_constraintVertical_bias="0.989" />
 
 </android.support.constraint.ConstraintLayout>
 
