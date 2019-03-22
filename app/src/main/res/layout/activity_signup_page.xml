@@ -68,10 +68,10 @@
         android:layout_height="wrap_content">
 
         <CheckBox
-        android:id="@+id/checkbox_mon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Monday" />
+            android:id="@+id/checkbox_mon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Monday" />
 
         <CheckBox
             android:id="@+id/checkbox_tues"
@@ -144,8 +144,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <Button
                 android:id="@+id/signup_student_button"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sign Up"
@@ -160,6 +162,7 @@
 
             <Button
                 android:id="@+id/login_button"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Back to Login In"

@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Email"/>
+                android:hint="Email" />
         </LinearLayout>
 
         <LinearLayout
@@ -36,8 +36,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:inputType="textPassword"
-                android:hint="Password"/>
+                android:hint="Password"
+                android:inputType="textPassword" />
         </LinearLayout>
 
         <LinearLayout
@@ -46,6 +46,7 @@
 
             <Button
                 android:id="@+id/login_button"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Login"
@@ -56,13 +57,16 @@
 
         <Button
             android:id="@+id/signup_student_button"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sign Up as Student"
             tools:layout_editor_absoluteX="161dp"
             tools:layout_editor_absoluteY="434dp" />
+
         <Button
             android:id="@+id/signup_both_button"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sign Up as Tutor or as a Student/tutor combo"

@@ -114,7 +114,8 @@ public class SignupActivity extends AppCompatActivity {
                 } else {
                     MainActivity.currentUserEmail = email;
                     DataManagement.registerNewUser(name, email, password, userType,"0", days, times, context);
-
+                    launchMainActivity();
+                    finish();
                 }
             }
 

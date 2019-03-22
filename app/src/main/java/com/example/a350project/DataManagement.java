@@ -115,13 +115,13 @@ public class DataManagement {
     }
 
     public static void registerNewUser(String name, String email, String password, String userType, String price, String days, String times, Context context) {
-        String FILENAME = "Users1.txt";
+        String FILENAME = "new_users1.txt";
+
 
         String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +
-                ",userType:" + userType + ",price:" + price + ",days:" + days + ",times"
+                ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
                 + times + ",tutorRating:" +  "0" + ",studentRating:" + "0" + ",balance:" + "100}" + "\n";;
-        Log.d("day", days);
-        Log.d("time", times);
+        Log.d("day", JSONobj);
 
         BufferedWriter  w = null;
         try {
@@ -136,11 +136,15 @@ public class DataManagement {
     // find user by email, used for finding current user
     public static JSONObject findUser(String email) {
         List<String> allUsers = loadUsers();
+
         JSONObject result = null;
+
         try{
             // loop through users and find matching email
             for(String user : allUsers) {
+                Log.d("user", user);
                 JSONObject userJson = new JSONObject(user);
+                //Log.d("email", userJson.getString("email"));
                 if (userJson.getString("email").equals(email)) {
                     result = userJson;
                 }
@@ -153,7 +157,7 @@ public class DataManagement {
     }
 
     public static List<String> loadUsers() {
-        String FILENAME = "Users1.txt";
+        String FILENAME = "new_users1.txt";
 
         BufferedReader w;
 
@@ -170,7 +174,6 @@ public class DataManagement {
         } catch (IOException e) {
             Log.d("PRINT", e.toString());
         }
-
         return tempList;
     }
 

@@ -118,6 +118,7 @@ public class SignupTutorActivity extends AppCompatActivity {
                     MainActivity.currentUserEmail = email;
                     DataManagement.registerNewUser(name, email, password, userType, price, days, times, context);
                     launchMainActivity();
+                    finish();
                 }
             }
 
@@ -203,6 +204,7 @@ public class SignupTutorActivity extends AppCompatActivity {
                     MainActivity.currentUserEmail = email;
                     DataManagement.registerNewUser(name, email, password, userType, price, days, times, context);
                     launchMainActivity();
+                    finish();
                 }
             }
 
