@@ -20,7 +20,7 @@ public class MarketplaceFunctions {
         allSessions = SessionFunctions.getAllSessions();
         if (allSessions != null) {
             for (SessionObject currentSession : allSessions) {
-                if (currentSession.getSubject().equals(searchString)) {
+                if (currentSession.getSubject().equals(searchString) && currentSession.getStudent().equals("unclaimed")) {
                     foundSessions.add(currentSession);
                     Toast.makeText(view.getContext(), "FOUND " + searchString, Toast.LENGTH_LONG).show();
 

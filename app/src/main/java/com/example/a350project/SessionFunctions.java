@@ -26,6 +26,9 @@ public class SessionFunctions {
         addSession("Petra","Terry","MATH114","3PM 03/25/19", "60", "15", "pending");
         addSession("Aaron","Terry","MATH114","3PM 03/25/19", "60", "15", "pending");
         addSession("Chris","Terry","MATH240","3PM 03/25/19", "60", "15", "pending");
+        addSession("Petra","unclaimed","MATH114","3PM 03/25/19", "60", "15", "pending");
+        addSession("Aaron","unclaimed","MATH114","3PM 03/25/19", "60", "15", "pending");
+        addSession("Chris","unclaimed","MATH240","3PM 03/25/19", "60", "15", "pending");
         Log.e("LOAD SESSIONS", "CALLED ADD SESSION: SIZE = " + allSessions.size());
         allSessions.clear();
         allSessions.addAll(DataManagement.loadSessions());
