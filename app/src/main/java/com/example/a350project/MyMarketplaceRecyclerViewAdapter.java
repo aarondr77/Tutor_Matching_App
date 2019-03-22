@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.content.Context;
+import android.widget.Toast;
 
 
 import com.example.a350project.MarketplaceListFragment.OnListFragmentInteractionListener;
@@ -80,10 +81,17 @@ public class MyMarketplaceRecyclerViewAdapter extends RecyclerView.Adapter<MyMar
         holder.Price.setText(mValues.get(position).getPrice());
         holder.Time.setText(mValues.get(position).getDate());
         holder.Duration.setText(mValues.get(position).getDuration());
+        final String sessionID = mValues.get(position).getSessionID();
+        final int positionToRemove = position;
 
         holder.ClaimButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("CLAIM CLICKED", sessionID);
+                SessionFunctions.claimSession(sessionID);
+                mValues.remove(positionToRemove);
+                notifyItemRemoved(positionToRemove);
+
             }
         });
 
