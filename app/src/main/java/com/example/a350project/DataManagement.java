@@ -48,6 +48,7 @@ public class DataManagement {
             }
             fos.close();
 
+
             return returnVal;
         } catch (IOException e) {
             Log.d("PRINT", e.toString());
@@ -59,47 +60,34 @@ public class DataManagement {
     public static void writeSession(Context context, SessionObject newSession) {
         String FILENAME = "Sessions2.txt";
         String sessionString = newSession.getTutor() + ":" + newSession.getStudent() + ":" + newSession.getStudentEmail() + ":" + newSession.getTutorEmail() + ":" + newSession.getSubject() + ":" +
-                newSession.getDate() + ":" + newSession.getDuration() + ":" + newSession.getPrice() + ":" + newSession.getStatus() + "\n";
-
-        BufferedWriter fos = null;
+                newSession.getDate() + ":" + newSession.getDuration() + ":" + newSession.getPrice() + ":" + newSession.getStatus() + "\n";    
+        Log.e("WRITE SESSION SIZE: ", Integer.toString(writeSession.size()));
         try {
-            fos = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_APPEND)));
-            fos.write(sessionString);
+            BufferedWriter fos = null;
+            fos = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
+
+            for (SessionObject currentSession : writeSession) {
+                String sessionString = currentSession.getSessionID() + ":" + currentSession.getTutor() + ":" + currentSession.getStudent() + ":" + currentSession.getSubject() + ":" +
+                        currentSession.getDate() + ":" + currentSession.getDuration() + ":" + currentSession.getPrice() + ":" + currentSession.getStatus() + "\n";
+                try {
+                    Log.i("ADDING TO DATABASE", sessionString);
+                    fos.write(sessionString);
+                    Log.e("PRINT", "wrote session to database");
+                } catch (IOException e) {
+                    Log.d("PRINT", e.toString());
+                }
+            }
             fos.close();
-            Log.e("PRINT", "wrote session to database");
         } catch (IOException e) {
             Log.d("PRINT", e.toString());
+
         }
+
     }
 
 
 
     public static void writeComplaint(Context context, ComplaintsObject newComplaint) {
-
-        /*private String complaintsFile = context.getFilesDir().getPath().toString() + "/ComplaintsFile.txt";
-
-        private File complaints = new File(complaintsFile);
-
-        if (!complaints.exists()) {
-            try {complaints.createNewFile();}
-            catch (IOException e) {
-                Log.d("Create File", e.toString());
-            }
-
-        }
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(complaintsFile));
-            writer.write(newComplaint.getContent() + "," + newComplaint.getSubmitter() + "," + newComplaint.getStatus() + "," + newComplaint.getTarget());
-            writer.close();
-        } catch (IOException e) {
-            Log.d("PRINT", e.toString());
-        } */
-
-
-        /*String complaintsFile = context.getFilesDir().getPath().toString() + "/ComplaintsFile.txt";
-        File complaints = new File(complaintsFile);
-        complaints.delete();*/
-
 
         String FILENAME = "ComplaintsFile.txt";
         String string = newComplaint.getContent() + ":" + newComplaint.getSubmitter() + ":" + newComplaint.getStatus() + ":" + newComplaint.getTarget() + "\n";
@@ -118,6 +106,28 @@ public class DataManagement {
     public static void registerNewUser(String name, String email, String password, String userType, String price, String days, String times, Context context) {
         String FILENAME = "new_users3.txt";
 
+        List<String> allUsers = loadUsers();
+        String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +
+                ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
+                + times + ",tutorRating:" +  "0" + ",studentRating:" + "0" + ",balance:" + "100}" + "\n";
+        allUsers.add(JSONobj);
+
+        BufferedWriter  w = null;
+        try {
+            w = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
+            for (String user : allUsers) {
+                w.write(JSONobj);
+            }
+            w.close();
+        } catch (IOException e) {
+            Log.d("PRINT", e.toString());
+        }
+
+    }
+/*
+    public static void registerNewUser(String name, String email, String password, String userType, String price, String days, String times, Context context) {
+        String FILENAME = "new_users1.txt";
+
 
         String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +
                 ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
@@ -134,6 +144,7 @@ public class DataManagement {
             Log.d("PRINT", e.toString());
         }
     }
+    */
 
     // find user by email, used for finding current user
     public static JSONObject findUser(String email) {
@@ -156,6 +167,65 @@ public class DataManagement {
         }
         // return matching json object
         return result;
+    }
+
+    public static void updateBalance (String emailAddress, double newBalance, Context context) {
+        Log.e("Updating Balance", emailAddress);
+        Log.e("Updating Balance", Double.toString(newBalance));
+
+        String FILENAME = "new_users1.txt";
+
+        // get up to date list of allUsers as String
+        List<String> allUsers = loadUsers();
+        List<String> updatedUsers = loadUsers();
+        for (String currentUser : allUsers) {
+            try {
+                JSONObject userJson = new JSONObject(currentUser);
+                if (userJson.get("email").equals(emailAddress)) {
+                    Log.e("Updating Balance", "FOUND " + emailAddress);
+
+                    String name = userJson.getString("name");
+                    String password = userJson.getString("password");
+                    String userType = userJson.getString("userType");
+                    String price = userJson.getString("price");
+                    String days = userJson.getString("days");
+                    String times = userJson.getString("times");
+                    String tutorRating = userJson.getString("tutorRating");
+                    String studentRating = userJson.getString("studentRating");
+                    String balance = Double.toString(newBalance);
+
+                    String JSONobj = "{ name:" + name + ",email:" + emailAddress + ",password:" + password +
+                            ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
+                            + times + ",tutorRating:" + tutorRating + ",studentRating:" + studentRating + ",balance:" + balance + "}" + "\n";
+
+                    updatedUsers.add(JSONobj);
+                } else {
+                    updatedUsers.add(currentUser);
+                }
+            } catch (JSONException e) {
+                Log.e("JSONException", e.getStackTrace().toString());
+            }
+        }
+        // overwrite old file and rewrite all new users
+        BufferedWriter  w = null;
+        try {
+            w = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
+            for (String user : updatedUsers) {
+                Log.e("Adding User", user);
+                w.write(user);
+            }
+            w.close();
+        } catch (IOException e) {
+            Log.e("IOException", e.getStackTrace().toString());
+        }
+
+        // TEST! REMOVE BEFORE SUBMITTING
+        try {
+            Log.e("Resulting Balance " , findUser(emailAddress).getString("balance"));
+        } catch (JSONException e) {
+
+        }
+
     }
 
     public static List<String> loadUsers() {
