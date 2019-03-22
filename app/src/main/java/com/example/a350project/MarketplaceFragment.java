@@ -69,6 +69,7 @@ public class MarketplaceFragment extends Fragment {
         View v = inflater.inflate(R.layout.activity_marketplace, container, false);
 
         final EditText searchInput = (EditText) v.findViewById(R.id.SearchText);
+
         Button searchButton = (Button) v.findViewById(R.id.Button_Search_Marketplace);
         searchButton.setOnClickListener(new View.OnClickListener () {
             @Override
