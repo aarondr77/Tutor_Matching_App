@@ -113,8 +113,8 @@ public class SignupActivity extends AppCompatActivity {
                     return;
                 } else {
                     MainActivity.currentUserEmail = email;
-                    DataManagement.registerNewUser(name, email, password, userType, "-1", days, times, context);
-                    launchMainActivity();
+                    DataManagement.registerNewUser(name, email, password, userType,"0", days, times, context);
+
                 }
             }
 

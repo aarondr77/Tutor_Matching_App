@@ -21,7 +21,7 @@ import android.content.Intent;
 import java.util.List;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class  LoginActivity extends AppCompatActivity {
 
     private static final String username = "";
 
