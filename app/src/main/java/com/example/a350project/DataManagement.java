@@ -44,7 +44,7 @@ public class DataManagement {
                 Log.e("READ VALUE", curLine.split(":")[0]);
                 Log.e("ALL VALUE", curLine);
                 returnVal.add(new SessionObject(curLine.split(":")[0], curLine.split(":")[1], curLine.split(":")[2], curLine.split(":")[3],
-                        curLine.split(":")[4], curLine.split(":")[5], curLine.split(":")[6], curLine.split(":")[7], curLine.split(":")[8]));
+                        curLine.split(":")[4], curLine.split(":")[5], curLine.split(":")[6], curLine.split(":")[7], curLine.split(":")[8],  curLine.split(":")[9]));
             }
             fos.close();
 
@@ -57,17 +57,15 @@ public class DataManagement {
         return null;
     }
 
-    public static void writeSession(Context context, SessionObject newSession) {
+    public static void writeSession(Context context, LinkedList<SessionObject> writeSession) {
         String FILENAME = "Sessions2.txt";
-        String sessionString = newSession.getTutor() + ":" + newSession.getStudent() + ":" + newSession.getStudentEmail() + ":" + newSession.getTutorEmail() + ":" + newSession.getSubject() + ":" +
-                newSession.getDate() + ":" + newSession.getDuration() + ":" + newSession.getPrice() + ":" + newSession.getStatus() + "\n";    
         Log.e("WRITE SESSION SIZE: ", Integer.toString(writeSession.size()));
         try {
             BufferedWriter fos = null;
             fos = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
 
             for (SessionObject currentSession : writeSession) {
-                String sessionString = currentSession.getSessionID() + ":" + currentSession.getTutor() + ":" + currentSession.getStudent() + ":" + currentSession.getSubject() + ":" +
+                String sessionString = currentSession.getSessionID() + ":" + currentSession.getTutor() + ":" + currentSession.getStudent() + ":" + currentSession.getTutorEmail() + ":" + currentSession.getStudentEmail() + ":" +  currentSession.getSubject() + ":" +
                         currentSession.getDate() + ":" + currentSession.getDuration() + ":" + currentSession.getPrice() + ":" + currentSession.getStatus() + "\n";
                 try {
                     Log.i("ADDING TO DATABASE", sessionString);

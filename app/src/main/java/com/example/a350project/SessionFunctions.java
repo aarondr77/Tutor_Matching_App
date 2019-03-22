@@ -38,8 +38,8 @@ public class SessionFunctions {
         DataManagement.writeSession(MainActivity.context , allSessions);
     }
 
-    public static void addSession(String sessionID, String tutor, String student, String subject, String date, String duration, String price, String status) {
-        SessionObject newSession = new SessionObject(sessionID, tutor, student, subject, date, duration, price, status);
+    public static void addSession(String sessionID, String tutor, String student, String tutorEmail, String studentEmail, String subject, String date, String duration, String price, String status) {
+        SessionObject newSession = new SessionObject(sessionID, tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status);
         allSessions.add(newSession);
         Log.e("SESSION ADDED ", newSession.getSessionID());
         Log.e("ADD SESSIONS ", "Size: " + allSessions.size());
@@ -51,7 +51,7 @@ public class SessionFunctions {
                 Log.i("FOUND SESSION TO CLAIM", "FOUND");
                 allSessions.remove(currentSession);
                 // CHANGE CURRENT USER EMAIL TO CURRENT USER NAME
-                addSession(targetSessionID, currentSession.getTutor(), MainActivity.currentUserEmail, currentSession.getSubject(), currentSession.getDate(), currentSession.getDuration(), currentSession.getPrice(), "accepted");
+                addSession(targetSessionID, currentSession.getTutor(), MainActivity.currentUserEmail, currentSession.getTutorEmail(), currentSession.getStudentEmail(), currentSession.getSubject(), currentSession.getDate(), currentSession.getDuration(), currentSession.getPrice(), "accepted");
                 break;
             }
         }
