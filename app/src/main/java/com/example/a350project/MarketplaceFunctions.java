@@ -41,6 +41,18 @@ public class MarketplaceFunctions {
         return balance;
     }
 
+    public static void updateBalance (String emailAddress, double balanceDelta) {
+        JSONObject user = DataManagement.findUser(emailAddress);
+        double balance;
+        try {
+            balance = user.getDouble("balance");
+            balance += balanceDelta;
+            
+        } catch (JSONException e) {
+
+        }
+    }
+
     public static LinkedList<SessionObject> getFoundSessions () {
         return foundSessions;
     }

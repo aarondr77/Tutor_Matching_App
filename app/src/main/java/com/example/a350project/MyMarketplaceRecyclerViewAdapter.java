@@ -89,7 +89,9 @@ public class MyMarketplaceRecyclerViewAdapter extends RecyclerView.Adapter<MyMar
             @Override
             public void onClick(View v) {
                 double userBalance = MarketplaceFunctions.getBalance(MainActivity.currentUserEmail);
+                // I NEED TO GET THE EMAIL ADDRESS OF THE TUTOR AND UPDATE HIS BALANCE ALSO!!
                 if (userBalance >= price) {
+                    DataManagement.updateBalance(MainActivity.currentUserEmail, userBalance - price, context);
                     Log.i("CLAIM CLICKED", sessionID);
                     SessionFunctions.claimSession(sessionID);
                     holder.ClaimButton.setClickable(false);

@@ -103,6 +103,28 @@ public class DataManagement {
     public static void registerNewUser(String name, String email, String password, String userType, String price, String days, String times, Context context) {
         String FILENAME = "new_users1.txt";
 
+        List<String> allUsers = loadUsers();
+        String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +
+                ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
+                + times + ",tutorRating:" +  "0" + ",studentRating:" + "0" + ",balance:" + "100}" + "\n";
+        allUsers.add(JSONobj);
+
+        BufferedWriter  w = null;
+        try {
+            w = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
+            for (String user : allUsers) {
+                w.write(JSONobj);
+            }
+            w.close();
+        } catch (IOException e) {
+            Log.d("PRINT", e.toString());
+        }
+
+    }
+/*
+    public static void registerNewUser(String name, String email, String password, String userType, String price, String days, String times, Context context) {
+        String FILENAME = "new_users1.txt";
+
 
         String JSONobj = "{ name:" + name + ",email:" + email + ",password:" + password +
                 ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
@@ -118,6 +140,7 @@ public class DataManagement {
             Log.d("PRINT", e.toString());
         }
     }
+    */
 
     // find user by email, used for finding current user
     public static JSONObject findUser(String email) {
@@ -140,6 +163,65 @@ public class DataManagement {
         }
         // return matching json object
         return result;
+    }
+
+    public static void updateBalance (String emailAddress, double newBalance, Context context) {
+        Log.e("Updating Balance", emailAddress);
+        Log.e("Updating Balance", Double.toString(newBalance));
+
+        String FILENAME = "new_users1.txt";
+
+        // get up to date list of allUsers as String
+        List<String> allUsers = loadUsers();
+        List<String> updatedUsers = loadUsers();
+        for (String currentUser : allUsers) {
+            try {
+                JSONObject userJson = new JSONObject(currentUser);
+                if (userJson.get("email").equals(emailAddress)) {
+                    Log.e("Updating Balance", "FOUND " + emailAddress);
+
+                    String name = userJson.getString("name");
+                    String password = userJson.getString("password");
+                    String userType = userJson.getString("userType");
+                    String price = userJson.getString("price");
+                    String days = userJson.getString("days");
+                    String times = userJson.getString("times");
+                    String tutorRating = userJson.getString("tutorRating");
+                    String studentRating = userJson.getString("studentRating");
+                    String balance = Double.toString(newBalance);
+
+                    String JSONobj = "{ name:" + name + ",email:" + emailAddress + ",password:" + password +
+                            ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
+                            + times + ",tutorRating:" + tutorRating + ",studentRating:" + studentRating + ",balance:" + balance + "}" + "\n";
+
+                    updatedUsers.add(JSONobj);
+                } else {
+                    updatedUsers.add(currentUser);
+                }
+            } catch (JSONException e) {
+                Log.e("JSONException", e.getStackTrace().toString());
+            }
+        }
+        // overwrite old file and rewrite all new users
+        BufferedWriter  w = null;
+        try {
+            w = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
+            for (String user : updatedUsers) {
+                Log.e("Adding User", user);
+                w.write(user);
+            }
+            w.close();
+        } catch (IOException e) {
+            Log.e("IOException", e.getStackTrace().toString());
+        }
+
+        // TEST! REMOVE BEFORE SUBMITTING
+        try {
+            Log.e("Resulting Balance " , findUser(emailAddress).getString("balance"));
+        } catch (JSONException e) {
+
+        }
+
     }
 
     public static List<String> loadUsers() {
