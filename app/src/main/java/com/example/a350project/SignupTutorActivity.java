@@ -28,6 +28,7 @@ public class SignupTutorActivity extends AppCompatActivity {
     private String password = "";
     private String userType = "";
     private String price = "";
+    private String qualifications = "~";
     public static Context context;
 
 
@@ -130,13 +131,25 @@ public class SignupTutorActivity extends AppCompatActivity {
                     return;
                 } else {
                     MainActivity.currentUserEmail = email;
-                    DataManagement.registerNewUser(firstName, lastName, email, password, userType, price, days, times, context);
+                    DataManagement.registerNewUser(firstName, lastName, email, password, userType,
+                            price, days, times, qualifications, context);
                     launchMainActivity();
                     finish();
                 }
             }
 
 
+        });
+
+        //button to return to sign in page
+        Button qualifications = (Button) findViewById(R.id.qualifications);
+        qualifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchDialog(v);
+
+
+            }
         });
 
 
@@ -151,6 +164,44 @@ public class SignupTutorActivity extends AppCompatActivity {
         });
     }
 
+
+    private void launchDialog(View v) {
+        Context c = v.getContext();
+
+        LayoutInflater factory = LayoutInflater.from(c);
+        final View textEntryView = factory.inflate(R.layout.qualifications_entry_popup, null);
+        //text_entry is an Layout XML file containing two text field to display in alert dialog
+        final EditText subject = (EditText) textEntryView.findViewById(R.id.enterSubject);
+        final EditText grade = (EditText) textEntryView.findViewById(R.id.enterGrade);
+        subject.setHint("MATH114,CIS110,PHYS140");
+        grade.setHint("A,B+,C,A-");
+
+        final AlertDialog.Builder alert = new AlertDialog.Builder(c);
+
+        AlertDialog dialog = new AlertDialog.Builder(c)
+                .setTitle("Submit Qualifications")
+                .setView(textEntryView)
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Editable subjectsEditable = subject.getText();
+                        String[] subjects = subjectsEditable.toString().split(",");
+
+                        Editable gradesEditable = grade.getText();
+                        String[] grades = gradesEditable.toString().split(",");
+
+                        for (int i = 0; i < subjects.length; i++) {
+                            qualifications += subjects[i] + "-"  + grades[i] + "~";
+                        }
+
+                    }
+
+
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
+    }
 
     // sends you to the main activity after you login
     public void launchMainActivity() {
