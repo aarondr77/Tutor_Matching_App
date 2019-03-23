@@ -16,16 +16,14 @@ import org.json.JSONException;
 
 public class DataManagement {
 
-    private static String sessionDatabase = "Sessions37.txt";
-    private static String userDatabase = "UserDatabase37.txt";
+    private static String sessionDatabase = "Sessions46.txt";
+    private static String userDatabase = "UserDatabase46.txt";
     private static String complaintsDatabase = "ComplaintsFile.txt";
 
     public DataManagement() { }
 
     public static List<SessionObject> loadSessions () {
         String FILENAME = sessionDatabase;
-        //String string = newComplaint.getContent() + "," + newComplaint.getSubmitter() + "," + newComplaint.getStatus() + "," + newComplaint.getTarget();
-
         BufferedReader fos = null;
 
         List<SessionObject> returnVal = new LinkedList<SessionObject>();
@@ -80,6 +78,7 @@ public class DataManagement {
     public static JSONObject addRating(String userEmail, float rating) {
         Log.d("useremail", userEmail);
         JSONObject user = findUser(userEmail);
+        Log.e("user found >>>>>", user.toString());
         try{
             Log.d("all fields" ,user.toString());
             Log.d("new rating", rating + "");
@@ -87,6 +86,7 @@ public class DataManagement {
 
             user.put("rateTotal", user.getDouble("rateTotal") + rating);
             user.put("rateNum", user.getInt("rateNum") + 1);
+            Log.e("reached past rateNUm", Integer.toString(user.getInt("rateNum")));
             user.put("rating", user.getDouble("rateTotal")/user.getInt("rateNum"));
 
             Log.d("current rateTotal", user.getDouble("rateTotal") + "");
@@ -166,8 +166,7 @@ public class DataManagement {
     // find user by email, used for finding current user
     public static JSONObject findUser(String email) {
         List<String> allUsers = loadUsers();
-
-
+        Log.e("FINDING USER...", Integer.toString(allUsers.size()));
         for (String e: allUsers) Log.d("u", e);
 
         JSONObject result = null;
@@ -200,28 +199,41 @@ public class DataManagement {
 
         // get up to date list of allUsers as String
         List<String> allUsers = loadUsers();
+        Log.e("UPDATE RATING", "loading users " + Integer.toString(allUsers.size()));
         List<String> updatedUsers =  new LinkedList<String>();
         for (String currentUser : allUsers) {
             try {
                 JSONObject userJson = new JSONObject(currentUser);
-                if (userJson.get("email").equals(emailAddress)) {
+                if (userJson.getString("email").equals(emailAddress)) {
                     Log.e("Updating Rating", "FOUND " + emailAddress);
 
                     String firstName = userJson.getString("firstName");
+                    Log.e("fuck", "1");
                     String lastName = userJson.getString("lastName");
+                    Log.e("fuck", "2");
                     String password = userJson.getString("password");
+                    Log.e("fuck", "3");
                     String userType = userJson.getString("userType");
+                    Log.e("fuck", "4");
                     String price = userJson.getString("price");
+                    Log.e("fuck", "5");
                     String days = userJson.getString("days");
+                    Log.e("fuck", "6");
                     String times = userJson.getString("times");
+                    Log.e("fuck", "7");
                     String totalCost = userJson.getString("totalCost");
+                    Log.e("fuck", "8");
                     String avgCost = userJson.getString("avgCost");
+                    Log.e("fuck", "9");
                     String rating = Double.toString(newRating);
                     String rateTotal = Double.toString(newRateTotal);
                     String rateNum = Integer.toString(newRateNum);
                     String numSessions = userJson.getString("numSessions");
+                    Log.e("fuck", "10");
                     String balance = userJson.getString("balance");
+                    Log.e("fuck", "11");
                     String qualifications = userJson.getString("qualifications");
+                    Log.e("fuck", "12");
 
                     String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + emailAddress + ",password:" + password +
                             ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
@@ -263,6 +275,7 @@ public class DataManagement {
 
         // get up to date list of allUsers as String
         List<String> allUsers = loadUsers();
+        Log.e("updateBalance", "allUsers.size" +  Integer.toString(allUsers.size()));
         List<String> updatedUsers =  new LinkedList<String>();
         for (String currentUser : allUsers) {
             try {
@@ -281,12 +294,14 @@ public class DataManagement {
                     String avgCost = userJson.getString("avgCost");
                     String rating = userJson.getString("rating");
                     String rateTotal = userJson.getString("rateTotal");
+                    String numSessions = userJson.getString("numSessions");
                     String balance = Double.toString(newBalance);
+                    String rateNum = userJson.getString("rateNum");
                     String qualifications = userJson.getString("qualifications");
 
                     String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + emailAddress + ",password:" + password +
                             ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                            + times + ",rating:" + rating + ",rateTotal:" + rateTotal + ",totalCost:"
+                            + times + ",numSessions:" + numSessions + ",rateNum:" + rateNum + ",rating:" + rating + ",rateTotal:" + rateTotal + ",totalCost:"
                             + totalCost + ",avgCost:" + avgCost + ",balance:" + balance + ",qualifications:" + qualifications + "}";
 
                     updatedUsers.add(JSONobj);
