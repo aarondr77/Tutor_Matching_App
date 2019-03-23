@@ -17,7 +17,7 @@ import org.json.JSONException;
 public class DataManagement {
 
     private static String sessionDatabase = "Sessions10.txt";
-    private static String userDatabase = "UserDatabase15.txt";
+    private static String userDatabase = "UserDatabase16.txt";
     private static String complaintsDatabase = "ComplaintsFile.txt";
 
     public DataManagement() { }
@@ -206,7 +206,7 @@ public class DataManagement {
             w = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
             for (String user : updatedUsers) {
                 Log.e("Adding User", user);
-                w.write(user);
+                w.write(user + "\n");
             }
             w.close();
         } catch (IOException e) {
