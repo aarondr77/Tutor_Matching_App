@@ -16,8 +16,8 @@ import org.json.JSONException;
 
 public class DataManagement {
 
-    private static String sessionDatabase = "Sessions46.txt";
-    private static String userDatabase = "UserDatabase46.txt";
+    private static String sessionDatabase = "Sessions50.txt";
+    private static String userDatabase = "UserDatabase50.txt";
     private static String complaintsDatabase = "ComplaintsFile.txt";
 
     public DataManagement() { }
@@ -267,7 +267,7 @@ public class DataManagement {
     }
 
 
-    public static void updateBalance (String emailAddress, double newBalance, Context context) {
+    public static void updateBalance (String emailAddress, double newBalance, double sessionPrice, Context context) {
         Log.e("Updating Balance", emailAddress);
         Log.e("Updating Balance", Double.toString(newBalance));
 
@@ -287,17 +287,30 @@ public class DataManagement {
                     String lastName = userJson.getString("lastName");
                     String password = userJson.getString("password");
                     String userType = userJson.getString("userType");
-                    String price = userJson.getString("price");
                     String days = userJson.getString("days");
                     String times = userJson.getString("times");
-                    String totalCost = userJson.getString("totalCost");
-                    String avgCost = userJson.getString("avgCost");
                     String rating = userJson.getString("rating");
                     String rateTotal = userJson.getString("rateTotal");
-                    String numSessions = userJson.getString("numSessions");
                     String balance = Double.toString(newBalance);
                     String rateNum = userJson.getString("rateNum");
                     String qualifications = userJson.getString("qualifications");
+                    String price = userJson.getString("price");
+
+                    // update average cost
+                    String totalCost = userJson.getString("totalCost");
+                    String numSessions = userJson.getString("numSessions");
+
+                    double totalCostDouble = Double.parseDouble(totalCost);
+                    totalCostDouble += sessionPrice;
+                    totalCost = Double.toString(totalCostDouble);
+
+                    int numSessionsInt = Integer.parseInt(numSessions);
+                    numSessionsInt ++;
+                    numSessions = Integer.toString(numSessionsInt);
+
+                    double averageCostDouble = totalCostDouble / numSessionsInt;
+                    String avgCost = Double.toString(averageCostDouble);
+
 
                     String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + emailAddress + ",password:" + password +
                             ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
