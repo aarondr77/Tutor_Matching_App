@@ -20,6 +20,7 @@ public class DataManagement {
     private static String userDatabase = "UserDatabase50.txt";
     private static String complaintsDatabase = "ComplaintsFile.txt";
 
+
     public DataManagement() { }
 
     public static List<SessionObject> loadSessions () {
