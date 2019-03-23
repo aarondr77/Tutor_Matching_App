@@ -1,11 +1,17 @@
 package com.example.a350project;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.util.Log;
 import org.json.JSONException;
@@ -102,6 +108,21 @@ public class ProfilePageFragment extends Fragment {
             ((TextView) v.findViewById(R.id.textView16)).setText("Student");
         }
 
+        // dialog for make new session button
+        Button newSessionBtn = (Button) v.findViewById(R.id.newSession);
+        if(currUserPosition.equals("student")) {
+            newSessionBtn.setClickable(false);
+        } else {
+            newSessionBtn.setBackgroundColor(Color.RED);
+            newSessionBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showAddSessionDialog(v.getContext());
+                }
+            });
+        }
+
+
 
         return v;
     }
@@ -110,6 +131,46 @@ public class ProfilePageFragment extends Fragment {
         Log.d("FIND CUR USER", MainActivity.currentUserEmail);
         currUser = DataManagement.findUser(MainActivity.currentUserEmail);
         Log.d("FIND CUR USER", currUser.toString());
+    }
+
+    private void showAddSessionDialog(Context c) {
+
+        LayoutInflater factory = LayoutInflater.from(c);
+        final View textEntryView = factory.inflate(R.layout.new_session_popup, null);
+        //text_entry is an Layout XML file containing two text field to display in alert dialog
+        final EditText subject = (EditText) textEntryView.findViewById(R.id.enterSubject);
+        final EditText date = (EditText) textEntryView.findViewById(R.id.enterDate);
+        final EditText time = (EditText) textEntryView.findViewById(R.id.enterTime);
+        final EditText duration = (EditText) textEntryView.findViewById(R.id.enterDuration);
+        final EditText price = (EditText) textEntryView.findViewById(R.id.enterPrice);
+        subject.setHint("MATH114");
+        duration.setHint("60");
+        price.setHint("20");
+        date.setHint("3/15/19");
+        time.setHint("3PM");
+
+        AlertDialog dialog = new AlertDialog.Builder(c)
+                .setTitle("Enter New Session Info:")
+                .setView(textEntryView)
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try{
+                            SessionFunctions.addSession(currUser.getString("firstName"), "unclaimed",
+                                    MainActivity.currentUserEmail, "unclaimed",
+                                    String.valueOf(subject.getText()), String.valueOf(time.getText()) + " " +
+                                    String.valueOf(date.getText()), String.valueOf(duration.getText()),
+                                    String.valueOf(price.getText()), "pending");
+                        } catch(JSONException e) {
+                            Log.e("jsonerror", e.getMessage());
+                        }
+                    }
+
+
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
     }
 
 
