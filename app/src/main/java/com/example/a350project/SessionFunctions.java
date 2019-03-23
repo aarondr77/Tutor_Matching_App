@@ -14,9 +14,10 @@ public class SessionFunctions {
 
     public static void loadSessions() {
         allSessions.clear();
-        allSessions.addAll(DataManagement.loadSessions());
-        Log.e("LOAD SESSIONS", "CALLED ADD SESSION: SIZE = " + allSessions.size());
-        Log.e("LOAD SESSIONS ", "Size: " + allSessions);
+        List<SessionObject> loadedSessions = DataManagement.loadSessions();
+        if (loadedSessions != null) {
+            allSessions.addAll(loadedSessions);
+        }
     }
 
 
