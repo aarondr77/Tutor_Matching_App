@@ -17,7 +17,7 @@ import org.json.JSONException;
 public class DataManagement {
 
     private static String sessionDatabase = "Sessions14.txt";
-    private static String userDatabase = "UserDatabase24.txt";
+    private static String userDatabase = "UserDatabase57.txt";
     private static String complaintsDatabase = "ComplaintsFile.txt";
 
     public DataManagement() { }
@@ -116,13 +116,17 @@ public class DataManagement {
 
     }
 
-    public static void registerNewUser(String firstName, String lastName, String email, String password, String userType, String price, String days, String times, Context context) {
+    public static void registerNewUser(String firstName, String lastName, String email,
+                                       String password, String userType, String price, String days,
+                                       String times, String qualifications, Context context) {
         String FILENAME = userDatabase;
 
         List<String> allUsers = loadUsers();
         String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + email + ",password:" + password +
                 ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                + times + ",numSessions:" + "0" + ",totalCost:" + "0" +  ",avgCost:"  + "0" +",rateNum:" + "0" + ",rateTotal:" + "0" + ",rating:" +  "0"  + ",balance:" + "100}";
+                + times + ",numSessions:" + "0" + ",totalCost:" + "0" +  ",avgCost:"  + "0" +
+                ",rateNum:" + "0" + ",rateTotal:" + "0" + ",rating:" +  "0"  + ",balance:" + "100" +
+                ",qualifications:" + qualifications + "}";
 
         allUsers.add(JSONobj);
 
@@ -163,6 +167,8 @@ public class DataManagement {
     // find user by email, used for finding current user
     public static JSONObject findUser(String email) {
         List<String> allUsers = loadUsers();
+
+
         for (String e: allUsers) Log.d("u", e);
 
         JSONObject result = null;
@@ -216,10 +222,13 @@ public class DataManagement {
                     String rateNum = Integer.toString(newRateNum);
                     String numSessions = userJson.getString("numSessions");
                     String balance = userJson.getString("balance");
+                    String qualifications = userJson.getString("qualifications");
 
                     String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + emailAddress + ",password:" + password +
                             ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                            + times + ",numSessions:"+ numSessions + ",rateNum:" + rateNum + ",rating:" + rating + ",rateTotal:" + rateTotal + ",totalCost:" + totalCost + ",avgCost:" + avgCost + ",balance:" + balance + "}";
+                            + times + ",numSessions:"+ numSessions + ",rateNum:" + rateNum + ",rating:"
+                            + rating + ",rateTotal:" + rateTotal + ",totalCost:" + totalCost + ",avgCost:"
+                            + avgCost + ",balance:" + balance + ",qualifications:" + qualifications + "}";
 
                     updatedUsers.add(JSONobj);
                 } else {
@@ -274,10 +283,12 @@ public class DataManagement {
                     String rating = userJson.getString("rating");
                     String rateTotal = userJson.getString("rateTotal");
                     String balance = Double.toString(newBalance);
+                    String qualifications = userJson.getString("qualifications");
 
                     String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + emailAddress + ",password:" + password +
                             ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                            + times + ",rating:" + rating + ",rateTotal:" + rateTotal + ",totalCost:" + totalCost + ",avgCost:" + avgCost + ",balance:" + balance + "}";
+                            + times + ",rating:" + rating + ",rateTotal:" + rateTotal + ",totalCost:"
+                            + totalCost + ",avgCost:" + avgCost + ",balance:" + balance + ",qualifications:" + qualifications + "}";
 
                     updatedUsers.add(JSONobj);
                 } else {
