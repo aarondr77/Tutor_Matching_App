@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.example.a350project.SessionListFragment.OnListFragmentInteractionListener;
 import com.example.a350project.dummy.DummyContent.DummyItem;
 
+import org.json.JSONException;
+
 import java.util.List;
 
 /**
@@ -71,6 +73,15 @@ public class MySessionRecyclerViewAdapter extends RecyclerView.Adapter<MySession
 
         holder.mItem = mValues.get(position);
         holder.Tutor.setText(mValues.get(position).getTutor());
+        try{
+            String positionTitle = ProfilePageFragment.currUser.getString("userType");
+            Log.d("position title", positionTitle);
+            if(positionTitle.equals("tutor")) {
+                holder.Tutor.setText(mValues.get(position).getStudent());
+            }
+        } catch(JSONException e) {
+            Log.e("jsonerror", e.getMessage());
+        }
         holder.Subject.setText(mValues.get(position).getSubject());
         holder.Time.setText(mValues.get(position).getDate());
         holder.Duration.setText(mValues.get(position).getDuration());

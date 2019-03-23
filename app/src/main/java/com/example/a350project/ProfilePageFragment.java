@@ -85,15 +85,24 @@ public class ProfilePageFragment extends Fragment {
         final TextView userPosition = (TextView) v.findViewById(R.id.positionView);
         final TextView userAvgCost = (TextView) v.findViewById(R.id.avgCostView);
         Log.d("user", currUser.toString());
+        String currUserPosition = "student";
         try {
             userBalance.setText("Balance: " + currUser.getDouble("balance"));
             userName.setText("Name: " + currUser.getString("firstName") + " " + currUser.getString("lastName"));
             userPosition.setText("Position: " + currUser.getString("userType"));
             userRating.setText("Rating: " + currUser.getDouble("tutorRating"));
             userAvgCost.setText("Average Session Cost: " + currUser.getDouble("avgCost"));
+            currUserPosition = currUser.getString("userType");
+            Log.d("curr pos in try is>>>>", currUserPosition);
         } catch(JSONException e) {
             Log.e("tag4", "Error getting user info");
         }
+        Log.d("curr pos is>>>>", currUserPosition);
+        if(currUserPosition.equals("tutor")) {
+            ((TextView) v.findViewById(R.id.textView16)).setText("Student");
+        }
+
+
         return v;
     }
 

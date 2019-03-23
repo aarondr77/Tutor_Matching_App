@@ -107,7 +107,7 @@ public class DataManagement {
         List<String> allUsers = loadUsers();
         String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + email + ",password:" + password +
                 ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                + times + ",tutorRating:" +  "0" + ",studentRating:" + "0" + ",balance:" + "100}" + "\n";
+                + times + ",numSessions:" + "0" + ",totalCost:" + "0" +  ",avgCost:"  + "0" + ",tutorRating:" +  "0" + ",studentRating:" + "0" + ",balance:" + "100}" + "\n";
         allUsers.add(JSONobj);
 
         BufferedWriter  w = null;

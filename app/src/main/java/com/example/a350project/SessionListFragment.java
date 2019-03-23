@@ -10,8 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.a350project.dummy.DummyContent.DummyItem;
+
+import org.json.JSONException;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -51,7 +54,6 @@ public class SessionListFragment extends Fragment {
     }
 
     public void updateSessions() {
-        // TODO: make function to find all sessions for currUser
         SessionFunctions.loadSessions();
         sessionList = SessionFunctions.getMySessions();
         Log.d("Called", "Called SessionListFragment");
