@@ -1,6 +1,7 @@
 package com.example.a350project;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -66,5 +67,16 @@ public class MainActivity extends AppCompatActivity implements ComplaintsListFra
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+    }
+
+    public void logout() {
+        currentUserEmail = "";
+        launchLoginActivity();
+    }
+
+    public void launchLoginActivity() {
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 }
