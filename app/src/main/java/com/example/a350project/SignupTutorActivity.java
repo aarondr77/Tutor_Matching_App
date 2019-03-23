@@ -139,23 +139,6 @@ public class SignupTutorActivity extends AppCompatActivity {
 
         });
 
-        /*Button qualificationsButton = (Button) findViewById(R.id.qualifications);
-        qualificationsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // custom dialog
-                final Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.dialog);
-                dialog.setTitle("Enter Your Subject Qualifications");
-            }
-        });*/
-
-        Button btn = (Button) findViewById(R.id.qualifications);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
 
 
         //button to return to sign in page
@@ -167,6 +150,7 @@ public class SignupTutorActivity extends AppCompatActivity {
             }
         });
     }
+
 
     // sends you to the main activity after you login
     public void launchMainActivity() {
