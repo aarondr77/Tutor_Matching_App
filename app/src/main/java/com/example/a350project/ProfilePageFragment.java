@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 
 /**
@@ -113,6 +114,7 @@ public class ProfilePageFragment extends Fragment {
         Button newSessionBtn = (Button) v.findViewById(R.id.newSession);
         if(currUserPosition.equals("student")) {
             newSessionBtn.setClickable(false);
+            newSessionBtn.setVisibility(View.INVISIBLE);
         } else {
             newSessionBtn.setBackgroundColor(Color.RED);
             newSessionBtn.setOnClickListener(new View.OnClickListener() {
@@ -122,9 +124,6 @@ public class ProfilePageFragment extends Fragment {
                 }
             });
         }
-
-
-
         return v;
     }
 
@@ -144,33 +143,58 @@ public class ProfilePageFragment extends Fragment {
         final EditText time = (EditText) textEntryView.findViewById(R.id.enterTime);
         final EditText duration = (EditText) textEntryView.findViewById(R.id.enterDuration);
         final EditText price = (EditText) textEntryView.findViewById(R.id.enterPrice);
+        final TextView errorMessage = (TextView) textEntryView.findViewById(R.id.errorMessage);
         subject.setHint("MATH114");
         duration.setHint("60");
         price.setHint("20");
         date.setHint("3/15/19");
         time.setHint("3PM");
+        if(String.valueOf(subject.getText()).equals("") || String.valueOf(duration.getText()).equals("")
+                || String.valueOf(time.getText()).equals("") || String.valueOf(date.getText()).equals("")
+                || String.valueOf(price.getText()).equals("")) {
+            errorMessage.setText("Please fill out all fields");
+        }
 
-        AlertDialog dialog = new AlertDialog.Builder(c)
+        final AlertDialog dialog = new AlertDialog.Builder(c)
                 .setTitle("Enter New Session Info:")
                 .setView(textEntryView)
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Add", null)
+                .setNegativeButton("Cancel", null)
+                .create();
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+
+                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
+
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        try{
-                            SessionFunctions.addSession(currUser.getString("firstName"), "unclaimed",
-                                    MainActivity.currentUserEmail, "unclaimed",
-                                    String.valueOf(subject.getText()), String.valueOf(time.getText()) + " " +
-                                    String.valueOf(date.getText()), String.valueOf(duration.getText()),
-                                    String.valueOf(price.getText()), "pending");
-                        } catch(JSONException e) {
-                            Log.e("jsonerror", e.getMessage());
+
+                    public void onClick(View view) {
+                        boolean fieldNotCompleted = String.valueOf(subject.getText()).equals("") || String.valueOf(duration.getText()).equals("")
+                                || String.valueOf(time.getText()).equals("") || String.valueOf(date.getText()).equals("")
+                                || String.valueOf(price.getText()).equals("");
+                        //Dismiss once everything is OK.
+                        if(!fieldNotCompleted) {
+                            try {
+                                SessionFunctions.addSession(currUser.getString("firstName"), "unclaimed",
+                                        MainActivity.currentUserEmail, "unclaimed",
+                                        String.valueOf(subject.getText()), String.valueOf(time.getText()) + " " +
+                                                String.valueOf(date.getText()), String.valueOf(duration.getText()),
+                                        String.valueOf(price.getText()), "pending");
+                                insertNestedFragment();
+                            } catch (JSONException e) {
+                                Log.e("jsonerror", e.getMessage());
+                            }
+                            dialog.dismiss();
                         }
                     }
 
-
-                })
-                .setNegativeButton("Cancel", null)
-                .create();
+                });
+            }
+        });
         dialog.show();
     }
 

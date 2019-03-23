@@ -16,8 +16,10 @@ import org.json.JSONException;
 
 public class DataManagement {
 
-    private static String sessionDatabase = "Sessions14.txt";
-    private static String userDatabase = "UserDatabase57.txt";
+
+    private static String sessionDatabase = "Sessions32.txt";
+    private static String userDatabase = "UserDatabase32.txt";
+
     private static String complaintsDatabase = "ComplaintsFile.txt";
 
     public DataManagement() { }
@@ -35,13 +37,12 @@ public class DataManagement {
 
             while (fos.ready()) {
                 String curLine = fos.readLine();
-                Log.e("READ VALUE", curLine.split(":")[0]);
-                Log.e("ALL VALUE", curLine);
+                Log.e("READ VALUE", curLine.split(":")[1]);
+                Log.e("ALL VALUE LOADING...", curLine);
                 returnVal.add(new SessionObject(curLine.split(":")[0], curLine.split(":")[1], curLine.split(":")[2], curLine.split(":")[3],
                         curLine.split(":")[4], curLine.split(":")[5], curLine.split(":")[6], curLine.split(":")[7], curLine.split(":")[8],  curLine.split(":")[9]));
             }
             fos.close();
-
 
             return returnVal;
         } catch (IOException e) {
@@ -56,7 +57,7 @@ public class DataManagement {
         Log.e("WRITE SESSION SIZE: ", Integer.toString(writeSession.size()));
         try {
             BufferedWriter fos = null;
-            fos = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
+            fos = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_APPEND)));
 
             for (SessionObject currentSession : writeSession) {
                 String sessionString = currentSession.getSessionID() + ":" + currentSession.getTutor() + ":" + currentSession.getStudent() + ":" + currentSession.getTutorEmail() + ":" + currentSession.getStudentEmail() + ":" +  currentSession.getSubject() + ":" +

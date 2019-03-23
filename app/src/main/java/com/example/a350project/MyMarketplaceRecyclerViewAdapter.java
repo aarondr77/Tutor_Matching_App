@@ -2,6 +2,7 @@ package com.example.a350project;
 
 
 import android.graphics.Color;
+import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.content.Context;
 import android.widget.Toast;
 import com.example.a350project.MarketplaceListFragment.OnListFragmentInteractionListener;
 import com.example.a350project.dummy.DummyContent.DummyItem;
+
+import org.json.JSONException;
 
 import java.util.List;
 
@@ -81,27 +84,42 @@ public class MyMarketplaceRecyclerViewAdapter extends RecyclerView.Adapter<MyMar
         final String sessionID = mValues.get(position).getSessionID();
         final String tutorEmail = mValues.get(position).getTutorEmail();
         final double price = Double.parseDouble(mValues.get(position).getPrice());
-
-        holder.ClaimButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double studentBalance = MarketplaceFunctions.getBalance(MainActivity.currentUserEmail);
-                Log.e("onBindViewHolder", "tutorEmail " + tutorEmail);
-                double tutorBalance = MarketplaceFunctions.getBalance(tutorEmail);
-                if (studentBalance >= price) {
-                    DataManagement.updateBalance(MainActivity.currentUserEmail, studentBalance - price, context);
-                    DataManagement.updateBalance(tutorEmail, studentBalance + price, context);
-                    Log.i("CLAIM CLICKED", sessionID);
-                    SessionFunctions.claimSession(sessionID);
-                    holder.ClaimButton.setClickable(false);
-                    holder.ClaimButton.setTextSize(15);
-                    holder.ClaimButton.setBackgroundColor(Color.rgb(0,153,0));
-                    holder.ClaimButton.setText(":)");
-                } else {
-                    Toast.makeText(context, "Insufficient funds in account", Toast.LENGTH_SHORT).show();
+        String userType = "";
+        try {
+            userType = ProfilePageFragment.currUser.getString("userType");
+        } catch (JSONException e) {
+            Log.e("JSONerror", e.getMessage());
+        }
+        if (userType.equals("student")) {
+            holder.ClaimButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    double studentBalance = MarketplaceFunctions.getBalance(MainActivity.currentUserEmail);
+                    Log.e("onBindViewHolder", "tutorEmail " + tutorEmail);
+                    double tutorBalance = MarketplaceFunctions.getBalance(tutorEmail);
+                    if (studentBalance >= price) {
+                        DataManagement.updateBalance(MainActivity.currentUserEmail, studentBalance - price, context);
+                        DataManagement.updateBalance(tutorEmail, studentBalance + price, context);
+                        Log.i("CLAIM CLICKED", sessionID);
+                        try {
+                            SessionFunctions.claimSession(sessionID, ProfilePageFragment.currUser.getString("firstName"));
+                        } catch (JSONException e) {
+                            Log.e("JSONerror ", e.getMessage());
+                        }
+                        holder.ClaimButton.setClickable(false);
+                        holder.ClaimButton.setTextSize(15);
+                        holder.ClaimButton.setBackgroundColor(Color.rgb(0,153,0));
+                        holder.ClaimButton.setText(":)");
+                    } else {
+                        Toast.makeText(context, "Insufficient funds in account", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            holder.ClaimButton.setClickable(false);
+            holder.ClaimButton.setVisibility(View.INVISIBLE);
+        }
+
 
         String pos = Integer.toString(position);
         Log.d("ADAPTER", pos);
