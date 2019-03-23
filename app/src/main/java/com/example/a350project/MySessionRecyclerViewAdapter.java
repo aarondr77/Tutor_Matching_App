@@ -121,6 +121,11 @@ public class MySessionRecyclerViewAdapter extends RecyclerView.Adapter<MySession
             Log.d("position title", positionTitle);
             if(positionTitle.equals("tutor")) {
                 holder.Tutor.setText(mValues.get(position).getStudent());
+                // can't rate if unclaimed
+                if(mValues.get(position).getStudent().equals("unclaimed")) {
+                    holder.rateButton.setClickable(false);
+                    holder.rateButton.setVisibility(View.INVISIBLE);
+                }
             }
         } catch(JSONException e) {
             Log.e("jsonerror", e.getMessage());
