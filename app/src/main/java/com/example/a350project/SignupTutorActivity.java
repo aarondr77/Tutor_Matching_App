@@ -120,7 +120,7 @@ public class SignupTutorActivity extends AppCompatActivity {
                 }
 
                 //check if the fields are value
-                if (email.equals("") || password.equals("") || firstName.equals("") || lastName.equals("")) {
+                if (email.equals("") || password.equals("") || firstName.equals("") || lastName.equals("") || price.equals("")) {
                     TextView error = (TextView) findViewById(R.id.error_tutor_signup);
                     error.setText("Please fill out all fields");
                     return;
