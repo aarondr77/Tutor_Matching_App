@@ -3,14 +3,8 @@ package com.example.a350project;
 import android.content.Context;
 import android.util.Log;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -22,8 +16,8 @@ import org.json.JSONException;
 
 public class DataManagement {
 
-    private static String sessionDatabase = "Sessions5.txt";
-    private static String userDatabase = "UserDatabase9.txt";
+    private static String sessionDatabase = "Sessions10.txt";
+    private static String userDatabase = "UserDatabase15.txt";
     private static String complaintsDatabase = "ComplaintsFile.txt";
 
     public DataManagement() { }
@@ -107,14 +101,14 @@ public class DataManagement {
         List<String> allUsers = loadUsers();
         String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + email + ",password:" + password +
                 ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                + times + ",tutorRating:" +  "0" + ",studentRating:" + "0" + ",balance:" + "100}" + "\n";
+                + times + ",tutorRating:" +  "0" + ",studentRating:" + "0" + ",balance:" + "100}";
         allUsers.add(JSONobj);
 
         BufferedWriter  w = null;
         try {
             w = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
             for (String user : allUsers) {
-                w.write(JSONobj);
+                w.write(user + "\n");
             }
             w.close();
         } catch (IOException e) {

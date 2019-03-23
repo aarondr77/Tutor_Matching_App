@@ -53,6 +53,8 @@ public class  LoginActivity extends AppCompatActivity {
                     return;
                 } else {
                     List<String> users = DataManagement.loadUsers();
+                    Log.e("LoginActivity", "users" + users);
+                    Log.e("LoginActivity", "users.length" + users.size());
                     for (String user: users) {
                         String[] info = user.split(",");
                         String userEmail = info[2].split(":")[1];
