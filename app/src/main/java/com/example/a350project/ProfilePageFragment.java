@@ -121,9 +121,6 @@ public class ProfilePageFragment extends Fragment {
                 }
             });
         }
-
-
-
         return v;
     }
 
@@ -166,8 +163,6 @@ public class ProfilePageFragment extends Fragment {
                             Log.e("jsonerror", e.getMessage());
                         }
                     }
-
-
                 })
                 .setNegativeButton("Cancel", null)
                 .create();

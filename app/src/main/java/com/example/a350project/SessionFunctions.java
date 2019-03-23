@@ -11,23 +11,17 @@ public class SessionFunctions {
     public SessionFunctions() { }
 
     public static void loadSessions() {
-        // add Fake Starting Data to Database
-        addSession("Petra","Terry", "petra@gmail.com", "terry@gmail.com","MATH114","3PM 03/25/19", "60", "15", "pending");
-        addSession("Aaron","Terry", "aaron@gmail.com", "terry@gmail.com", "MATH114","3PM 03/25/19", "60", "15", "pending");
-        addSession("Chris","Terry", "chris@gmail.com", "terry@gmail.com", "MATH240","3PM 03/25/19", "60", "15", "pending");
-        addSession("Petra","unclaimed", "petra@gmail.com", "unclaimed", "MATH114","3PM 03/25/19", "60", "15", "pending");
-        addSession("Aaron","unclaimed", "aaron@gmail.com", "unclaimed","MATH114","3PM 03/25/19", "60", "15", "pending");
-        addSession("Chris","unclaimed", "chris@gmail.com", "unclaimed", "MATH240","3PM 03/25/19", "60", "15", "pending");
-
-        Log.e("LOAD SESSIONS", "CALLED ADD SESSION: SIZE = " + allSessions.size());
         allSessions.clear();
         allSessions.addAll(DataManagement.loadSessions());
-        Log.e("LOAD SESSIONS ", "Size: " + allSessions.size());
+        Log.e("LOAD SESSIONS", "CALLED ADD SESSION: SIZE = " + allSessions.size());
+        Log.e("LOAD SESSIONS ", "Size: " + allSessions);
     }
 
 
     public static void addSession(String tutor, String student, String tutorEmail, String studentEmail, String subject, String date, String duration, String price, String status) {
         String sessionID = Double.toString(Math.random());
+        allSessions.clear();
+        allSessions.addAll(DataManagement.loadSessions());
         Log.e("RANDOM SESSION ID: ", sessionID);
         Log.e("session id>>>", subject + " sessionID:" + sessionID);
         SessionObject newSession = new SessionObject(sessionID, tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status);
