@@ -29,6 +29,7 @@ public class SessionFunctions {
     public static void addSession(String tutor, String student, String tutorEmail, String studentEmail, String subject, String date, String duration, String price, String status) {
         String sessionID = Double.toString(Math.random());
         Log.e("RANDOM SESSION ID: ", sessionID);
+        Log.e("session id>>>", subject + " sessionID:" + sessionID);
         SessionObject newSession = new SessionObject(sessionID, tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status);
         allSessions.add(newSession);
         Log.e("SESSION ADDED ", newSession.getSessionID());

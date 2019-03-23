@@ -54,7 +54,6 @@ public class SessionListFragment extends Fragment {
     }
 
     public void updateSessions() {
-        SessionFunctions.loadSessions();
         sessionList = SessionFunctions.getMySessions();
         Log.d("Called", "Called SessionListFragment");
 
