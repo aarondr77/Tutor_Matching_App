@@ -17,7 +17,7 @@ import org.json.JSONException;
 public class DataManagement {
 
     private static String sessionDatabase = "Sessions10.txt";
-    private static String userDatabase = "UserDatabase16.txt";
+    private static String userDatabase = "UserDatabase20.txt";
     private static String complaintsDatabase = "ComplaintsFile.txt";
 
     public DataManagement() { }
@@ -148,9 +148,14 @@ public class DataManagement {
         try{
             // loop through users and find matching email
             for(String user : allUsers) {
+                Log.d("input_email", email);
+
                 JSONObject userJson = new JSONObject(user);
+                Log.e("findUser", "currentEmail " + userJson.getString("email"));
                 if (userJson.getString("email").equals(email)) {
                     result = userJson;
+                } else {
+
                 }
             }
         } catch(JSONException e) {
@@ -169,7 +174,6 @@ public class DataManagement {
         // get up to date list of allUsers as String
         List<String> allUsers = loadUsers();
         List<String> updatedUsers =  new LinkedList<String>();
-        Log.e("Updating Balance", "allUsers Size " + allUsers.size());
         for (String currentUser : allUsers) {
             try {
                 JSONObject userJson = new JSONObject(currentUser);
@@ -189,7 +193,7 @@ public class DataManagement {
 
                     String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + emailAddress + ",password:" + password +
                             ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                            + times + ",tutorRating:" + tutorRating + ",studentRating:" + studentRating + ",balance:" + balance + "}" + "\n";
+                            + times + ",tutorRating:" + tutorRating + ",studentRating:" + studentRating + ",balance:" + balance + "}";
 
                     updatedUsers.add(JSONobj);
                 } else {
