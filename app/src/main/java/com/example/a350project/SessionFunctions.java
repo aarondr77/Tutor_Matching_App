@@ -44,13 +44,12 @@ public class SessionFunctions {
         Log.e("ADD SESSIONS ", "Size: " + allSessions.size());
         DataManagement.writeSession(MainActivity.context , allSessions);
     }
-    public static void claimSession(String targetSessionID) {
+    public static void claimSession(String targetSessionID, String student) {
         for (SessionObject currentSession : allSessions) {
             if (currentSession.getSessionID().equals(targetSessionID)) {
                 Log.i("FOUND SESSION TO CLAIM", "FOUND");
                 allSessions.remove(currentSession);
-                // CHANGE CURRENT USER EMAIL TO CURRENT USER NAME
-                addSession(targetSessionID, currentSession.getTutor(), MainActivity.currentUserEmail, currentSession.getTutorEmail(), currentSession.getStudentEmail(), currentSession.getSubject(), currentSession.getDate(), currentSession.getDuration(), currentSession.getPrice(), "accepted");
+                addSession(targetSessionID, currentSession.getTutor(), student, currentSession.getTutorEmail(), MainActivity.currentUserEmail, currentSession.getSubject(), currentSession.getDate(), currentSession.getDuration(), currentSession.getPrice(), "accepted");
                 break;
             }
         }

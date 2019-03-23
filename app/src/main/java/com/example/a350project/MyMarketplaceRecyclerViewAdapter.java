@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.example.a350project.MarketplaceListFragment.OnListFragmentInteractionListener;
 import com.example.a350project.dummy.DummyContent.DummyItem;
 
+import org.json.JSONException;
+
 import java.util.List;
 
 /**
@@ -92,7 +94,11 @@ public class MyMarketplaceRecyclerViewAdapter extends RecyclerView.Adapter<MyMar
                     DataManagement.updateBalance(MainActivity.currentUserEmail, studentBalance - price, context);
                     DataManagement.updateBalance(tutorEmail, studentBalance + price, context);
                     Log.i("CLAIM CLICKED", sessionID);
-                    SessionFunctions.claimSession(sessionID);
+                    try {
+                        SessionFunctions.claimSession(sessionID, ProfilePageFragment.currUser.getString("firstName"));
+                    } catch (JSONException e) {
+                        Log.e("JSONerror ", e.getMessage());
+                    }
                     holder.ClaimButton.setClickable(false);
                     holder.ClaimButton.setTextSize(15);
                     holder.ClaimButton.setBackgroundColor(Color.rgb(0,153,0));
