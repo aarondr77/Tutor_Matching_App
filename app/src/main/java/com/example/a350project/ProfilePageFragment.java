@@ -155,12 +155,17 @@ public class ProfilePageFragment extends Fragment {
             errorMessage.setText("Please fill out all fields");
         }
 
+
+
+
+
         final AlertDialog dialog = new AlertDialog.Builder(c)
                 .setTitle("Enter New Session Info:")
                 .setView(textEntryView)
                 .setPositiveButton("Add", null)
                 .setNegativeButton("Cancel", null)
                 .create();
+
 
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
 
@@ -173,11 +178,34 @@ public class ProfilePageFragment extends Fragment {
                     @Override
 
                     public void onClick(View view) {
+                        // get subjects
+                        boolean qualified = false;
+                        try{
+                            String qualificationString = currUser.getString("qualifications");
+                            Log.e("qualification string", qualificationString);
+                            if(qualificationString.equals("~")) {
+                                qualified = true;
+                            }
+                            String[] qualificationArray = qualificationString.split("~");
+                            for(int i = 1; i < qualificationArray.length; i++) {
+
+                                String subjectQual = qualificationArray[i].split("-")[0];
+                                Log.e("qualarrayelement", subjectQual);
+                                Log.e("subjectinput", subject.getText().toString());
+                                if(subject.getText().toString().toLowerCase().equals(subjectQual.toLowerCase())) {
+                                    qualified = true;
+                                }
+                            }
+
+                        } catch(JSONException e) {
+                            Log.e("get subject error", e.getMessage());
+                        }
                         boolean fieldNotCompleted = String.valueOf(subject.getText()).equals("") || String.valueOf(duration.getText()).equals("")
                                 || String.valueOf(time.getText()).equals("") || String.valueOf(date.getText()).equals("")
                                 || String.valueOf(price.getText()).equals("");
+                        boolean notQualified = !String.valueOf(subject.getText()).equals("") && !qualified;
                         //Dismiss once everything is OK.
-                        if(!fieldNotCompleted) {
+                        if(!fieldNotCompleted && !notQualified) {
                             try {
                                 SessionFunctions.addSession(currUser.getString("firstName"), "unclaimed",
                                         MainActivity.currentUserEmail, "unclaimed",
@@ -189,6 +217,14 @@ public class ProfilePageFragment extends Fragment {
                                 Log.e("jsonerror", e.getMessage());
                             }
                             dialog.dismiss();
+                        }
+                        if(!String.valueOf(subject.getText()).equals("") && !qualified) {
+                            errorMessage.setText("You are not qualified.");
+                        }
+                        if(String.valueOf(subject.getText()).equals("") || String.valueOf(duration.getText()).equals("")
+                                || String.valueOf(time.getText()).equals("") || String.valueOf(date.getText()).equals("")
+                                || String.valueOf(price.getText()).equals("")) {
+                            errorMessage.setText("Please fill out all fields");
                         }
                     }
 
