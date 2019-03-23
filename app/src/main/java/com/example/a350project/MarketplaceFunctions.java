@@ -31,6 +31,7 @@ public class MarketplaceFunctions {
 
     public static double getBalance (String emailAddress) {
         JSONObject user = DataManagement.findUser(emailAddress);
+        Log.e("getBalance", "user: " + user);
         double balance = -1;
         try {
             balance = user.getDouble("balance");

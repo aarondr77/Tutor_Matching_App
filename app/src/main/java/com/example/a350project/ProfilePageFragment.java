@@ -107,7 +107,9 @@ public class ProfilePageFragment extends Fragment {
     }
 
     public void findCurrentUser() {
+        Log.d("FIND CUR USER", MainActivity.currentUserEmail);
         currUser = DataManagement.findUser(MainActivity.currentUserEmail);
+        Log.d("FIND CUR USER", currUser.toString());
     }
 
     private void insertNestedFragment() {

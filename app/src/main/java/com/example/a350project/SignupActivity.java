@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.content.Context;
 import android.widget.TextView;
 
-
+import java.util.List;
 
 
 public class SignupActivity extends AppCompatActivity {
@@ -113,6 +113,10 @@ public class SignupActivity extends AppCompatActivity {
                     TextView error = (TextView) findViewById(R.id.error_student_signup);
                     error.setText("Please fill out all fields");
                     return;
+                } else if (DataManagement.userExists(email)) {
+                    TextView error = (TextView) findViewById(R.id.error_student_signup);
+                    error.setText("The email you chose is taken");
+                    return;
                 } else {
                     MainActivity.currentUserEmail = email;
                     DataManagement.registerNewUser(firstName, lastName, email, password, userType,"0", days, times, context);
@@ -133,7 +137,9 @@ public class SignupActivity extends AppCompatActivity {
         });
 
 
+
     }
+
 
     // sends you to the main activity after you login
     public void launchMainActivity() {

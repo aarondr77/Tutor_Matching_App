@@ -79,15 +79,18 @@ public class MyMarketplaceRecyclerViewAdapter extends RecyclerView.Adapter<MyMar
         holder.Time.setText(mValues.get(position).getDate());
         holder.Duration.setText(mValues.get(position).getDuration());
         final String sessionID = mValues.get(position).getSessionID();
+        final String tutorEmail = mValues.get(position).getTutorEmail();
         final double price = Double.parseDouble(mValues.get(position).getPrice());
 
         holder.ClaimButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                double userBalance = MarketplaceFunctions.getBalance(MainActivity.currentUserEmail);
-                // I NEED TO GET THE EMAIL ADDRESS OF THE TUTOR AND UPDATE HIS BALANCE ALSO!!
-                if (userBalance >= price) {
-                    DataManagement.updateBalance(MainActivity.currentUserEmail, userBalance - price, context);
+                double studentBalance = MarketplaceFunctions.getBalance(MainActivity.currentUserEmail);
+                Log.e("onBindViewHolder", "tutorEmail " + tutorEmail);
+                double tutorBalance = MarketplaceFunctions.getBalance(tutorEmail);
+                if (studentBalance >= price) {
+                    DataManagement.updateBalance(MainActivity.currentUserEmail, studentBalance - price, context);
+                    DataManagement.updateBalance(tutorEmail, studentBalance + price, context);
                     Log.i("CLAIM CLICKED", sessionID);
                     SessionFunctions.claimSession(sessionID);
                     holder.ClaimButton.setClickable(false);

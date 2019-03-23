@@ -120,9 +120,13 @@ public class SignupTutorActivity extends AppCompatActivity {
                 }
 
                 //check if the fields are value
-                if (email.equals("") || password.equals("") || firstName.equals("") || lastName.equals("")) {
+                if (email.equals("") || password.equals("") || firstName.equals("") || lastName.equals("") || price.equals("")) {
                     TextView error = (TextView) findViewById(R.id.error_tutor_signup);
                     error.setText("Please fill out all fields");
+                    return;
+                } else if (DataManagement.userExists(email)) {
+                    TextView error = (TextView) findViewById(R.id.error_tutor_signup);
+                    error.setText("The email you chose is taken");
                     return;
                 } else {
                     MainActivity.currentUserEmail = email;
@@ -135,23 +139,6 @@ public class SignupTutorActivity extends AppCompatActivity {
 
         });
 
-        /*Button qualificationsButton = (Button) findViewById(R.id.qualifications);
-        qualificationsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // custom dialog
-                final Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.dialog);
-                dialog.setTitle("Enter Your Subject Qualifications");
-            }
-        });*/
-
-        Button btn = (Button) findViewById(R.id.qualifications);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
 
 
         //button to return to sign in page
@@ -163,6 +150,7 @@ public class SignupTutorActivity extends AppCompatActivity {
             }
         });
     }
+
 
     // sends you to the main activity after you login
     public void launchMainActivity() {

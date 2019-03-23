@@ -3,14 +3,8 @@ package com.example.a350project;
 import android.content.Context;
 import android.util.Log;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -22,8 +16,8 @@ import org.json.JSONException;
 
 public class DataManagement {
 
-    private static String sessionDatabase = "Sessions5.txt";
-    private static String userDatabase = "UserDatabase9.txt";
+    private static String sessionDatabase = "Sessions10.txt";
+    private static String userDatabase = "UserDatabase20.txt";
     private static String complaintsDatabase = "ComplaintsFile.txt";
 
     public DataManagement() { }
@@ -107,14 +101,15 @@ public class DataManagement {
         List<String> allUsers = loadUsers();
         String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + email + ",password:" + password +
                 ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                + times + ",numSessions:" + "0" + ",totalCost:" + "0" +  ",avgCost:"  + "0" + ",tutorRating:" +  "0" + ",studentRating:" + "0" + ",balance:" + "100}" + "\n";
+                + times + ",numSessions:" + "0" + ",totalCost:" + "0" +  ",avgCost:"  + "0" + ",tutorRating:" +  "0" + ",studentRating:" + "0" + ",balance:" + "100}";
+
         allUsers.add(JSONobj);
 
         BufferedWriter  w = null;
         try {
             w = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
             for (String user : allUsers) {
-                w.write(JSONobj);
+                w.write(user + "\n");
             }
             w.close();
         } catch (IOException e) {
@@ -154,9 +149,14 @@ public class DataManagement {
         try{
             // loop through users and find matching email
             for(String user : allUsers) {
+                Log.d("input_email", email);
+
                 JSONObject userJson = new JSONObject(user);
+                Log.e("findUser", "currentEmail " + userJson.getString("email"));
                 if (userJson.getString("email").equals(email)) {
                     result = userJson;
+                } else {
+
                 }
             }
         } catch(JSONException e) {
@@ -175,7 +175,6 @@ public class DataManagement {
         // get up to date list of allUsers as String
         List<String> allUsers = loadUsers();
         List<String> updatedUsers =  new LinkedList<String>();
-        Log.e("Updating Balance", "allUsers Size " + allUsers.size());
         for (String currentUser : allUsers) {
             try {
                 JSONObject userJson = new JSONObject(currentUser);
@@ -195,7 +194,7 @@ public class DataManagement {
 
                     String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + emailAddress + ",password:" + password +
                             ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                            + times + ",tutorRating:" + tutorRating + ",studentRating:" + studentRating + ",balance:" + balance + "}" + "\n";
+                            + times + ",tutorRating:" + tutorRating + ",studentRating:" + studentRating + ",balance:" + balance + "}";
 
                     updatedUsers.add(JSONobj);
                 } else {
@@ -212,7 +211,7 @@ public class DataManagement {
             w = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
             for (String user : updatedUsers) {
                 Log.e("Adding User", user);
-                w.write(user);
+                w.write(user + "\n");
             }
             w.close();
         } catch (IOException e) {
@@ -281,5 +280,15 @@ public class DataManagement {
         }
 
         return null;
+    }
+
+    public static boolean userExists(String email) {
+        List<String> allUsers = DataManagement.loadUsers();
+        for (String u: allUsers) {
+            String[] info = u.split(",");
+            String e = info[2].split(":")[1];
+            if (email.equals(e)) return true;
+        }
+        return false;
     }
 }
