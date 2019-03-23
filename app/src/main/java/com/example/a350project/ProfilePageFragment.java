@@ -90,7 +90,7 @@ public class ProfilePageFragment extends Fragment {
             userBalance.setText("Balance: " + currUser.getDouble("balance"));
             userName.setText("Name: " + currUser.getString("firstName") + " " + currUser.getString("lastName"));
             userPosition.setText("Position: " + currUser.getString("userType"));
-            userRating.setText("Rating: " + currUser.getDouble("tutorRating"));
+            userRating.setText("Rating: " + currUser.getDouble("rating"));
             userAvgCost.setText("Average Session Cost: " + currUser.getDouble("avgCost"));
             currUserPosition = currUser.getString("userType");
             Log.d("curr pos in try is>>>>", currUserPosition);
@@ -111,6 +111,7 @@ public class ProfilePageFragment extends Fragment {
         currUser = DataManagement.findUser(MainActivity.currentUserEmail);
         Log.d("FIND CUR USER", currUser.toString());
     }
+
 
     private void insertNestedFragment() {
         Fragment childFragment = SessionListFragment.newInstance(1);
