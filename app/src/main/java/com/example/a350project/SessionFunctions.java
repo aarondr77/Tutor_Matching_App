@@ -2,6 +2,8 @@ package com.example.a350project;
 
 import android.util.Log;
 import java.util.LinkedList;
+import java.util.List;
+
 
 
 public class SessionFunctions {
@@ -12,16 +14,20 @@ public class SessionFunctions {
 
     public static void loadSessions() {
         allSessions.clear();
-        allSessions.addAll(DataManagement.loadSessions());
-        Log.e("LOAD SESSIONS", "CALLED ADD SESSION: SIZE = " + allSessions.size());
-        Log.e("LOAD SESSIONS ", "Size: " + allSessions);
+        List<SessionObject> loadedSessions = DataManagement.loadSessions();
+        if (loadedSessions != null) {
+            allSessions.addAll(loadedSessions);
+        }
     }
 
 
     public static void addSession(String tutor, String student, String tutorEmail, String studentEmail, String subject, String date, String duration, String price, String status) {
         String sessionID = Double.toString(Math.random());
         allSessions.clear();
-        allSessions.addAll(DataManagement.loadSessions());
+        List<SessionObject> loadedSessions = DataManagement.loadSessions();
+        if (loadedSessions != null) {
+            allSessions.addAll(loadedSessions);
+        }
         Log.e("RANDOM SESSION ID: ", sessionID);
         Log.e("session id>>>", subject + " sessionID:" + sessionID);
         SessionObject newSession = new SessionObject(sessionID, tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status);

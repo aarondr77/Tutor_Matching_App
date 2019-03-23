@@ -120,7 +120,16 @@ public class SignupTutorActivity extends AppCompatActivity {
                     times += "evening-";
                 }
 
-                //check if the fields are value
+                //check that the price is a double
+                try {
+                    Double.parseDouble(price);
+                } catch (NumberFormatException e) {
+                    TextView error = (TextView) findViewById(R.id.error_tutor_signup);
+                    error.setText("Please enter a numerical value for minimum price");
+                    return;
+                }
+
+                //check if the fields are filled out
                 if (email.equals("") || password.equals("") || firstName.equals("") || lastName.equals("") || price.equals("")) {
                     TextView error = (TextView) findViewById(R.id.error_tutor_signup);
                     error.setText("Please fill out all fields");
@@ -130,6 +139,12 @@ public class SignupTutorActivity extends AppCompatActivity {
                     error.setText("The email you chose is taken");
                     return;
                 } else {
+                    if (!checkQualifications()) {
+                        TextView error = (TextView) findViewById(R.id.error_tutor_signup);
+                        error.setText("Please re-enter qualifications in the specified format");
+                        qualifications = "~";
+                        return;
+                    }
                     MainActivity.currentUserEmail = email;
                     DataManagement.registerNewUser(firstName, lastName, email, password, userType,
                             price, days, times, qualifications, context);
@@ -147,8 +162,6 @@ public class SignupTutorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 launchDialog(v);
-
-
             }
         });
 
@@ -162,6 +175,21 @@ public class SignupTutorActivity extends AppCompatActivity {
                 launchLoginActivity();
             }
         });
+    }
+
+    private boolean checkQualifications() {
+        Log.d("q", qualifications);
+        String[] q = qualifications.split("~");
+
+        if (q.length == 0) return true;
+        qualifications = qualifications.replaceAll(" ", "");
+        for (int i = 0; i < qualifications.length(); i++) {
+            int c = (int) qualifications.charAt(i);
+            if (!(c >= 48 && c <= 57) && !(c >= 65 && c <= 90) && !(c >= 97 && c <= 122) && c != 44 && c != 45 && c != 126) {
+                return false;
+            }
+        }
+        return true;
     }
 
 

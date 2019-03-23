@@ -16,10 +16,9 @@ import org.json.JSONException;
 
 public class DataManagement {
 
-
-    private static String sessionDatabase = "Sessions32.txt";
-    private static String userDatabase = "UserDatabase32.txt";
-    private static String complaintsDatabase = "ComplaintsFile.txt";
+    private static String sessionDatabase = "Sessions00.txt";
+    private static String userDatabase = "UserDatabase00.txt";
+    private static String complaintsDatabase = "ComplaintsFile5.txt";
 
     public DataManagement() { }
 
