@@ -17,7 +17,7 @@ import org.json.JSONException;
 public class DataManagement {
 
     private static String sessionDatabase = "Sessions10.txt";
-    private static String userDatabase = "UserDatabase20.txt";
+    private static String userDatabase = "UserDatabase21.txt";
     private static String complaintsDatabase = "ComplaintsFile.txt";
 
     public DataManagement() { }
@@ -78,6 +78,29 @@ public class DataManagement {
     }
 
 
+    public static double addRating(String userEmail, float rating) {
+        Log.d("useremail", userEmail);
+        JSONObject user = findUser(userEmail);
+        double result = 0;
+        try{
+            Log.d("all fields" ,user.toString());
+            Log.d("new rating", rating + "");
+
+
+            user.put("rateTotal", user.getDouble("rateTotal") + rating);
+            user.put("numSessions", user.getInt("numSessions") + 1);
+            user.put("rating", user.getDouble("rateTotal")/user.getInt("numSessions"));
+
+            Log.d("current rateTotal", user.getDouble("rateTotal") + "");
+            Log.d("rating after", user.getDouble("rateTotal")/user.getInt("numSessions") + "");
+            result = user.getDouble("rateTotal")/user.getInt("numSessions");
+        } catch(JSONException e) {
+            Log.e("jsonerror", e.getMessage());
+        }
+
+        return result;
+
+    }
 
     public static void writeComplaint(Context context, ComplaintsObject newComplaint) {
 
@@ -101,7 +124,7 @@ public class DataManagement {
         List<String> allUsers = loadUsers();
         String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + email + ",password:" + password +
                 ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                + times + ",numSessions:" + "0" + ",totalCost:" + "0" +  ",avgCost:"  + "0" + ",tutorRating:" +  "0" + ",studentRating:" + "0" + ",balance:" + "100}";
+                + times + ",numSessions:" + "0" + ",totalCost:" + "0" +  ",avgCost:"  + "0" + ",rateTotal:" + "0" + ",rating:" +  "0"  + ",balance:" + "100}";
 
         allUsers.add(JSONobj);
 
@@ -166,6 +189,62 @@ public class DataManagement {
         return result;
     }
 
+    public static void updateRating (String emailAddress, double newRating, Context context) {
+        Log.e("Updating Rating", emailAddress);
+        Log.e("Updating Rating", Double.toString(newRating));
+
+        String FILENAME = userDatabase;
+
+        // get up to date list of allUsers as String
+        List<String> allUsers = loadUsers();
+        List<String> updatedUsers =  new LinkedList<String>();
+        for (String currentUser : allUsers) {
+            try {
+                JSONObject userJson = new JSONObject(currentUser);
+                if (userJson.get("email").equals(emailAddress)) {
+                    Log.e("Updating Rating", "FOUND " + emailAddress);
+
+                    String firstName = userJson.getString("firstName");
+                    String lastName = userJson.getString("lastName");
+                    String password = userJson.getString("password");
+                    String userType = userJson.getString("userType");
+                    String price = userJson.getString("price");
+                    String days = userJson.getString("days");
+                    String times = userJson.getString("times");
+                    String rating = Double.toString(newRating);
+                    String rateTotal = userJson.getString("rateTotal");
+                    String balance = userJson.getString("balance");
+
+                    String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + emailAddress + ",password:" + password +
+                            ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
+                            + times + ",rating:" + rating + ",rateTotal:" + rateTotal + ",balance:" + balance + "}";
+
+                    updatedUsers.add(JSONobj);
+                } else {
+                    updatedUsers.add(currentUser);
+                }
+            } catch (JSONException e) {
+                Log.e("JSONException", e.getStackTrace().toString());
+            }
+        }
+        // overwrite old file and rewrite all new users
+        BufferedWriter  w = null;
+        Log.e("Updating Rating", "updatedUsers Size " + updatedUsers.size());
+        try {
+            w = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
+            for (String user : updatedUsers) {
+                Log.e("Adding User", user);
+                w.write(user + "\n");
+            }
+            w.close();
+        } catch (IOException e) {
+            Log.e("IOException", e.getStackTrace().toString());
+        }
+
+
+    }
+
+
     public static void updateBalance (String emailAddress, double newBalance, Context context) {
         Log.e("Updating Balance", emailAddress);
         Log.e("Updating Balance", Double.toString(newBalance));
@@ -188,13 +267,13 @@ public class DataManagement {
                     String price = userJson.getString("price");
                     String days = userJson.getString("days");
                     String times = userJson.getString("times");
-                    String tutorRating = userJson.getString("tutorRating");
-                    String studentRating = userJson.getString("studentRating");
+                    String rating = userJson.getString("rating");
+                    String rateTotal = userJson.getString("rateTotal");
                     String balance = Double.toString(newBalance);
 
                     String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + emailAddress + ",password:" + password +
                             ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                            + times + ",tutorRating:" + tutorRating + ",studentRating:" + studentRating + ",balance:" + balance + "}";
+                            + times + ",rating:" + rating + ",rateTotal:" + rateTotal + ",balance:" + balance + "}";
 
                     updatedUsers.add(JSONobj);
                 } else {
