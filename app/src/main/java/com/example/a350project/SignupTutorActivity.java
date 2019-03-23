@@ -182,6 +182,7 @@ public class SignupTutorActivity extends AppCompatActivity {
                 .setTitle("Submit Qualifications")
                 .setView(textEntryView)
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Editable subjectsEditable = subject.getText();
