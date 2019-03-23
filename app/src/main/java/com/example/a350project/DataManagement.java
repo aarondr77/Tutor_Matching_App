@@ -17,7 +17,7 @@ import org.json.JSONException;
 public class DataManagement {
 
     private static String sessionDatabase = "Sessions10.txt";
-    private static String userDatabase = "UserDatabase21.txt";
+    private static String userDatabase = "UserDatabase24.txt";
     private static String complaintsDatabase = "ComplaintsFile.txt";
 
     public DataManagement() { }
@@ -78,27 +78,25 @@ public class DataManagement {
     }
 
 
-    public static double addRating(String userEmail, float rating) {
+    public static JSONObject addRating(String userEmail, float rating) {
         Log.d("useremail", userEmail);
         JSONObject user = findUser(userEmail);
-        double result = 0;
         try{
             Log.d("all fields" ,user.toString());
             Log.d("new rating", rating + "");
 
 
             user.put("rateTotal", user.getDouble("rateTotal") + rating);
-            user.put("numSessions", user.getInt("numSessions") + 1);
-            user.put("rating", user.getDouble("rateTotal")/user.getInt("numSessions"));
+            user.put("rateNum", user.getInt("rateNum") + 1);
+            user.put("rating", user.getDouble("rateTotal")/user.getInt("rateNum"));
 
             Log.d("current rateTotal", user.getDouble("rateTotal") + "");
-            Log.d("rating after", user.getDouble("rateTotal")/user.getInt("numSessions") + "");
-            result = user.getDouble("rateTotal")/user.getInt("numSessions");
+            Log.d("rating after", user.getDouble("rateTotal")/user.getInt("rateNum") + "");
         } catch(JSONException e) {
             Log.e("jsonerror", e.getMessage());
         }
 
-        return result;
+        return user;
 
     }
 
@@ -124,7 +122,7 @@ public class DataManagement {
         List<String> allUsers = loadUsers();
         String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + email + ",password:" + password +
                 ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                + times + ",numSessions:" + "0" + ",totalCost:" + "0" +  ",avgCost:"  + "0" + ",rateTotal:" + "0" + ",rating:" +  "0"  + ",balance:" + "100}";
+                + times + ",numSessions:" + "0" + ",totalCost:" + "0" +  ",avgCost:"  + "0" +",rateNum:" + "0" + ",rateTotal:" + "0" + ",rating:" +  "0"  + ",balance:" + "100}";
 
         allUsers.add(JSONobj);
 
@@ -189,7 +187,7 @@ public class DataManagement {
         return result;
     }
 
-    public static void updateRating (String emailAddress, double newRating, Context context) {
+    public static void updateRating (String emailAddress, double newRating, double newRateTotal, int newRateNum, Context context) {
         Log.e("Updating Rating", emailAddress);
         Log.e("Updating Rating", Double.toString(newRating));
 
@@ -211,13 +209,17 @@ public class DataManagement {
                     String price = userJson.getString("price");
                     String days = userJson.getString("days");
                     String times = userJson.getString("times");
+                    String totalCost = userJson.getString("totalCost");
+                    String avgCost = userJson.getString("avgCost");
                     String rating = Double.toString(newRating);
-                    String rateTotal = userJson.getString("rateTotal");
+                    String rateTotal = Double.toString(newRateTotal);
+                    String rateNum = Integer.toString(newRateNum);
+                    String numSessions = userJson.getString("numSessions");
                     String balance = userJson.getString("balance");
 
                     String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + emailAddress + ",password:" + password +
                             ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                            + times + ",rating:" + rating + ",rateTotal:" + rateTotal + ",balance:" + balance + "}";
+                            + times + ",numSessions:"+ numSessions + ",rateNum:" + rateNum + ",rating:" + rating + ",rateTotal:" + rateTotal + ",totalCost:" + totalCost + ",avgCost:" + avgCost + ",balance:" + balance + "}";
 
                     updatedUsers.add(JSONobj);
                 } else {
@@ -267,13 +269,15 @@ public class DataManagement {
                     String price = userJson.getString("price");
                     String days = userJson.getString("days");
                     String times = userJson.getString("times");
+                    String totalCost = userJson.getString("totalCost");
+                    String avgCost = userJson.getString("avgCost");
                     String rating = userJson.getString("rating");
                     String rateTotal = userJson.getString("rateTotal");
                     String balance = Double.toString(newBalance);
 
                     String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + emailAddress + ",password:" + password +
                             ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                            + times + ",rating:" + rating + ",rateTotal:" + rateTotal + ",balance:" + balance + "}";
+                            + times + ",rating:" + rating + ",rateTotal:" + rateTotal + ",totalCost:" + totalCost + ",avgCost:" + avgCost + ",balance:" + balance + "}";
 
                     updatedUsers.add(JSONobj);
                 } else {

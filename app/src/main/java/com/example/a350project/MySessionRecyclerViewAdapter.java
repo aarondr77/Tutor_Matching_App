@@ -19,6 +19,7 @@ import com.example.a350project.SessionListFragment.OnListFragmentInteractionList
 import com.example.a350project.dummy.DummyContent.DummyItem;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -89,9 +90,15 @@ public class MySessionRecyclerViewAdapter extends RecyclerView.Adapter<MySession
                 .setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Double newRating = DataManagement.addRating(ratedPersonEmail, rating.getRating());
-                        DataManagement.updateRating(ratedPersonEmail, newRating, c);
-
+                        JSONObject newUser = DataManagement.addRating(ratedPersonEmail, rating.getRating());
+                        try{
+                            Double newRating = newUser.getDouble("rating");
+                            Double newRateTotal = newUser.getDouble("rateTotal");
+                            Integer newRateNum = newUser.getInt("rateNum");
+                            DataManagement.updateRating(ratedPersonEmail, newRating, newRateTotal, newRateNum, c);
+                        } catch(JSONException e) {
+                            Log.e("jsonerror", e.getMessage());
+                        }
                     }
 
 
