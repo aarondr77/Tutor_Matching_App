@@ -8,6 +8,10 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+
 import com.example.a350project.dummy.DummyContent;
 
 public class MainActivity extends AppCompatActivity implements ComplaintsListFragment.OnListFragmentInteractionListener, MarketplaceListFragment.OnListFragmentInteractionListener, SessionListFragment.OnListFragmentInteractionListener {
@@ -56,6 +60,13 @@ public class MainActivity extends AppCompatActivity implements ComplaintsListFra
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Remove title bar
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+
         setContentView(R.layout.activity_main);
 
         ft.replace(R.id.frame_container, ProfilePageFragment.newInstance("", ""));
@@ -69,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements ComplaintsListFra
 
     }
 
-    public void logout() {
+    public void logOutButtonClick(View v) {
         currentUserEmail = "";
         launchLoginActivity();
     }

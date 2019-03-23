@@ -7,12 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-     <FrameLayout
+    <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="416dp"
-        android:layout_height="671dp"
+        android:layout_height="654dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginBottom="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:layout_editor_absoluteX="-5dp" />
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logOutButton" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
@@ -25,5 +29,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/navigation" />
+
+    <Button
+        android:id="@+id/logOutButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="412dp"
+        android:layout_height="43dp"
+        android:text="Log Out"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
