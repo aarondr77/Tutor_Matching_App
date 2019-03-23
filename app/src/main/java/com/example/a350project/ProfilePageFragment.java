@@ -161,6 +161,7 @@ public class ProfilePageFragment extends Fragment {
                                     String.valueOf(subject.getText()), String.valueOf(time.getText()) + " " +
                                     String.valueOf(date.getText()), String.valueOf(duration.getText()),
                                     String.valueOf(price.getText()), "pending");
+                            insertNestedFragment();
                         } catch(JSONException e) {
                             Log.e("jsonerror", e.getMessage());
                         }
