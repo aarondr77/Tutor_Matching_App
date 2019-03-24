@@ -4,8 +4,6 @@ import android.util.Log;
 import java.util.LinkedList;
 import java.util.List;
 
-
-
 public class SessionFunctions {
 
     private static LinkedList<SessionObject> allSessions = new LinkedList<SessionObject>();
@@ -38,14 +36,27 @@ public class SessionFunctions {
     }
 
     public static void addSession(String sessionID, String tutor, String student, String tutorEmail, String studentEmail, String subject, String date, String duration, String price, String status) {
+        // remove the session to update
+        for (SessionObject currentSession : allSessions) {
+            if (currentSession.getSessionID().equals(sessionID)) {
+                Log.e("addSession", "removing" + sessionID);
+                allSessions.remove(currentSession);
+            }
+        }
         SessionObject newSession = new SessionObject(sessionID, tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status);
         allSessions.add(newSession);
-        Log.e("SESSION ADDED ", newSession.getSessionID());
+
+        Log.e("SESSION ADDED ", allSessions.toString());
         Log.e("ADD SESSIONS ", "Size: " + allSessions.size());
         DataManagement.writeSession(MainActivity.context , allSessions);
+
+        // JUST FOR TESTING
+        loadSessions();
+        Log.e("ADD SESSIONS ", "Size: " + allSessions.size());
     }
     public static void claimSession(String targetSessionID, String student) {
         for (SessionObject currentSession : allSessions) {
+
             if (currentSession.getSessionID().equals(targetSessionID)) {
                 Log.i("FOUND SESSION TO CLAIM", "FOUND");
                 allSessions.remove(currentSession);

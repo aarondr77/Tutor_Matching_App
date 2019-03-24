@@ -16,8 +16,8 @@ import org.json.JSONException;
 
 public class DataManagement {
 
-    private static String sessionDatabase = "Sessions50.txt";
-    private static String userDatabase = "UserDatabase50.txt";
+    private static String sessionDatabase = "Sessions66.txt";
+    private static String userDatabase = "UserDatabase66.txt";
     private static String complaintsDatabase = "ComplaintsFile.txt";
 
 
@@ -54,7 +54,7 @@ public class DataManagement {
         Log.e("WRITE SESSION SIZE: ", Integer.toString(writeSession.size()));
         try {
             BufferedWriter fos = null;
-            fos = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_APPEND)));
+            fos = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
 
             for (SessionObject currentSession : writeSession) {
                 String sessionString = currentSession.getSessionID() + ":" + currentSession.getTutor() + ":" + currentSession.getStudent() + ":" + currentSession.getTutorEmail() + ":" + currentSession.getStudentEmail() + ":" +  currentSession.getSubject() + ":" +
