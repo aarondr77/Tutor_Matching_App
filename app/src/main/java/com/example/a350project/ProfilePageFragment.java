@@ -112,7 +112,6 @@ public class ProfilePageFragment extends Fragment {
             newSessionBtn.setClickable(false);
             newSessionBtn.setVisibility(View.INVISIBLE);
         } else {
-            newSessionBtn.setBackgroundColor(Color.RED);
             newSessionBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

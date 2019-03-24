@@ -1,10 +1,13 @@
 package com.example.a350project;
 
 import android.content.Context;
+import android.support.annotation.MainThread;
 import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -18,7 +21,7 @@ public class DataManagement {
 
     private static String sessionDatabase = "Sessions67.txt";
     private static String userDatabase = "UserDatabase67.txt";
-    private static String complaintsDatabase = "ComplaintsFile.txt";
+    private static String complaintsDatabase = "ComplaintsFile1.txt";
 
 
     public DataManagement() { }
@@ -278,6 +281,9 @@ public class DataManagement {
 
         BufferedReader w;
 
+
+
+
         List<String> tempList = new LinkedList<>();
 
         try {
@@ -301,12 +307,19 @@ public class DataManagement {
         List<ComplaintsObject> tempList = new LinkedList<ComplaintsObject>();
         List<ComplaintsObject> returnVal = new LinkedList<ComplaintsObject>();
 
+
+        //File complaints = MainActivity.context.getDir(complaintsDatabase, Context.MODA);
+        //Log.d("DATA MANAG", MainActivity.context.getDir(complaintsDatabase, Context.MODE_PRIVATE);
+        //complaints.delete();
+
         try {
             fos = new BufferedReader(new InputStreamReader(MainActivity.context.openFileInput(FILENAME)));
 
             while (fos.ready()) {
                 String curLine = fos.readLine();
-                tempList.add(new ComplaintsObject(curLine.split(":")[0], curLine.split(":")[1], curLine.split(":")[2], curLine.split(":")[3]));
+                Log.d("DATA MANAG", String.valueOf(curLine));
+                if (curLine.split(":").length == 4)
+                    tempList.add(new ComplaintsObject(curLine.split(":")[0], curLine.split(":")[1], curLine.split(":")[2], curLine.split(":")[3]));
             }
             fos.close();
 
