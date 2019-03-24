@@ -215,6 +215,12 @@ public class SignupTutorActivity extends AppCompatActivity {
                         Editable gradesEditable = grade.getText();
                         String[] grades = gradesEditable.toString().split(",");
 
+                        if (subjectsEditable.toString().equals("") || gradesEditable.toString().equals("")) {
+                            TextView error = (TextView) findViewById(R.id.error_tutor_signup);
+                            error.setText("Please fill all fields");
+                            return;
+                        }
+
                         for (int i = 0; i < subjects.length; i++) {
                             qualifications += subjects[i] + "-"  + grades[i] + "~";
                         }
