@@ -6,7 +6,6 @@ import android.text.Editable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.EditText;
-
 import android.widget.TextView;
 import android.view.View;
 import android.widget.Button;

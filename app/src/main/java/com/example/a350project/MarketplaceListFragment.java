@@ -52,7 +52,6 @@ public class MarketplaceListFragment extends Fragment {
 
         sessionList = MarketplaceFunctions.getFoundSessions();
         Log.d("Called", "Called MarketplaceListFragment");
-
     }
 
     @Override
@@ -70,12 +69,8 @@ public class MarketplaceListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Log.d("CALLED", "Called onCreateView of MarketplaceListFragment!");
-
         View view = inflater.inflate(R.layout.fragment_marketplace_list, container, false);
-
         MyMarketplaceRecyclerViewAdapter mAdapter;
-
         this.updateSessions();
 
         // Set the adapter
@@ -89,7 +84,6 @@ public class MarketplaceListFragment extends Fragment {
             }
             mAdapter = new MyMarketplaceRecyclerViewAdapter(sessionList, mListener, context);
             recyclerView.setAdapter( mAdapter);
-            Log.d("COMPLISTFRAG", "Creating new adapter");
         }
 
         return view;

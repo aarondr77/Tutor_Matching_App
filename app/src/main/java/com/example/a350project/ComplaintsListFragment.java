@@ -10,9 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.a350project.dummy.DummyContent.DummyItem;
-
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -92,7 +90,6 @@ public class ComplaintsListFragment extends Fragment {
             }
             mAdapter = new MyComplaintsRecyclerViewAdapter(complaintsList, mListener);
             recyclerView.setAdapter( mAdapter);
-            Log.d("COMPLISTFRAG", "Creating new adapter");
         }
 
         return view;

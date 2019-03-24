@@ -6,16 +6,10 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
 import com.example.a350project.dummy.DummyContent.DummyItem;
-
-import org.json.JSONException;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -56,8 +50,6 @@ public class SessionListFragment extends Fragment {
     public void updateSessions() {
         SessionFunctions.loadSessions();
         sessionList = SessionFunctions.getMySessions();
-        Log.d("Called", "Called SessionListFragment");
-
     }
 
     @Override
@@ -74,8 +66,6 @@ public class SessionListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        Log.d("CALLED", "Called onCreateView of SessionListFragment!");
 
         View view = inflater.inflate(R.layout.fragment_session_list, container, false);
 
@@ -94,7 +84,6 @@ public class SessionListFragment extends Fragment {
             }
             mAdapter = new MySessionRecyclerViewAdapter(sessionList, mListener, context);
             recyclerView.setAdapter( mAdapter);
-            Log.d("COMPLISTFRAG", "Creating new adapter");
         }
 
         return view;

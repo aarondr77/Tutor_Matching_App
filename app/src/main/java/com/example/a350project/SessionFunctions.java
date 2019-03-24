@@ -26,12 +26,8 @@ public class SessionFunctions {
         if (loadedSessions != null) {
             allSessions.addAll(loadedSessions);
         }
-        Log.e("RANDOM SESSION ID: ", sessionID);
-        Log.e("session id>>>", subject + " sessionID:" + sessionID);
         SessionObject newSession = new SessionObject(sessionID, tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status);
         allSessions.add(newSession);
-        Log.e("SESSION ADDED ", newSession.getSessionID());
-        Log.e("ADD SESSIONS ", "Size: " + allSessions.size());
         DataManagement.writeSession(MainActivity.context , allSessions);
     }
 
@@ -45,14 +41,8 @@ public class SessionFunctions {
         }
         SessionObject newSession = new SessionObject(sessionID, tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status);
         allSessions.add(newSession);
-
-        Log.e("SESSION ADDED ", allSessions.toString());
-        Log.e("ADD SESSIONS ", "Size: " + allSessions.size());
         DataManagement.writeSession(MainActivity.context , allSessions);
 
-        // JUST FOR TESTING
-        loadSessions();
-        Log.e("ADD SESSIONS ", "Size: " + allSessions.size());
     }
     public static void claimSession(String targetSessionID, String student) {
         for (SessionObject currentSession : allSessions) {

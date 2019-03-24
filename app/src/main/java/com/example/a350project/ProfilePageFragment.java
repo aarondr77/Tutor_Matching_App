@@ -90,7 +90,6 @@ public class ProfilePageFragment extends Fragment {
         final TextView userRating = (TextView) v.findViewById(R.id.ratingView);
         final TextView userPosition = (TextView) v.findViewById(R.id.positionView);
         final TextView userAvgCost = (TextView) v.findViewById(R.id.avgCostView);
-        Log.d("user", currUser.toString());
         String currUserPosition = "student";
         try {
             userBalance.setText("Balance: " + currUser.getDouble("balance"));
@@ -103,7 +102,6 @@ public class ProfilePageFragment extends Fragment {
         } catch(JSONException e) {
             Log.e("tag4", "Error getting user info");
         }
-        Log.d("curr pos is>>>>", currUserPosition);
         if(currUserPosition.equals("tutor")) {
             ((TextView) v.findViewById(R.id.textView16)).setText("Student");
         }
@@ -126,9 +124,7 @@ public class ProfilePageFragment extends Fragment {
     }
 
     public void findCurrentUser() {
-        Log.d("FIND CUR USER", MainActivity.currentUserEmail);
         currUser = DataManagement.findUser(MainActivity.currentUserEmail);
-        Log.d("FIND CUR USER", currUser.toString());
     }
 
     private void showAddSessionDialog(Context c) {
@@ -180,7 +176,6 @@ public class ProfilePageFragment extends Fragment {
                         boolean qualified = false;
                         try{
                             String qualificationString = currUser.getString("qualifications");
-                            Log.e("qualification string", qualificationString);
                             if(qualificationString.equals("~")) {
                                 qualified = true;
                             }
@@ -188,8 +183,6 @@ public class ProfilePageFragment extends Fragment {
                             for(int i = 1; i < qualificationArray.length; i++) {
 
                                 String subjectQual = qualificationArray[i].split("-")[0];
-                                Log.e("qualarrayelement", subjectQual);
-                                Log.e("subjectinput", subject.getText().toString());
                                 if(subject.getText().toString().toLowerCase().equals(subjectQual.toLowerCase())) {
                                     qualified = true;
                                 }
@@ -245,8 +238,6 @@ public class ProfilePageFragment extends Fragment {
     // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        // Setup any handles to view objects here
-        // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
         insertNestedFragment();
     }
 

@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -162,7 +161,6 @@ public class ComplaintsFragment extends Fragment {
         complaintsList = (ComplaintsListFragment)childFragment;
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.complaint_child_fragment_container, childFragment).addToBackStack(null).commit();
-        Log.d("Loading Child", "Here");
     }
 
     /**

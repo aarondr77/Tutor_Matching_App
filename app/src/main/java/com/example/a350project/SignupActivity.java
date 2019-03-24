@@ -11,8 +11,6 @@ import android.widget.EditText;
 import android.content.Context;
 import android.widget.TextView;
 
-import java.util.List;
-
 
 public class SignupActivity extends AppCompatActivity {
 

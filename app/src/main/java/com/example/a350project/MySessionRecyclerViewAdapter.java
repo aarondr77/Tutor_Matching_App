@@ -3,21 +3,16 @@ package com.example.a350project;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
 import com.example.a350project.SessionListFragment.OnListFragmentInteractionListener;
 import com.example.a350project.dummy.DummyContent.DummyItem;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,8 +62,6 @@ public class MySessionRecyclerViewAdapter extends RecyclerView.Adapter<MySession
         mValues = items;
         mListener = listener;
         this.context = context;
-        Log.d("CALLED", "CALLED MySessionRecyclerViewAdapter");
-
     }
 
     @Override
@@ -134,19 +127,6 @@ public class MySessionRecyclerViewAdapter extends RecyclerView.Adapter<MySession
         holder.Time.setText(mValues.get(position).getDate());
         holder.Duration.setText(mValues.get(position).getDuration());
 
-/*
-        final String descr = mValues.get(position).getDescription();
-        holder.dscrButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            AlertDialog.Builder ad = new AlertDialog.Builder(context);
-            ad.setTitle("Description");
-            ad.setMessage(descr);
-            AlertDialog dialog = ad.create();
-            ad.show();
-        }
-*/
-
         final String finalPositionTitle = positionTitle;
         holder.rateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,8 +143,6 @@ public class MySessionRecyclerViewAdapter extends RecyclerView.Adapter<MySession
 
 
         String pos = Integer.toString(position);
-        Log.d("ADAPTER", pos);
-        Log.d("ADAPTER", "Binding");
     }
 
 
@@ -172,11 +150,4 @@ public class MySessionRecyclerViewAdapter extends RecyclerView.Adapter<MySession
     public int getItemCount() {
         return mValues.size();
     }
-/*
-    public void updateData(List<ComplaintsObject> newList) {
-        mValues.clear();
-        mValues.addAll(newList);
-        this.notifyDataSetChanged();
-    }
-*/
 }
