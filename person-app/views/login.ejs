@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+<<<<<<< HEAD
 	 <title>Zoobook</title>
+=======
+	 <title>ADR Administation App</title>
+>>>>>>> login
 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	 <style type="text/css">
 		 body{
 		   padding-top: 50px;
 		   padding-bottom: 50px;
+<<<<<<< HEAD
 		   background-color: #FBFBFF;
+=======
+		   background-color: #155137;
+>>>>>>> login
 		}
 		 .login-box {
 			 max-width: 330px;
@@ -19,6 +27,12 @@
 		 .login-box .form-control {
 		 	margin-bottom: 10px;
 		 }
+<<<<<<< HEAD
+=======
+		 .button {
+  	 		background-color: #ce1271;
+		 }
+>>>>>>> login
 		 .intro {
 		 	margin: 0 auto;
 		 	text-align: center;
@@ -32,24 +46,51 @@
 			padding: 10px;
 		 }
 	 </style>
+<<<<<<< HEAD
 </head>
 <body>
 <div class="intro">
 <h1>Welcome to administration app. Please login.</h1>
+=======
+
+	 <style>
+	 	h1 {
+        color: #FBFBFF;
+			 }
+
+		</style>
+</head>
+<body>
+<div class="intro">
+<h1 color = "white" >Welcome to the admin app!</h1>
+<h1 color = "white" >Please login</h1>
+
+>>>>>>> login
 </div>
 <div class="login-box">
 	 <h4>Login</h4>
 	 <form method="post" action="/checklogin">
 	 <input type="text" name="email" size="20" class="form-control" placeholder="Enter email here">
 	 <input type="password" name="password" size="20" class="form-control" placeholder="Enter password here"><br>
+<<<<<<< HEAD
 	 <input type="submit" value="Login" class="btn btn-lg btn-primary btn-block"><br>
 	</form>
 </div>
+=======
+	 <input type="submit" value="Login" class="btn button btn-lg btn-primary btn-block"><br>
+	</form>
+</div>
+
+>>>>>>> login
 <div class="error">
 	 <%if (error_message != null) { %>
 		<font color="red">
 		<br> Error: <%= error_message %><p>
 	<% } %>
 </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> login
 </body>
 </html>
