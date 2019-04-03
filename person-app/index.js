@@ -4,6 +4,7 @@ var app = express();
 
 // set up EJS
 app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
 
 // set up BodyParser
 var bodyParser = require('body-parser');
@@ -12,10 +13,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // import the Person class from Person.js
 var Person = require('./Person.js');
 
-// encode as UTF-8
-const passwordBuffer = new TextEncoder('utf-8').encode("password");
-// hash the password
-const hashPassword = await crypto.subtle.digest('SHA-256', passwordBuffer);
+/***************************************/
+
+// admin email & admin_password
+const admin_email = "admin@adr.com"
+const admin_password = "password";
+
+// boolean: True if logged in, False if not
+var logged_in = false;
 
 /***************************************/
 
@@ -109,47 +114,33 @@ app.use('/api', (req, res) => {
 	    });
     });
 
-
-	// route for logging in
-	// this is the action of the "login" form
-	app.use('/login', (req, res) => {
+	// route for creating a new person
+	// this is the action of the "create new person" form
+	app.post('/checkLogin', (req, res) => {
 
 		var input_email = req.body.email;
 		var input_password = req.body.password;
 
-		// encode as UTF-8
-		const input_passwordBuffer = new TextEncoder('utf-8').encode(input_password);
-		// hash the password
-		const hash_input_password = await crypto.subtle.digest('SHA-256', passwordBuffer);
-
-		if (hashPassword == hash_input_password) {
-
+		if (admin_password === input_password && admin_email === input_email) {
+			logged_in = true;
+			console.log("logged in!");
+			res.render('../views/login', {error_message: "you signed in!"});
 		} else {
-			
+			res.render('../views/login', {error_message: "invalid email or password"});
 		}
-
-		// save the person to the database
-		newPerson.save( (err) => {
-			if (err) {
-			    res.type('html').status(200);
-			    res.write('uh oh: ' + err);
-			    console.log(err);
-			    res.end();
-			} else {
-				  // display the "successfull created" page using EJS
-				  res.render('created', {person : newPerson});
-			}
-		});
 	});
-
-
-
 
 /*************************************************/
 
 app.use('/public', express.static('public'));
 
-app.use('/', (req, res) => { res.redirect('/public/personform.html'); } );
+//app.use('/', (req, res) => { res.redirect('/public/personform.html'); } );
+//app.use('/', (req, res) => { res.render('/views/login'); } );
+
+app.get('/', function(req, res){
+  res.render('../views/login', {error_message: null});
+});
+
 
 app.listen(3000,  () => {
 	console.log('Listening on port 3000');
