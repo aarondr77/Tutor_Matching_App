@@ -48,7 +48,11 @@
 	</div>
 	<form action="/createaccount" method="post" id="signupform">
 		<input type="submit" value="Navigate to Qualifications Page">
-	</form>	
+	</form>
+
+	<form action="/logout" method="post">
+  	<button type="logout" class="btn button btn-lg btn-primary btn-block">Logout</button><br>
+	</form>
 
 	<div class="error">
 	 	<%if (error_message != null) { %>

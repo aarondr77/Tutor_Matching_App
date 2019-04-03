@@ -14,35 +14,6 @@ var User = require('../models/User.js');
 
 var checkLogin = function(req, res) {
 
-	var newUser = new User ({
-  		firstName: 'Petra',
-		lastName: 'Robertson',
-		email: 'petrar@seas.upenn.edu',
-		password: 'password',
-		userType: 'student',
-		price: 5,
-		days: '',
-		times: '',
-		numSessions: 0,
-		totalCost: 0,
-		avgCost: 0,
-		rateNum: 0,
-		rateToal: 0,
-		rating: 0,
-		balance: 0,
-		qualifications: 'MATH114-A'
-  	})
-  	newUser.save((err) => {
-  	if (err) {
-		    console.log(err);
-		}
-		else {
-		    //res.render('.././views/homepage', {error_message: newUser.firstName})
-		    console.log(newUser)
-		}
-  	});
-
-
 	var input_email = req.body.email;
 	var input_password = req.body.password;
 
@@ -53,12 +24,19 @@ var checkLogin = function(req, res) {
 	} else {
 		res.render('.././views/login', {error_message: "invalid email or password"});
 	}
-} 
+}
+
+var logout = function (req, res) {
+	console.log("logedout");
+	logged_in = false;
+	res.render('.././views/login', {error_message: null});
+}
 
 
 
 var routes = {
 	check_login: checkLogin,
+	logout: logout
 };
 
 module.exports = routes;
