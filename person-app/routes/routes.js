@@ -32,8 +32,6 @@ var logout = function (req, res) {
 	res.render('.././views/login', {error_message: null});
 }
 
-
-
 var routes = {
 	check_login: checkLogin,
 	logout: logout
