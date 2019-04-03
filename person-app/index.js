@@ -10,8 +10,8 @@ app.set('views', __dirname + '/views');
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// import the Person class from Person.js
-var Person = require('./Person.js');
+// import the User class from User.js
+var User = require('./User.js');
 
 /***************************************/
 
@@ -49,7 +49,9 @@ var logged_in = false;
 app.use('/public', express.static('public'));
 
 app.get('/', function(req, res){
-  res.render('../views/login', {error_message: null});
+   
+
+  res.render('../views/login', {error_message: newUser});
 });
 
 
