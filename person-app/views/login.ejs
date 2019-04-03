@@ -8,7 +8,7 @@
 		 body{
 		   padding-top: 50px;
 		   padding-bottom: 50px;
-		   background-color: #FBFBFF;
+		   background-color: #155137;
 		}
 		 .login-box {
 			 max-width: 330px;
@@ -18,6 +18,9 @@
 		 }
 		 .login-box .form-control {
 		 	margin-bottom: 10px;
+		 }
+		 .button {
+  	 		background-color: #ce1271;
 		 }
 		 .intro {
 		 	margin: 0 auto;
@@ -32,11 +35,18 @@
 			padding: 10px;
 		 }
 	 </style>
+
+	 <style>
+	 	h1 {
+        color: #FBFBFF;
+			 }
+
+		</style>
 </head>
 <body>
 <div class="intro">
-<h1>Welcome to administration app!</h1>
-<h1>Please login</h1>
+<h1 color = "white" >Welcome to the admin app!</h1>
+<h1 color = "white" >Please login</h1>
 
 </div>
 <div class="login-box">
@@ -44,7 +54,7 @@
 	 <form method="post" action="/checklogin">
 	 <input type="text" name="email" size="20" class="form-control" placeholder="Enter email here">
 	 <input type="password" name="password" size="20" class="form-control" placeholder="Enter password here"><br>
-	 <input type="submit" value="Login" class="btn btn-lg btn-primary btn-block"><br>
+	 <input type="submit" value="Login" class="btn button btn-lg btn-primary btn-block"><br>
 	</form>
 </div>
 

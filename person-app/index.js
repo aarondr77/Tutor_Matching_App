@@ -134,9 +134,6 @@ app.use('/api', (req, res) => {
 
 app.use('/public', express.static('public'));
 
-//app.use('/', (req, res) => { res.redirect('/public/personform.html'); } );
-//app.use('/', (req, res) => { res.render('/views/login'); } );
-
 app.get('/', function(req, res){
   res.render('../views/login', {error_message: null});
 });
@@ -144,4 +141,4 @@ app.get('/', function(req, res){
 
 app.listen(3000,  () => {
 	console.log('Listening on port 3000');
-    });
+});
