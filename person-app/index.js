@@ -12,10 +12,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // import the Person class from Person.js
 var Person = require('./Person.js');
 
-// encode as UTF-8
-const passwordBuffer = new TextEncoder('utf-8').encode("password");
-// hash the password
-const hashPassword = await crypto.subtle.digest('SHA-256', passwordBuffer);
 
 /***************************************/
 
@@ -110,37 +106,7 @@ app.use('/api', (req, res) => {
     });
 
 
-	// route for logging in
-	// this is the action of the "login" form
-	app.use('/login', (req, res) => {
 
-		var input_email = req.body.email;
-		var input_password = req.body.password;
-
-		// encode as UTF-8
-		const input_passwordBuffer = new TextEncoder('utf-8').encode(input_password);
-		// hash the password
-		const hash_input_password = await crypto.subtle.digest('SHA-256', passwordBuffer);
-
-		if (hashPassword == hash_input_password) {
-
-		} else {
-			
-		}
-
-		// save the person to the database
-		newPerson.save( (err) => {
-			if (err) {
-			    res.type('html').status(200);
-			    res.write('uh oh: ' + err);
-			    console.log(err);
-			    res.end();
-			} else {
-				  // display the "successfull created" page using EJS
-				  res.render('created', {person : newPerson});
-			}
-		});
-	});
 
 
 
