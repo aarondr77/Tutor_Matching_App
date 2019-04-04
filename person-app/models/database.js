@@ -2,6 +2,7 @@
 var User = require('./User.js');
 
 
+// returns all users
 var getUsers = function(route_callback) {
 	User.find({}, (err, users) => {
 		if (err) {
@@ -12,7 +13,7 @@ var getUsers = function(route_callback) {
 			route_callback(null,  null)
 		} else {
 			route_callback(null, users) 
-		}
+		} 
 	});
 }
 
@@ -21,3 +22,4 @@ var database = {
 };
 
 module.exports = database;
+

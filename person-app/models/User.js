@@ -26,6 +26,7 @@ var userSchema = new Schema({
 	pendingQualifications: String
     });
 
+
 // export personSchema as a class called Person
 module.exports = mongoose.model('User', userSchema);
 

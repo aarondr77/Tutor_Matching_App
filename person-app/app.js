@@ -15,19 +15,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // import the User class from User.js
 var User = require('./models/User.js');
 
-
-
 app.post('/checkLogin', routes.check_login);
 
+app.post('/logout', routes.logout);
 
-/*************************************************/
+app.get('/getUsers', routes.getUsers);
 
 app.use('/public', express.static('public'));
 
 app.get('/', function(req, res){
   res.render('../views/login', {error_message: null});
 });
-
 
 app.listen(3000,  () => {
 	console.log('Listening on port 3000');

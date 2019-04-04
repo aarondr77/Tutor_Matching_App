@@ -2,7 +2,8 @@
 
 <html>
 <head>
-	 <title>ADR Administration App</title>
+	 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	 <title>ADR Administation App</title>
 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	 <style type="text/css">
@@ -40,9 +41,54 @@
 	 	h1 {
         color: #FBFBFF;
 			 }
-
 		</style>
 </head>
+
+<script>
+
+	var users;
+	var usersToSearch;
+
+  function getUsers() {
+		console.log("called get users");
+    fetch('/getUsers').then(async function(response) {
+       users = await response.json();
+			 await console.log(users);
+			 await console.log("called get users");
+		});
+  }
+
+// this method is used to find a user
+$(document).ready(function () {
+  // Listen to submit event on the <form> itself!
+  $('#search').submit(function (e) {
+		console.log("form submitted");
+
+    e.preventDefault();
+
+		var searchTerm = document.getElementById('textBoxID').value;
+		document.getElementById('textBoxID').value = "";
+
+		var length = users.users.length;
+		var user = foundUser;
+
+		for (var i = 0; i < length; i++) {
+			var firstname = users.users[i].firstName;
+			var lastname = users.users[i].lastName;
+			var fullname = firstname + " " + lastname;
+			console.log("examining: " + fullname);
+			if (fullname == searchTerm) {
+				foundUser = users.users[i];
+				console.log("found user!");
+			}
+		}
+  });
+});
+
+</script>
+
+<body onload="getUsers()">
+
 <body>
 	<div class="intro">
 		<h1 style="color:blue;" >Welcome to the admin app!</h1>
@@ -71,5 +117,28 @@
 
 	<% }); %>
 </table>
+		<h1 color = "white" >Welcome to the admin app!</h1>
+	</div>
+	<form action="/createaccount" method="post" id="signupform">
+		<input type="submit" value="Navigate to Qualifications Page">
+	</form>
+
+	<form action="/logout" method="post">
+  	<button type="logout" class="btn button btn-lg btn-primary btn-block">Logout</button><br>
+	</form>
+
+
+	<form id = "search" class = "form-inline">
+		<input type = "search" id = "textBoxID" placeholder="Search for names...">
+  	<button type="submit" class="btn button btn-primary btn-block">Search</button><br>
+	</form>
+
+	<div class="error">
+	 	<%if (users != null) { %>
+			<font color="red">
+				<br> Error: <%= users %><p>
+		<% } %>
+	</div>
+
 </body>
 </html>
