@@ -15,8 +15,8 @@ var sessionSchema = new Schema({
 	duration: Number,
 	price: String,
 	status: String,
-	studentEmail: Number,
-	tutorEmail: Number,
+	studentEmail: String,
+	tutorEmail: String,
 });
 
 // export personSchema as a class called Person

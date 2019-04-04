@@ -8,54 +8,242 @@ const admin_password = "password";
 var logged_in = false;
 
 var User = require('../models/User.js');
+var Session = require('../models/Session.js');
 var db = require('../models/database.js');
 
 
 /***************************************/
 
 
-var checkLogin = function(req, res) {
-
-	var sessionSchema = new Schema({
-		sessionID: String,
-		tutor: String,
-		student: String,
-		subject: String,
-		date: String,
-		duration: Number,
-		price: String,
-		status: String,
-		studentEmail: Number,
-		tutorEmail: Number,
+function clearDB () {
+	User.remove({}, function(err) {
+		console.log('cleared User database');
 	});
 
+	Session.remove({}, function(err) {
+		console.log('cleared Session database');
+	})
+}
 
-	var session1 = new Session ({
-		sessionID: "1",
-		tutor: "Aaron Diamond-Reivich",
-		student: "Petra Robertson",
-		subject: ,
-		date: String,
-		duration: Number,
-		price: String,
-		status: String,
-		studentEmail: Number,
-		tutorEmail: Number,
-	 });
+function loadData () {
+
+	var user1 = new User({
+		firstName: "Aaron",
+		lastName: "Diamond-Reivich",
+		email: "aaron@gmail.com",
+		password: "aaron",
+		userType: "tutor",
+		price: 10,
+		days: "monday",
+		times: "3pm",
+		numSessions: 2,
+		totalCost: 50,
+		avgCost: 25,
+		rateNum: 2,
+		rateToal: 10,
+		rating: 5,
+		balance: 150,
+		qualifications: "Math114",
+		sessions: ["1", "2"]
+	});
+
+	var user2 = new User({
+		firstName: "Tamir",
+		lastName: "Frank",
+		email: "tamir@gmail.com",
+		password: "tamir",
+		userType: "tutor",
+		price: 10,
+		days: "monday",
+		times: "3pm",
+		numSessions: 2,
+		totalCost: 50,
+		avgCost: 25,
+		rateNum: 2,
+		rateToal: 10,
+		rating: 5,
+		balance: 150,
+		qualifications: "Math114",
+		sessions: ["3", "4"]
+	});
+
+	var user3 = new User({
+		firstName: "Petra",
+		lastName: "Robertson",
+		email: "petra@gmail.com",
+		password: "petra",
+		userType: "student",
+		price: 10,
+		days: "monday",
+		times: "3pm",
+		numSessions: 2,
+		totalCost: 50,
+		avgCost: 25,
+		rateNum: 2,
+		rateToal: 10,
+		rating: 5,
+		balance: 50,
+		qualifications: "Math114",
+		sessions: ["1", "3"]
+	});
+
+	var user4 = new User({
+		firstName: "Chris",
+		lastName: "Williams",
+		email: "chris@gmail.com",
+		password: "chris",
+		userType: "student",
+		price: 10,
+		days: "monday",
+		times: "3pm",
+		numSessions: 2,
+		totalCost: 50,
+		avgCost: 25,
+		rateNum: 2,
+		rateToal: 10,
+		rating: 5,
+		balance: 50,
+		qualifications: "Math114",
+		sessions: ["2", "4"]
+	});
+
+	var session1 = new Session({
+		sessionID: 1,
+		tutor: "Aaron",
+		student: "Petra",
+		subject: 'Math114',
+		date: "3/12/19",
+		duration: 60,
+		price: "25",
+		status: "accepted",
+		studentEmail: "petra@gmail.com",
+		tutorEmail: "aaron@gmail.com",
+	});
+
+	var session2 = new Session({
+		sessionID: 2,
+		tutor: "Aaron",
+		student: "Chris",
+		subject: 'Math114',
+		date: "3/12/19",
+		duration: 60,
+		price: "25",
+		status: "accepted",
+		studentEmail: "chris@gmail.com",
+		tutorEmail: "aaron@gmail.com",
+	});
+
+	var session3 = new Session({
+		sessionID: 1,
+		tutor: "Tamir",
+		student: "Petra",
+		subject: 'Math114',
+		date: "3/12/19",
+		duration: 60,
+		price: "25",
+		status: "accepted",
+		studentEmail: "petra@gmail.com",
+		tutorEmail: "tamir@gmail.com",
+	});
+
+	var session4 = new Session({
+		sessionID: 1,
+		tutor: "Tamir",
+		student: "Chris",
+		subject: 'Math114',
+		date: "3/12/19",
+		duration: 60,
+		price: "25",
+		status: "accepted",
+		studentEmail: "chris@gmail.com",
+		tutorEmail: "tamir@gmail.com",
+	});
 
 	// save the person to the database
-	newPerson.save( (err) => {
+	user1.save( (err) => {
 		if (err) {
-		    res.type('html').status(200);
-		    res.write('uh oh: ' + err);
 		    console.log(err);
 		    res.end();
+		} else {
+			console.log("added user")
 		}
-		else {
-		    // display the "successfull created" page using EJS
-		    res.render('created', {person : newPerson});
+	});
+
+	// save the person to the database
+	user2.save( (err) => {
+		if (err) {
+		    console.log(err);
+		    res.end();
+		} else {
+			console.log("added user")
 		}
-	    } );
+	});
+
+	// save the person to the database
+	user3.save( (err) => {
+		if (err) {
+		    console.log(err);
+		    res.end();
+		} else {
+			console.log("added user")
+		}
+	});
+
+	// save the person to the database
+	user4.save( (err) => {
+		if (err) {
+		    console.log(err);
+		    res.end();
+		} else {
+			console.log("added user")
+		}
+	});
+
+	// save the person to the database
+	session1.save( (err) => {
+		if (err) {
+		    console.log(err);
+		    res.end();
+		} else {
+			console.log("added user")
+		}
+	});
+
+	// save the person to the database
+	session2.save( (err) => {
+		if (err) {
+		    console.log(err);
+		    res.end();
+		} else {
+			console.log("added user")
+		}
+	});
+
+	// save the person to the database
+	session3.save( (err) => {
+		if (err) {
+		    console.log(err);
+		    res.end();
+		} else {
+			console.log("added user")
+		}
+	});
+
+	// save the person to the database
+	session4.save( (err) => {
+		if (err) {
+		    console.log(err);
+		    res.end();
+		} else {
+			console.log("added user")
+		}
+	});
+}
+
+
+var checkLogin = function(req, res) {
+
+	//loadData();
 
 	var input_email = req.body.email;
 	var input_password = req.body.password;
@@ -94,6 +282,7 @@ var routes = {
 	check_login: checkLogin,
 	logout: logout,
 	getUsers: getUsers,
+
 };
 
 module.exports = routes;

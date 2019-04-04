@@ -23,6 +23,7 @@ var userSchema = new Schema({
 	rating: Number,
 	balance: Number,
 	qualifications: String,
+	sessions: [String]
 });
 
 // export personSchema as a class called Person
