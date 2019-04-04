@@ -16,6 +16,47 @@ var db = require('../models/database.js');
 
 var checkLogin = function(req, res) {
 
+	var sessionSchema = new Schema({
+		sessionID: String,
+		tutor: String,
+		student: String,
+		subject: String,
+		date: String,
+		duration: Number,
+		price: String,
+		status: String,
+		studentEmail: Number,
+		tutorEmail: Number,
+	});
+
+
+	var session1 = new Session ({
+		sessionID: "1",
+		tutor: "Aaron Diamond-Reivich",
+		student: "Petra Robertson",
+		subject: ,
+		date: String,
+		duration: Number,
+		price: String,
+		status: String,
+		studentEmail: Number,
+		tutorEmail: Number,
+	 });
+
+	// save the person to the database
+	newPerson.save( (err) => {
+		if (err) {
+		    res.type('html').status(200);
+		    res.write('uh oh: ' + err);
+		    console.log(err);
+		    res.end();
+		}
+		else {
+		    // display the "successfull created" page using EJS
+		    res.render('created', {person : newPerson});
+		}
+	    } );
+
 	var input_email = req.body.email;
 	var input_password = req.body.password;
 
