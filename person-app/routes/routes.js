@@ -9,52 +9,57 @@ var logged_in = false;
 
 var User = require('../models/User.js');
 
+var db = require('../models/database.js');
+
 /***************************************/
 
 
 var checkLogin = function(req, res) {
+	var input_email = req.body.email;
+	var input_password = req.body.password;
 
 	var newUser = new User ({
-  		firstName: 'Petra',
-		lastName: 'Robertson',
-		email: 'petrar@seas.upenn.edu',
-		password: 'password',
-		userType: 'student',
-		price: 5,
-		days: '',
-		times: '',
-		numSessions: 0,
-		totalCost: 0,
-		avgCost: 0,
-		rateNum: 0,
-		rateToal: 0,
-		rating: 0,
-		balance: 0,
-		qualifications: 'MATH114-A'
-  	})
-  	newUser.save((err) => {
+  	firstName: 'Petra',
+	lastName: 'Robertson',
+	email: 'petrar@seas.upenn.edu',
+	password: 'password',
+	userType: 'student',
+	price: 5,
+	days: '',
+	times: '',
+	numSessions: 0,
+	totalCost: 0,
+	avgCost: 0,
+	rateNum: 0,
+	rateToal: 0,
+	rating: 0,
+	balance: 0,
+	pendingQualifications: 'MATH114-A',
+	qualifications: ''
+  })
+  newUser.save((err) => {
   	if (err) {
 		    console.log(err);
 		}
 		else {
-		    //res.render('.././views/homepage', {error_message: newUser.firstName})
-		    console.log(newUser)
+		    // display the "successfull created" page using EJS
 		}
-  	});
-
-
-	var input_email = req.body.email;
-	var input_password = req.body.password;
+  });
 
 	if (admin_password === input_password && admin_email === input_email) {
 		logged_in = true;
 		console.log("logged in!");
-		res.render('.././views/homepage', {error_message: "you signed in!"});
+		var userArray = []
+		db.get_users((err, users) => {
+			userArray = users
+			console.log(userArray)
+			res.render('.././views/homepage', {users: userArray});
+
+		})
 	} else {
 		res.render('.././views/login', {error_message: "invalid email or password"});
 	}
 } 
-
 
 
 var routes = {

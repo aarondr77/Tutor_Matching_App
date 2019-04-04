@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-	 <title>ADR Administation App</title>
+	 <title>ADR Administration App</title>
 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	 <style type="text/css">
 		 body{
 		   padding-top: 50px;
 		   padding-bottom: 50px;
-		   background-color: #155137;
+		   background-color: #FFFFFF;
 		}
 		 .login-box {
 			 max-width: 330px;
@@ -44,17 +45,31 @@
 </head>
 <body>
 	<div class="intro">
-		<h1 color = "white" >Welcome to the admin app!</h1>
+		<h1 style="color:blue;" >Welcome to the admin app!</h1>
 	</div>
-	<form action="/createaccount" method="post" id="signupform">
-		<input type="submit" value="Navigate to Qualifications Page">
-	</form>	
+<table style="width:100%">
+	<tr>
+    	<th>Tutor Firstname</th>
+    	<th>Tutor Lastname</th> 
+    	<th>Tutor Qualifications</th>
+  	</tr>
 
-	<div class="error">
-	 	<%if (error_message != null) { %>
-			<font color="red">
-				<br> Error: <%= error_message %><p>
-		<% } %>
-	</div>
+	<%= console.log("aaron") %>
+
+	<%= console.log(users) %>
+	
+	<% users.forEach( (user) => { %>
+		<tr>
+			<th> <%= user.firstName %> </th>
+			<th> <%= user.lastName %> </th>
+			<th> <%= user.qualifications %> </th>
+		</tr>
+
+		<br>
+
+
+
+	<% }); %>
+</table>
 </body>
 </html>

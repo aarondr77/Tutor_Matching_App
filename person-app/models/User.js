@@ -22,7 +22,8 @@ var userSchema = new Schema({
 	rateToal: Number,
 	rating: Number,
 	balance: Number,
-	qualifications: String
+	qualifications: String,
+	pendingQualifications: String
     });
 
 // export personSchema as a class called Person
