@@ -24,7 +24,8 @@ var userSchema = new Schema({
 	balance: Number,
 	qualifications: String,
 	pendingQualifications: String
-    });
+	sessions: [String]
+});
 
 
 // export personSchema as a class called Person
