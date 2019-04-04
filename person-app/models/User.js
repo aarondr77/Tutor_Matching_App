@@ -23,7 +23,7 @@ var userSchema = new Schema({
 	rating: Number,
 	balance: Number,
 	qualifications: String
-    });
+});
 
 // export personSchema as a class called Person
 module.exports = mongoose.model('User', userSchema);

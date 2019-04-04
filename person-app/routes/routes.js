@@ -8,6 +8,8 @@ const admin_password = "password";
 var logged_in = false;
 
 var User = require('../models/User.js');
+var db = require('../models/database.js');
+
 
 /***************************************/
 
@@ -20,7 +22,12 @@ var checkLogin = function(req, res) {
 	if (admin_password === input_password && admin_email === input_email) {
 		logged_in = true;
 		console.log("logged in!");
-		res.render('.././views/homepage', {error_message: "you signed in!"});
+		var userArray = []
+		db.get_users((err, users) => {
+			userArray = users
+			//console.log(userArray)
+			res.render('.././views/homepage', {users: userArray});
+		})
 	} else {
 		res.render('.././views/login', {error_message: "invalid email or password"});
 	}
@@ -32,9 +39,20 @@ var logout = function (req, res) {
 	res.render('.././views/login', {error_message: null});
 }
 
+var getUsers = function (req, res) {
+	var userArray = []
+	db.get_users((err, users) => {
+		console.log(err);
+		userArray = users
+		console.log(userArray);
+		res.json({users: userArray});
+	})
+}
+
 var routes = {
 	check_login: checkLogin,
-	logout: logout
+	logout: logout,
+	getUsers: getUsers,
 };
 
 module.exports = routes;

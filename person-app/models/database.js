@@ -17,7 +17,7 @@ var getUsers = function(route_callback) {
 }
 
 var database = {
-get_users: getUsers,
+	get_users: getUsers,
 };
 
 module.exports = database;
