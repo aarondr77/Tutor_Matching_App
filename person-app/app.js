@@ -28,6 +28,8 @@ app.use('/complaints',  routes.complaints);
 
 app.post('/updateComplaint', routes.updateComplaint);
 
+app.post('/banUser', routes.banUser);
+
 app.use('/public', express.static('public'));
 
 app.get('/', function(req, res){

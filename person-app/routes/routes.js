@@ -48,6 +48,7 @@ function loadData () {
 		rating: 5,
 		balance: 150,
 		qualifications: "Math114",
+		banned: false,
 	});
 
 	var user2 = new User({
@@ -67,6 +68,7 @@ function loadData () {
 		rating: 5,
 		balance: 150,
 		qualifications: "Math114",
+		banned: false,
 	});
 
 	var user3 = new User({
@@ -86,6 +88,7 @@ function loadData () {
 		rating: 5,
 		balance: 50,
 		qualifications: "Math114",
+		banned: false,
 	});
 
 	var user4 = new User({
@@ -105,6 +108,7 @@ function loadData () {
 		rating: 5,
 		balance: 50,
 		qualifications: "Math114",
+		banned: false,
 	});
 
 	var session1 = new Session({
@@ -240,15 +244,15 @@ function loadData () {
 	});
 
 	var complaint1 = new Complaint({
-		target: "Chris",
-		submitter: "Aaron",
+		target: "aaron@gmail.com",
+		submitter: "chris@gmail.com",
 		content: "He sucks",
 		status: 'Approved'
 	});
 
 	var complaint2 = new Complaint({
-		target: "Petra",
-		submitter: "Chris",
+		target: "chris@gmail.com",
+		submitter: "tamir@gmail.com",
 		content: "Boo",
 		status: 'Denied'
 	});
@@ -349,13 +353,29 @@ var deleteSessions = function (req, res) {
 
 var updateComplaint = function (req, res) {
 	console.log("in Routes! Updating Complaints");
-	var complaint = req.body.complaint;
+	var target = req.body.target;
+	var submitter = req.body.submitter;
+	var content = req.body.content;
+	var status = req.body.status;
 
-	db.updateComplaint(complaint, (err) => {
+	db.updateComplaint(target, submitter, content, status, (err) => {
 		if (err) {
 			console.log("err:" + err);
 		} else {
-			console.log("successful delete");
+			console.log("successful Update");
+		}
+	});
+}
+
+var banUser = function (req, res) {
+	console.log("in Routes! Banning User");
+	var target = req.body.target;
+
+	db.banUser(target, (err) => {
+		if (err) {
+			console.log("err:" + err);
+		} else {
+			console.log("successful Banning");
 		}
 	});
 }
@@ -368,6 +388,7 @@ var routes = {
 	complaints: complaints,
 	deleteSessions: deleteSessions,
 	updateComplaint: updateComplaint,
+	banUser: banUser,
 };
 
 module.exports = routes;

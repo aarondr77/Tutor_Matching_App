@@ -62,15 +62,37 @@ var deleteSessionsOfStudent = function (email, route_callback) {
 	});
 }
 
-var updateComplaint = function(complaint, route_callback) {
-	Complaint.findOne( {submitter: complaint.submitter, target: complaint.target, content: complaint.target}, (err, comp) => {
+var updateComplaint = function(target, submitter, content, status, route_callback) {
+	console.log(submitter);
+	Complaint.findOne( {target: target, submitter: submitter, content: content}, (err, comp) => {
 		if (err) {
 			route_callback(err);
 		} else if (!comp) {
 			route_callback(200);
 		} else {
-			comp.status = complaint.status;
+			console.log(typeof submitter);
+			comp.status = String(status);
+			console.log(comp.status);
 			comp.save ((err) => {
+				if (err) {
+					route_callback(err);
+				} else {
+					route_callback(null)
+				}
+			})
+		}
+	})
+}
+
+var banUser = function(target, route_callback) {
+	Complaint.findOne( {target: target}, (err, user) => {
+		if (err) {
+			route_callback(err);
+		} else if (!user) {
+			route_callback(200);
+		} else {
+			user.banned = true;
+			user.save ((err) => {
 				if (err) {
 					route_callback(err);
 				} else {
@@ -92,6 +114,7 @@ var database = {
 
 	updateComplaint: updateComplaint,
 
+	banUser: banUser,
 };
 
 module.exports = database;
