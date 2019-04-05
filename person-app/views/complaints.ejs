@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	 <title>ADR Administation App</title>
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	 <style type="text/css">
+		 body{
+		   padding-top: 50px;
+		   padding-bottom: 50px;
+		   background-color: #155137;
+		}
+		 .login-box {
+			 max-width: 330px;
+			 margin: 0 auto;
+			 background-color: #DBE4EE;
+			 padding: 10px;
+		 }
+		 .login-box .form-control {
+		 	margin-bottom: 10px;
+		 }
+		 .button {
+  	 		background-color: #ce1271;
+		 }
+		 .intro {
+		 	margin: 0 auto;
+		 	text-align: center;
+		 	padding: 5px;
+		 	padding-bottom: 15px;
+		 }
+		 .error {
+		 	margin: 0 auto;
+		 	text-align: center;
+		 	max-width: 330px;
+			padding: 10px;
+		 }
+	 </style>
+	 <style>
+	 	h1 {
+        color: #FBFBFF;
+			 }
+		</style>
+</head>
+
+<script>
+$(document).ready(function () {
+
+	$('button.deny').click(function () {
+		this.dataset.status = "Denied"
+		console.log("Deny Button");
+		var data = {
+			target: this.dataset.target,
+			submitter:this.dataset.submitter,
+			status:this.dataset.status,
+			content: this.dataset.content,
+		}
+		$.ajax({
+			type: "post",
+			url: "/complaints/updateComplaint",
+			data: data,
+			success: function(data) {
+				console.log("success?")
+			}
+		});
+		location.reload()
+	});
+
+
+	$('button.approve').click(function () {
+		this.dataset.status = "Approved"
+		console.log("Approved Button");
+		var data = {
+			target: this.dataset.target,
+			submitter:this.dataset.submitter,
+			status:this.dataset.status,
+			content: this.dataset.content,
+		}
+		$.ajax({
+			type: "post",
+			url: "/complaints/updateComplaint",
+			data: data,
+			success: function(data) {
+				console.log("success?")
+			}
+		});
+		$.ajax({
+			type: "post",
+			url: "/complaints/banUser",
+			data: data,
+			success: function(data) {
+				console.log("success?")
+			}
+		});
+		location.reload()
+	});
+
+
+});
+
+</script>
+
+<body>
+<div class="intro">
+	<h1 color = "white" >Complaints Page</h1>
+</div>
+</body>
+<li> <p> <font color="red"> Submitter : Content : Target : Status </font> <p> </li>
+
+<% complaints.forEach((complaint)=>{ %>
+	<%if (complaint.target != "admin@adr.com") {%>
+		<%if (complaint.status != "Approved" && complaint.status != "Denied") {%>
+	  <li>
+	    <p> <font color="red"> <%=complaint.submitter%> : <%=complaint.content%> : <%=complaint.target%> : <%=complaint.status%> </font> </p>
+	    <button class="approve" data-target="<%=complaint.target%>" data-submitter="<%=complaint.submitter%>" data-content="<%=complaint.content%>" data-status="<%=complaint.status%>">Approve</button> <button class="deny" data-target="<%=complaint.target%>" data-submitter="<%=complaint.submitter%>" data-content="<%=complaint.content%>" data-status="<%=complaint.status%>">Deny</button>
+	  </li>
+		<%} else {%>
+			<li>
+		    <p> <font color="red"> <%=complaint.submitter%> : <%=complaint.content%> : <%=complaint.target%> : <%=complaint.status%> </font> </p>
+  	  </li>
+		<%}%>
+	<%}%>
+<%})%>
