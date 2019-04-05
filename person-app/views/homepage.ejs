@@ -248,6 +248,35 @@ $(document).ready(function () {
 <body onload="getUsers()">
 
 <body>
+	<navbutton>
+	<form action="/analytics" method="get" id="analytics">
+		<button type="analytics" class="btn btn-success">Analytics</button><br>
+	</form>
+	</navbutton>
+
+	<navbutton>
+	<form action="/complaints" method="post" id="complaints">
+		<button type="complaints" class="btn btn-success">Complaints</button><br>
+	</form>
+	</navbutton>
+
+	<navbutton>
+	<form action="/feedback" method="post" id="feedback">
+		<button type="feedback" class="btn btn-success">Feedback</button><br>
+	</form>
+	</navbutton>
+
+
+	<navbutton>
+		<form action="/logout" method="post">
+  				<button type="logout" class="btn btn-success">Logout</button><br>
+		</form>
+	</navbutton>
+
+	<br>
+	<br>
+	<br>
+
 	<div class="intro">
 		<h1 style="color:green;" >Welcome to the admin app!</h1>
 	</div>
@@ -287,31 +316,6 @@ $(document).ready(function () {
 	<br><div class="post"id="pendingQualifications"> </div>
 
 	<br><div class="post"id="userQualifications"> </div>
-
-	<navbutton>
-	<form action="/analytics" method="get" id="analytics">
-		<button type="analytics" class="btn btn-success">Analytics</button><br>
-	</form>
-	</navbutton>
-
-	<navbutton>
-	<form action="/complaints" method="post" id="complaints">
-		<button type="complaints" class="btn btn-success">Complaints</button><br>
-	</form>
-	</navbutton>
-
-	<navbutton>
-	<form action="/feedback" method="post" id="feedback">
-		<button type="feedback" class="btn btn-success">Feedback</button><br>
-	</form>
-	</navbutton>
-
-
-	<navbutton>
-		<form action="/logout" method="post">
-  				<button type="logout" class="btn btn-success">Logout</button><br>
-		</form>
-	</navbutton>
 
 </body>
 </html>
