@@ -323,7 +323,7 @@ var checkLogin = function(req, res) {
 		db.get_users((err, users) => {
 			userArray = users
 			//console.log(userArray)
-			res.render('.././views/homepage', {users: userArray});
+			res.redirect('/home');
 		})
 	} else {
 		res.render('.././views/login', {error_message: "invalid email or password"});
@@ -331,9 +331,18 @@ var checkLogin = function(req, res) {
 }
 
 var logout = function (req, res) {
-	console.log("logedout");
+	console.log("loggedout");
 	logged_in = false;
 	res.render('.././views/login', {error_message: null});
+}
+
+var analytics = function(req, res) {
+	console.log("reached analytics");
+	if(logged_in) {
+		res.render('.././views/analytics', {stats: {avgSessions: 0, mostPopular: "Math"}});
+	} else {
+		res.redirect('/');
+	}
 }
 
 var complaints = function (req, res) {
@@ -346,6 +355,15 @@ var complaints = function (req, res) {
 		console.log(complaintsArray);
 		res.render('.././views/complaints', {complaints: complaintsArray});
 	})
+}
+
+var homepage = function(req,res) {
+	// check if logged in, if not redirect to login page, which currently we have as '/'
+	if(logged_in) {
+		res.render('.././views/homepage');
+	} else {
+		res.redirect('/');
+	}
 }
 
 var feedback = function (req, res) {
@@ -433,6 +451,8 @@ var routes = {
 	updateComplaint: updateComplaint,
 	banUser: banUser,
 	feedback: feedback,
+	analytics: analytics,
+	home: homepage,
 };
 
 module.exports = routes;
