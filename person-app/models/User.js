@@ -22,8 +22,8 @@ var userSchema = new Schema({
 	rateToal: Number,
 	rating: Number,
 	balance: Number,
-	qualifications: String,
-	pendingQualifications: String
+	qualifications: [String],
+	pendingQualifications: [String],
 	sessions: [String]
 });
 

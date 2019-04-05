@@ -45,7 +45,8 @@ function loadData () {
 		rateToal: 10,
 		rating: 5,
 		balance: 150,
-		qualifications: "Math114",
+		qualifications: [],
+		pendingQualifications: ["MATH114-C"],
 		sessions: ["1", "2"]
 	});
 
@@ -65,7 +66,8 @@ function loadData () {
 		rateToal: 10,
 		rating: 5,
 		balance: 150,
-		qualifications: "Math114",
+		qualifications: [],
+		pendingQualifications: ["MATH114-A", "CIS110-B"],
 		sessions: ["3", "4"]
 	});
 
@@ -85,7 +87,8 @@ function loadData () {
 		rateToal: 10,
 		rating: 5,
 		balance: 50,
-		qualifications: "Math114",
+		qualifications: [],
+		pendingQualifications: ["CIS110-B+"],
 		sessions: ["1", "3"]
 	});
 
@@ -105,7 +108,8 @@ function loadData () {
 		rateToal: 10,
 		rating: 5,
 		balance: 50,
-		qualifications: "Math114",
+		qualifications: ["MATH114-A"],
+		pendingQualifications: [],
 		sessions: ["2", "4"]
 	});
 
@@ -245,7 +249,10 @@ function loadData () {
 
 var checkLogin = function(req, res) {
 
-	//loadData();
+	
+	clearDB();
+	loadData();
+
 
 	var input_email = req.body.email;
 	var input_password = req.body.password;
@@ -279,15 +286,91 @@ var getUsers = function (req, res) {
 	db.get_users((err, users) => {
 		console.log(err);
 		userArray = users
-		console.log(userArray);
+		console.log("ALL USERS")
+		console.log(users)
 		res.json({users: userArray});
 	})
 }
+
+var getUsersPendingQualifications = function(req, res) {
+	db.get_users((err, users) => {
+		if (err) {
+			console.log(err)
+		} else if (!users) {
+			console.log("Users field was null")
+		} else {
+			var pendingUsers = [];
+			var length = users.length - 1
+			users.forEach((user) => {
+				if (user.pendingQualifications.length > 0) {
+					pendingUsers.push(user)
+				}
+				if (length == 0) {
+					//res.setHeader('Content-Type', 'text/plain');
+					//res.setHeader('Content-Length', pendingUsers.length);
+					console.log(pendingUsers)
+					res.json({users: pendingUsers});
+				}
+				length -= 1;
+			})
+		}
+	})
+}
+
+// method to approve a single qualification for a single user
+var approveQualification = function(req, res) {
+	db.approve_qualification(req.query.email, req.query.qualification, (err) => {
+		if (err) {
+			console.log(err)
+		} else {
+			console.log("successfully approved qualification!")
+		}
+	})
+}
+
+// method to deny a single qualification for a single user
+var denyQualification = function(req, res) {
+	db.deny_qualification(req.query.email, req.query.qualif, (err) => {
+		if (err) {
+			console.log(err)
+		} else {
+			console.log("successfully denied qualification")
+		}
+	})
+}
+
+var removeQualification = function(req, res) {
+	db.remove_qualification(req.query.email, req.query.qualification, (err) => {
+		if (err) {
+			console.log(err)
+		} else {
+			console.log("successfully removed qualification")
+			db.get_users((err, users) => {
+				console.log(users)
+			})
+		}
+	})
+}
+
+var renderHomepage = function(req, res) {
+	db.get_users((err, users) => {
+			userArray = users
+			res.render("homepage.ejs", {users: userArray});
+	})
+	
+}
+
+
 
 var routes = {
 	check_login: checkLogin,
 	logout: logout,
 	getUsers: getUsers,
+	approve_qualification: approveQualification,
+	deny_qualification: denyQualification,
+	get_users_pending_qualifications: getUsersPendingQualifications,
+	remove_qualification: removeQualification,
+	homepage: renderHomepage,
 
 };
 

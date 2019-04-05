@@ -17,9 +17,19 @@ var User = require('./models/User.js');
 
 app.post('/checkLogin', routes.check_login);
 
+app.post('/approveQualification', routes.approve_qualification)
+
+app.post('/denyQualification', routes.deny_qualification)
+
+app.post('/removeQualification', routes.remove_qualification)
+
 app.post('/logout', routes.logout);
 
+app.get('/homepage', routes.homepage);
+
 app.get('/getUsers', routes.getUsers);
+
+app.get('/getUsersPendingQualification', routes.get_users_pending_qualifications);
 
 app.use('/public', express.static('public'));
 
