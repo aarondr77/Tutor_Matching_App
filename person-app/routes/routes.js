@@ -55,7 +55,7 @@ function loadData () {
 		balance: 150,
 		qualifications: [],
 		pendingQualifications: ["MATH114-C"],
-		sessions: ["1", "2"]
+		sessions: ["1", "2"],
 		banned: false,
 	});
 
@@ -77,7 +77,7 @@ function loadData () {
 		balance: 150,
 		qualifications: [],
 		pendingQualifications: ["MATH114-A", "CIS110-B"],
-		sessions: ["3", "4"]
+		sessions: ["3", "4"],
 		banned: false,
 	});
 
@@ -99,7 +99,7 @@ function loadData () {
 		balance: 50,
 		qualifications: [],
 		pendingQualifications: ["CIS110-B+"],
-		sessions: ["1", "3"]
+		sessions: ["1", "3"],
 		banned: false,
 	});
 
@@ -121,7 +121,7 @@ function loadData () {
 		balance: 50,
 		qualifications: ["MATH114-A"],
 		pendingQualifications: [],
-		sessions: ["2", "4"]
+		sessions: ["2", "4"],
 		banned: false,
 	});
 
@@ -371,8 +371,8 @@ function loadData () {
 var checkLogin = function(req, res) {
 
 	
-	clearDB();
-	loadData();
+	//clearDB();
+	//loadData();
 
 
 	var input_email = req.body.email;
@@ -478,8 +478,6 @@ var getUsers = function (req, res) {
 	db.get_users((err, users) => {
 		console.log(err);
 		userArray = users
-		console.log("ALL USERS")
-		console.log(users)
 		res.json({users: userArray});
 	})
 }
@@ -511,12 +509,13 @@ var getUsersPendingQualifications = function(req, res) {
 
 // method to approve a single qualification for a single user
 var approveQualification = function(req, res) {
-	db.approve_qualification(req.query.email, req.query.qualification, (err) => {
+	db.approve_qualification(req.query.email, req.query.qualif, (err) => {
 		if (err) {
 			console.log(err)
+			res.render('.././views/homepage');
 		} else {
 			console.log("successfully approved qualification!")
-		}
+			res.render('.././views/homepage');		}
 	})
 }
 
@@ -525,21 +524,22 @@ var denyQualification = function(req, res) {
 	db.deny_qualification(req.query.email, req.query.qualif, (err) => {
 		if (err) {
 			console.log(err)
+			res.render('.././views/homepage');
 		} else {
 			console.log("successfully denied qualification")
+			res.render('.././views/homepage');
 		}
 	})
 }
 
 var removeQualification = function(req, res) {
-	db.remove_qualification(req.query.email, req.query.qualification, (err) => {
+	db.remove_qualification(req.query.email, req.query.qualif, (err) => {
 		if (err) {
 			console.log(err)
+			res.render('.././views/homepage');
 		} else {
 			console.log("successfully removed qualification")
-			db.get_users((err, users) => {
-				console.log(users)
-			})
+			res.render('.././views/homepage');
 		}
 	})
 }

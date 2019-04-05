@@ -24,7 +24,7 @@ var userSchema = new Schema({
 	balance: Number,
 	qualifications: [String],
 	pendingQualifications: [String],
-	sessions: [String]
+	sessions: [String],
 	banned : Boolean,
 });
 

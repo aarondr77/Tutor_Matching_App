@@ -21,12 +21,12 @@ var getUsers = function(route_callback) {
 	});
 }
 
-<<<<<<< HEAD
 
 /* Method to approve a qualification for a single user. Removes that subject
    from the "pendingQualifications" field in their user object 
    and adds is to the "qualifications" field */
 var approveQualification = function(email_id, qual, route_callback) {
+	console.log(qual)
 	User.findOne({email: email_id}, (err, user) => {
 		if (err) {
 			console.log("Unable to find user to update qualifications")
@@ -34,33 +34,38 @@ var approveQualification = function(email_id, qual, route_callback) {
 		} else if (!user) {
 			route_callback("User does not exist")
 		} else {
-			
-			// first delete that element from pending qualifications
+						// first delete that element from pending qualifications
 			var count = 0
 			var idx = -1
 			var pendingUserQualif = user.pendingQualifications
 			pendingUserQualif.forEach( (pendingQual) => { 
+				console.log("hey now")
+				console.log(qual)
 				if (pendingQual.split("-")[0] === qual) {
-					console.log(pendingQual.split("-")[0])
 					idx = count
 				}
 				count++
 			})
+
 			
-			console.log(pendingUserQualif)
 			pendingUserQualif.splice(idx, 1)
 			user.pendingQualifications = pendingUserQualif
-			console.log(pendingUserQualif)
-			console.log(idx)
 
-			//then add it to their qualifications
-			user.qualifications.push(qual)
+			newQualifications = user.qualifications
+			if (newQualifications == null || newQualifications == undefined) {
+				newQualifications = []
+			}
 
+			newQualifications.push(qual)
+			user.qualifications = newQualifications
+
+			// then update the DB with the new user object
 			user.save( (err) => {
 				if (err) {
 					console.log("unable to approve user qualification")
 					route_callback(err)
 				} else {
+					console.log("new user object")
 					console.log(user)
 					route_callback(null)
 				}
@@ -87,18 +92,15 @@ var denyQualification = function(email_id, qual, route_callback) {
 			var pendingUserQualif = user.pendingQualifications
 			pendingUserQualif.forEach( (pendingQual) => { 
 				if (pendingQual.split("-")[0] === qual) {
-					console.log(pendingQual.split("-")[0])
 					idx = count
 				}
 				count++
 			})
 			
 			// remove the element from the list
-			console.log(pendingUserQualif)
 			pendingUserQualif.splice(idx, 1)
 			user.pendingQualifications = pendingUserQualif
-			console.log(pendingUserQualif)
-			console.log(idx)
+
 
 			//update that user's object
 			user.save( (err) => {
@@ -106,8 +108,13 @@ var denyQualification = function(email_id, qual, route_callback) {
 					console.log("unable to approve user qualification")
 					route_callback(err)
 				} else {
-					console.log(user)
-=======
+					route_callback(null)
+				}
+			})
+		}
+	})
+}
+
 var getMostPopularCourse = function (route_callback) {
 	var allCourses = [];
 	getAllSessions((err, sessionArray) => {
@@ -222,7 +229,6 @@ var updateComplaint = function(target, submitter, content, status, route_callbac
 				if (err) {
 					route_callback(err);
 				} else {
->>>>>>> iteration2
 					route_callback(null)
 				}
 			})
@@ -230,9 +236,7 @@ var updateComplaint = function(target, submitter, content, status, route_callbac
 	})
 }
 
-<<<<<<< HEAD
 var removeQualification = function(email_id, qual, route_callback) {
-	console.log("REMOVE QUALIFICATIONS METHOD")
 	User.findOne({email: email_id}, (err, user) => {
 		if (err) {
 			console.log("Unable to find user to update qualifications")
@@ -251,11 +255,10 @@ var removeQualification = function(email_id, qual, route_callback) {
 				}
 				count++
 			})
-			console.log(qualifs)
+
 			// remove the element from the list
 			qualifs.splice(idx, 1)
 			user.qualifications = qualifs
-			console.log(qualifs)
 
 			//update that user's object
 			user.save( (err) => {
@@ -263,11 +266,13 @@ var removeQualification = function(email_id, qual, route_callback) {
 					console.log("unable to remove user qualification")
 					route_callback(err)
 				} else {
-					console.log("UPDATED USER OBJECT")
-					console.log(user)
-=======
+					route_callback(null)
+				}
+			})
+		}
+	})
+}
 var banUser = function(target, route_callback) {
-	console.log(target);
 	User.findOne( {email: target}, (err, user) => {
 		if (err) {
 			route_callback(err);
@@ -279,7 +284,6 @@ var banUser = function(target, route_callback) {
 				if (err) {
 					route_callback(err);
 				} else {
->>>>>>> iteration2
 					route_callback(null)
 				}
 			})
@@ -288,14 +292,6 @@ var banUser = function(target, route_callback) {
 }
 
 
-<<<<<<< HEAD
-
-var database = {
-	get_users: getUsers,
-	approve_qualification: approveQualification,
-	deny_qualification: denyQualification,
-	remove_qualification: removeQualification,
-=======
 var database = {
 	get_users: getUsers,
 	get_sessions: getAllSessions,
@@ -309,8 +305,11 @@ var database = {
 	updateComplaint: updateComplaint,
 
 	banUser: banUser,
->>>>>>> iteration2
-};
+
+	approve_qualification: approveQualification,
+	deny_qualification: denyQualification,
+	remove_qualification: removeQualification,
+}
 
 module.exports = database;
 
