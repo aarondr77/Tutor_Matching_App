@@ -25,8 +25,13 @@ app.post('/deleteSessions', routes.deleteSessions);
 
 app.get('/getUsers', routes.getUsers);
 
+app.get('/home', routes.home);
+
 app.post('/complaints',  routes.complaints);
+
 app.use('/complaints',  routes.complaints);
+
+app.get('/analytics', routes.analytics);
 
 app.post('/updateComplaint', routes.updateComplaint);
 

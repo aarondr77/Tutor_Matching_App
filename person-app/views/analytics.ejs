@@ -43,21 +43,12 @@
 		</style>
 </head>
 
-</script>
-
 
 <body>
 <div class="intro">
-	<h1 color = "white" >Feedback Page</h1>
+	<h1 color = "white" >Analytics Page</h1>
 </div>
 </body>
 
-<li> <p> <font color="red"> Submitter : Content </font> <p> </li>
-
-<% complaints.forEach((complaint)=>{ %>
-	<%if (complaint.target == "admin@adr.com") {%>
-	  <li>
-	    <p> <font color="red"> <%=complaint.submitter%> : <%=complaint.content%> </font> </p>
-	  </li>
-	<%}%>
-<%})%>
+<li> <p> <font color="white"> Average Daily Sessions: <%=stats.avgSessions%> </font> <p> </li>
+<li> <p> <font color="white"> Most Popular Subject: <%=stats.mostPopular%> </font> <p> </li>
