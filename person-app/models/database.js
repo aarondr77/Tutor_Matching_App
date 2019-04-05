@@ -2,6 +2,7 @@
 var User = require('./User.js');
 var Session = require('./Session.js');
 var Complaint = require('./Complaint.js');
+var _ = require('lodash');
 
 // returns all users
 var getUsers = function(route_callback) {
@@ -18,6 +19,41 @@ var getUsers = function(route_callback) {
 	});
 }
 
+var getMostPopularCourse = function (route_callback) {
+	var allCourses = [];
+	getAllSessions((err, sessionArray) => {
+		if(err) {
+			route_callback(err, null)
+		} else {
+			// iterate throuhg all sessions and add course title to allCourses
+			_.forEach(sessionArray, function(sessionObject) {
+				allCourses.push(sessionObject.subject);
+			});
+			console.log("all courses", allCourses);
+			// get most popular
+			var mostPopular = _.head(_(allCourses)
+  			.countBy()
+  			.entries()
+  			.maxBy('[1]'));
+			route_callback(null, mostPopular);
+		}
+	});
+}
+
+var getAllSessions = function(route_callback) {
+	Session.find({}, (err, allSessions) => {
+		if(err) {
+			console.log("error: " + err);
+			route_callback(err, null)
+		} else if(!allSessions) {
+			console.log("no sessions");
+			route_callback(null, null)
+		} else {
+			console.log("found all users : ", allSessions);
+			route_callback(null, allSessions);
+		}
+	});
+}
 
 var getComplaints = function(route_callback) {
 	Complaint.find({}, (err, complaints) => {
@@ -107,7 +143,8 @@ var banUser = function(target, route_callback) {
 
 var database = {
 	get_users: getUsers,
-
+	get_sessions: getAllSessions,
+	get_most_popular_course: getMostPopularCourse,
 	get_complaints: getComplaints,
 
 	deleteSessionsOfTutor: deleteSessionsOfTutor,

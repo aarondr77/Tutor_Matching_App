@@ -30,6 +30,10 @@ function clearDB () {
 }
 
 function loadData () {
+	var dummyUsers = [];
+	var dummySessions = [];
+	var dummyComplaints = [];
+	var dummyFeedback = [];
 
 	var user1 = new User({
 		firstName: "Aaron",
@@ -128,7 +132,7 @@ function loadData () {
 		sessionID: 2,
 		tutor: "Aaron",
 		student: "Chris",
-		subject: 'Math114',
+		subject: 'Bio001',
 		date: "3/12/19",
 		duration: 60,
 		price: "25",
@@ -141,7 +145,7 @@ function loadData () {
 		sessionID: 1,
 		tutor: "Tamir",
 		student: "Petra",
-		subject: 'Math114',
+		subject: 'Phys100',
 		date: "3/12/19",
 		duration: 60,
 		price: "25",
@@ -154,6 +158,32 @@ function loadData () {
 		sessionID: 1,
 		tutor: "Tamir",
 		student: "Chris",
+		subject: 'Bio001',
+		date: "3/12/19",
+		duration: 60,
+		price: "25",
+		status: "accepted",
+		studentEmail: "chris@gmail.com",
+		tutorEmail: "tamir@gmail.com",
+	});
+
+	var session5 = new Session({
+		sessionID: 1,
+		tutor: "Tamir",
+		student: "Chris",
+		subject: 'Bio001',
+		date: "3/12/19",
+		duration: 60,
+		price: "25",
+		status: "accepted",
+		studentEmail: "chris@gmail.com",
+		tutorEmail: "tamir@gmail.com",
+	});
+
+	var session6 = new Session({
+		sessionID: 1,
+		tutor: "Tamir",
+		student: "Chris",
 		subject: 'Math114',
 		date: "3/12/19",
 		duration: 60,
@@ -162,6 +192,7 @@ function loadData () {
 		studentEmail: "chris@gmail.com",
 		tutorEmail: "tamir@gmail.com",
 	});
+
 
 	// save the person to the database
 	user1.save( (err) => {
@@ -243,6 +274,24 @@ function loadData () {
 		}
 	});
 
+	session5.save( (err) => {
+		if (err) {
+		    console.log(err);
+		    res.end();
+		} else {
+			console.log("added user")
+		}
+	});
+
+	session6.save( (err) => {
+		if (err) {
+		    console.log(err);
+		    res.end();
+		} else {
+			console.log("added user")
+		}
+	});
+
 	var complaint1 = new Complaint({
 		target: "aaron@gmail.com",
 		submitter: "chris@gmail.com",
@@ -307,6 +356,7 @@ function loadData () {
 	});
 }
 
+// END OF DUMMY DATA --------------------------------------------------------
 
 var checkLogin = function(req, res) {
 
@@ -322,7 +372,6 @@ var checkLogin = function(req, res) {
 		var userArray = []
 		db.get_users((err, users) => {
 			userArray = users
-			//console.log(userArray)
 			res.redirect('/home');
 		})
 	} else {
@@ -339,7 +388,18 @@ var logout = function (req, res) {
 var analytics = function(req, res) {
 	console.log("reached analytics");
 	if(logged_in) {
-		res.render('.././views/analytics', {stats: {avgSessions: 0, mostPopular: "Math"}});
+		// search for most popular sessions
+		var mostPopularCourse = "";
+
+		db.get_most_popular_course((err, course) => {
+			if(err) {
+				console.log("err for analytics:" , err)
+			} else {
+				console.log("MOST POPULAR ------> ", course);
+				mostPopularCourse = course;
+				res.render('.././views/analytics', {stats: {avgSessions: 0, mostPopular: mostPopularCourse}});
+			}
+		});
 	} else {
 		res.redirect('/');
 	}
@@ -462,6 +522,7 @@ var routes = {
 	feedback: feedback,
 	analytics: analytics,
 	home: homepage,
+
 };
 
 module.exports = routes;
