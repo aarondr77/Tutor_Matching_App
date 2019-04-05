@@ -23,6 +23,10 @@ function clearDB () {
 	Session.remove({}, function(err) {
 		console.log('cleared Session database');
 	})
+
+	Complaint.remove({}, function(err) {
+		console.log('cleared Session database');
+	})
 }
 
 function loadData () {
@@ -234,6 +238,38 @@ function loadData () {
 			console.log("added user")
 		}
 	});
+
+	var complaint1 = new Complaint({
+		target: "Chris",
+		submitter: "Aaron",
+		content: "He sucks",
+		status: 'Approved'
+	});
+
+	var complaint2 = new Complaint({
+		target: "Petra",
+		submitter: "Chris",
+		content: "Boo",
+		status: 'Denied'
+	});
+
+	complaint1.save( (err) => {
+		if (err) {
+		    console.log(err);
+		    res.end();
+		} else {
+			console.log("added complaint")
+		}
+	});
+
+	complaint2.save( (err) => {
+		if (err) {
+		    console.log(err);
+		    res.end();
+		} else {
+			console.log("added complaint")
+		}
+	});
 }
 
 
@@ -311,12 +347,27 @@ var deleteSessions = function (req, res) {
 	}
 }
 
+var updateComplaint = function (req, res) {
+	console.log("in Routes! Updating Complaints");
+	var complaint = req.body.complaint;
+
+	db.updateComplaint(complaint, (err) => {
+		if (err) {
+			console.log("err:" + err);
+		} else {
+			console.log("successful delete");
+		}
+	});
+}
+
+
 var routes = {
 	check_login: checkLogin,
 	logout: logout,
 	getUsers: getUsers,
 	complaints: complaints,
 	deleteSessions: deleteSessions,
+	updateComplaint: updateComplaint,
 };
 
 module.exports = routes;

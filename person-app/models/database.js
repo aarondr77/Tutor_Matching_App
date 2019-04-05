@@ -28,6 +28,7 @@ var getComplaints = function(route_callback) {
 			console.log("no users")
 			route_callback(null,  null)
 		} else {
+			console.log("getComplaints:" + complaints)
 			route_callback(null, complaints)
 		}
 	});
@@ -61,6 +62,26 @@ var deleteSessionsOfStudent = function (email, route_callback) {
 	});
 }
 
+var updateComplaint = function(complaint, route_callback) {
+	Complaint.findOne( {submitter: complaint.submitter, target: complaint.target, content: complaint.target}, (err, comp) => {
+		if (err) {
+			route_callback(err);
+		} else if (!comp) {
+			route_callback(200);
+		} else {
+			comp.status = complaint.status;
+			comp.save ((err) => {
+				if (err) {
+					route_callback(err);
+				} else {
+					route_callback(null)
+				}
+			})
+		}
+	})
+}
+
+
 var database = {
 	get_users: getUsers,
 
@@ -68,6 +89,8 @@ var database = {
 
 	deleteSessionsOfTutor: deleteSessionsOfTutor,
 	deleteSessionsOfStudent: deleteSessionsOfStudent,
+
+	updateComplaint: updateComplaint,
 
 };
 

@@ -2,7 +2,7 @@
 var express = require('express');
 var app = express();
 var routes = require('./routes/routes.js')
-
+var jsdom = require("jsdom");
 
 // set up EJS
 app.set('view engine', 'ejs');
@@ -24,6 +24,9 @@ app.post('/deleteSessions', routes.deleteSessions);
 app.get('/getUsers', routes.getUsers);
 
 app.post('/complaints',  routes.complaints);
+app.use('/complaints',  routes.complaints);
+
+app.post('/updateComplaint', routes.updateComplaint);
 
 app.use('/public', express.static('public'));
 
