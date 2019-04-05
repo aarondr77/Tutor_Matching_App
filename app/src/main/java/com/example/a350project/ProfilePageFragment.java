@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 
 /**
@@ -148,17 +149,12 @@ public class ProfilePageFragment extends Fragment {
             errorMessage.setText("Please fill out all fields");
         }
 
-
-
-
-
         final AlertDialog dialog = new AlertDialog.Builder(c)
                 .setTitle("Enter New Session Info:")
                 .setView(textEntryView)
                 .setPositiveButton("Add", null)
                 .setNegativeButton("Cancel", null)
                 .create();
-
 
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
 

@@ -45,8 +45,31 @@
 
 <script>
 $(document).ready(function () {
+
+	$('button.deny').click(function () {
+		this.dataset.status = "Denied"
+		console.log("Deny Button");
+		var data = {
+			target: this.dataset.target,
+			submitter:this.dataset.submitter,
+			status:this.dataset.status,
+			content: this.dataset.content,
+		}
+		$.ajax({
+			type: "post",
+			url: "/complaints/updateComplaint",
+			data: data,
+			success: function(data) {
+				console.log("success?")
+			}
+		});
+		location.reload()
+	});
+
+
 	$('button.approve').click(function () {
 		this.dataset.status = "Approved"
+		console.log("Approved Button");
 		var data = {
 			target: this.dataset.target,
 			submitter:this.dataset.submitter,
@@ -72,24 +95,7 @@ $(document).ready(function () {
 		location.reload()
 	});
 
-	$('button.deny').click(function () {
-		this.dataset.status = "Denied"
-		var data = {
-			target: this.dataset.target,
-			submitter:this.dataset.submitter,
-			status:this.dataset.status,
-			content: this.dataset.content,
-		}
-		$.ajax({
-			type: "post",
-			url: "/complaints/updateComplaint",
-			data: data,
-			success: function(data) {
-				console.log("success?")
-			}
-		});
-		location.reload()
-	});
+
 });
 
 </script>

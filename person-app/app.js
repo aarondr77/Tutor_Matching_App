@@ -3,6 +3,8 @@ var express = require('express');
 var app = express();
 var routes = require('./routes/routes.js')
 var jsdom = require("jsdom");
+var mongoose = require("mongoose");
+mongoose.connect('mongodb://localhost:27017/appDatabase');
 
 // set up EJS
 app.set('view engine', 'ejs');
@@ -23,11 +25,16 @@ app.post('/deleteSessions', routes.deleteSessions);
 
 app.get('/getUsers', routes.getUsers);
 
+app.get('/home', routes.home);
+
+app.get('/complaints',  routes.complaints);
 app.post('/complaints',  routes.complaints);
 
 app.post('/complaints/updateComplaint', routes.updateComplaint);
 
 app.post('/complaints/banUser', routes.banUser);
+
+app.get('/analytics', routes.analytics);
 
 app.post('/feedback',  routes.feedback);
 
