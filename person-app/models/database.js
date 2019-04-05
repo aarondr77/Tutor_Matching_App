@@ -1,5 +1,6 @@
-// import the User class from User.js
+// import the databases
 var User = require('./User.js');
+var Session = require('./Session.js');
 
 // returns all users
 var getUsers = function(route_callback) {
@@ -16,7 +17,8 @@ var getUsers = function(route_callback) {
 	});
 }
 
-var get_complaints = function(route_callback) {
+
+var getComplaints = function(route_callback) {
 	Complaint.find({}, (err, complaints) => {
 		if (err) {
 			console.log("err: " + err)
@@ -26,13 +28,43 @@ var get_complaints = function(route_callback) {
 			route_callback(null,  null)
 		} else {
 			route_callback(null, complaints)
+
+
+var deleteSessionsOfTutor = function (email, route_callback) {
+	console.log("trying to delete: " + email);
+	Session.remove({tutorEmail: email}, err => {
+		if (err) {
+			console.log("err: " + err);
+			route_callback(err);
+		} else {
+			console.log("deleted sessions");
+			route_callback(null)
+		}
+	});
+}
+
+var deleteSessionsOfStudent = function (email, route_callback) {
+	console.log("trying to delete: " + email);
+	Session.remove({studentEmail: email}, err => {
+		if (err) {
+			console.log("err: " + err);
+			route_callback(err);
+		} else {
+			console.log("deleted sessions");
+			route_callback(null)
+
 		}
 	});
 }
 
 var database = {
 	get_users: getUsers,
-	get_complaints: get_complaints,
+
+	get_complaints: getComplaints,
+
+	deleteSessionsOfTutor: deleteSessionsOfTutor,
+	deleteSessionsOfStudent: deleteSessionsOfStudent,
+
 };
 
 module.exports = database;
