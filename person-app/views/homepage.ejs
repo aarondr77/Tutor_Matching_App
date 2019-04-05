@@ -14,7 +14,7 @@
 		 body{
 		   padding-top: 50px;
 		   padding-bottom: 50px;
-		   background-color: #FFFFFF;
+		   background-color: #CEE9FA;
 		}
 		 .login-box {
 			 max-width: 330px;
@@ -43,6 +43,11 @@
 		 .hidden {
 			 display: none;
 		 }
+
+		 navbutton {
+    		float:left;
+    		margin:5px;
+		}
 	 </style>
 	 <style>
 	 	h1 {
@@ -54,7 +59,7 @@
 
 <script>
 	function getPendingQualifications() {
-		var qualifications_html = "<h3 style=\"color:blue;\">Current Tutor Pending Qualifications: Please Approve or Deny</h3>" + "<table style=\"width:100%\">"
+		var qualifications_html = "<h5 style=\"color:blue;\">Current Tutor Pending Qualifications: Please Approve or Deny</h5>" + "<table style=\"width:100%\">"
 		qualifications_html += "<tr>" + "<th>Tutor Firstname</th>" + "<th>Tutor Lastname</th>" + "<th>Subject</th>" + "<th>Grade</th>" + "</tr>" + "<br>"
 	
 		var userArray = [];
@@ -78,11 +83,11 @@
 					var email = users[i].email
 					
 					qualifications_html +=  "<th><form action=\"/approveQualification?email=" + email + "&qualif=" + qualif[j].split("-")[0] + "&a=" + a + "\"method=\"post\" id=\"denyqualificationform_" + a + "\">"
-		  			qualifications_html += "<button type=\"submit\" class=\"btn button btn-lg btn-primary btn-block\">Approve this Qualification</button><br>"
+		  			qualifications_html += "<button type=\"submit\" class=\"btn btn-success\">Approve this Qualification</button><br>"
 					qualifications_html += "</form>"  + "</th>"
 
 					qualifications_html += "<th><form action=\"/denyQualification?email=" + email + "&qualif=" + qualif[j].split("-")[0] + "&d=" + d + "\"method=\"post\" id=\"denyqualificationform_" + d + "\">"
-		  			qualifications_html += "<button type=\"submit\" class=\"btn button btn-lg btn-primary btn-block\">Deny this Qualification</button><br>"
+		  			qualifications_html += "<button type=\"submit\" class=\"btn btn-success\">Deny this Qualification</button><br>"
 					qualifications_html += "</form>"  + "</th>" + "</tr>" + "<br>"
 
 					a += 1
@@ -103,7 +108,7 @@
        		userArray = await response.json();
 			var users = userArray.users
 
-			var qualifications_html = "<h3 style=\"color:blue;\">Current Tutor Qualifications</h3>" + "<table style=\"width:100%\">"
+			var qualifications_html = "<h5 style=\"color:blue;\">Current Tutor Qualifications</h5>" + "<table style=\"width:100%\">"
 			qualifications_html += "<tr>" + "<th>Tutor Firstname</th>" + "<th>Tutor Lastname</th>" + "<th>Subject</th>" + "</tr>" + "<br>"	
 
 			var i
@@ -121,7 +126,7 @@
 					var email = users[i].email
 					
 					qualifications_html +=  "<th><form action=\"/removeQualification?email=" + email + "&qualif=" + qualif[j].split("-")[0] + "&a=" + a + "\"method=\"post\" id=\"removequalificationform_" + a + "\">"
-		  			qualifications_html += "<button type=\"submit\" class=\"btn button btn-lg btn-primary btn-block\">Remove this Qualification</button><br>"
+		  			qualifications_html += "<button type=\"submit\" class=\"btn btn-success\">Remove this Qualification</button><br>"
 					qualifications_html += "</form>"  + "</th>"
 
 					a += 1
@@ -224,37 +229,26 @@ $(document).ready(function () {
 
 <body>
 	<div class="intro">
-		<h1 style="color:blue;" >Welcome to the admin app!</h1>
+		<h1 style="color:green;" >Welcome to the admin app!</h1>
 	</div>
 
-	</div>
+
 
 	
 </table>
-		<h1 color = "white" >Welcome to the admin app!</h1>
-	</div>
 
 
-	<form action="/analytics" method="get" id="analytics">
-		<button type="analytics" class="btn button btn-lg btn-primary btn-block">Analytics</button><br>
-	</form>
-
-	<form action="/complaints" method="post" id="complaints">
-		<button type="complaints" class="btn button btn-lg btn-primary btn-block">Complaints</button><br>
-	</form>
-
-	<form action="/feedback" method="post" id="feedback">
-		<button type="feedback" class="btn button btn-lg btn-primary btn-block">Feedback</button><br>
-	</form>
-
-	<form action="/logout" method="post">
-  	<button type="logout" class="btn button btn-lg btn-primary btn-block">Logout</button><br>
-	</form>
 
 
+
+	<br>
+	<br>
+	<br>
+	<br>
+	
 	<form id = "search" class = "form-inline">
 		<input type = "search" id = "textBoxID" placeholder="Search for names...">
-  	<button type="submit" class="btn button btn-primary btn-block">Search</button><br>
+  	<button type="submit" class="btn btn-success">Search</button><br>
 	</form>
 
 
@@ -268,7 +262,7 @@ $(document).ready(function () {
 		<p id = "qualifications"></p>
 
 		<form id = "delete_sessions" class = "form-inline">
-			<button type="submit" class="btn button btn-primary btn-block">Delete Sessions</button>
+			<button type="submit" class="btn btn-success">Delete Sessions</button>
 		</form>
 	</div>
 
@@ -276,6 +270,30 @@ $(document).ready(function () {
 
 	<br><div class="post"id="userQualifications"> </div>
 
+	<navbutton>
+	<form action="/analytics" method="get" id="analytics">
+		<button type="analytics" class="btn btn-success">Analytics</button><br>
+	</form>
+	</navbutton>
+
+	<navbutton>
+	<form action="/complaints" method="post" id="complaints">
+		<button type="complaints" class="btn btn-success">Complaints</button><br>
+	</form>
+	</navbutton>
+
+	<navbutton>
+	<form action="/feedback" method="post" id="feedback">
+		<button type="feedback" class="btn btn-success">Feedback</button><br>
+	</form>
+	</navbutton>
+
+
+	<navbutton>
+		<form action="/logout" method="post">
+  				<button type="logout" class="btn btn-success">Logout</button><br>
+		</form>
+	</navbutton>
 
 </body>
 </html>
