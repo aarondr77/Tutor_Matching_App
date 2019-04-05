@@ -35,10 +35,16 @@
 		 	max-width: 330px;
 			padding: 10px;
 		 }
+
+		 navbutton {
+    		float:left;
+    		margin:5px;
+		}
+
 	 </style>
 	 <style>
 	 	h1 {
-        color: #FBFBFF;
+        color: #0;
 			 }
 		</style>
 </head>
@@ -102,7 +108,7 @@ $(document).ready(function () {
 
 <body>
 <div class="intro">
-	<h1 color = "white" >Complaints Page</h1>
+	<h1 color = "black" >Complaints Page</h1>
 </div>
 </body>
 <li> <p> <font color="red"> Submitter : Content : Target : Status </font> <p> </li>
@@ -121,3 +127,16 @@ $(document).ready(function () {
 		<%}%>
 	<%}%>
 <%})%>
+
+<navbutton>
+
+<form action="/home" method="get">
+  		<button type="logout" class="btn btn-success">Back to Homepage</button><br>
+</form>
+</navbutton>
+
+<navbutton>
+<form action="/logout" method="post">
+  				<button type="logout" class="btn btn-success">Logout</button><br>
+</form>
+</navbutton>

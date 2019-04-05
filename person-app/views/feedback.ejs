@@ -35,10 +35,15 @@
 		 	max-width: 330px;
 			padding: 10px;
 		 }
+
+		 navbutton {
+    		float:left;
+    		margin:5px;
+		}
 	 </style>
 	 <style>
 	 	h1 {
-        color: #FBFBFF;
+        color: #0;
 			 }
 		</style>
 </head>
@@ -48,7 +53,7 @@
 
 <body>
 <div class="intro">
-	<h1 color = "white" >Feedback Page</h1>
+	<h1 color = "black" >Feedback Page</h1>
 </div>
 </body>
 
@@ -61,3 +66,16 @@
 	  </li>
 	<%}%>
 <%})%>
+
+<navbutton>
+
+<form action="/home" method="get">
+  		<button type="logout" class="btn btn-success">Back to Homepage</button><br>
+</form>
+</navbutton>
+
+<navbutton>
+<form action="/logout" method="post">
+  				<button type="logout" class="btn btn-success">Logout</button><br>
+</form>
+</navbutton>
