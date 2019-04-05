@@ -24,11 +24,10 @@ app.post('/deleteSessions', routes.deleteSessions);
 app.get('/getUsers', routes.getUsers);
 
 app.post('/complaints',  routes.complaints);
-app.use('/complaints',  routes.complaints);
 
-app.post('/updateComplaint', routes.updateComplaint);
+app.post('/complaints/updateComplaint', routes.updateComplaint);
 
-app.post('/banUser', routes.banUser);
+app.post('/complaints/banUser', routes.banUser);
 
 app.post('/feedback',  routes.feedback);
 

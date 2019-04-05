@@ -55,7 +55,7 @@ $(document).ready(function () {
 		}
 		$.ajax({
 			type: "post",
-			url: "/updateComplaint",
+			url: "/complaints/updateComplaint",
 			data: data,
 			success: function(data) {
 				console.log("success?")
@@ -63,7 +63,7 @@ $(document).ready(function () {
 		});
 		$.ajax({
 			type: "post",
-			url: "/banUser",
+			url: "/complaints/banUser",
 			data: data,
 			success: function(data) {
 				console.log("success?")
@@ -82,7 +82,7 @@ $(document).ready(function () {
 		}
 		$.ajax({
 			type: "post",
-			url: "/updateComplaint",
+			url: "/complaints/updateComplaint",
 			data: data,
 			success: function(data) {
 				console.log("success?")

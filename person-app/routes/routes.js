@@ -340,24 +340,39 @@ var complaints = function (req, res) {
 	console.log("complaints");
 	var complaintsArray = []
 
-	db.get_complaints((err, complaints) => {
-		console.log(err);
-		complaintsArray = complaints
-		console.log(complaintsArray);
-		res.render('.././views/complaints', {complaints: complaintsArray});
-	})
+	if (logged_in == true) {
+		db.get_complaints((err, complaints) => {
+			console.log(err);
+			complaintsArray = complaints
+			console.log(complaintsArray);
+			res.render('.././views/complaints', {complaints: complaintsArray});
+		})
+	} else {
+		res.writeHead(301,
+		  {Location: '/'}
+		);
+		res.end();
+	}
 }
 
 var feedback = function (req, res) {
 	console.log("feedback");
 	var complaintsArray = []
 
-	db.get_complaints((err, complaints) => {
-		console.log(err);
-		complaintsArray = complaints
-		console.log(complaintsArray);
-		res.render('.././views/feedback', {complaints: complaintsArray});
-	})
+
+	if (logged_in == true) {
+		db.get_complaints((err, complaints) => {
+			console.log(err);
+			complaintsArray = complaints
+			console.log(complaintsArray);
+			res.render('.././views/feedback', {complaints: complaintsArray});
+		})
+	} else {
+		res.writeHead(301,
+		  {Location: '/'}
+		);
+		res.end();
+	}
 }
 
 var getUsers = function (req, res) {
