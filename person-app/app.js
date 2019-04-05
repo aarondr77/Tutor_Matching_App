@@ -21,6 +21,8 @@ app.post('/logout', routes.logout);
 
 app.get('/getUsers', routes.getUsers);
 
+app.post('/complaints',  routes.complaints);
+
 app.use('/public', express.static('public'));
 
 app.get('/', function(req, res){

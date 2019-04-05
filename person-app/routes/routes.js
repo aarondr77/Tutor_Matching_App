@@ -9,6 +9,7 @@ var logged_in = false;
 
 var User = require('../models/User.js');
 var Session = require('../models/Session.js');
+var Complaint = require('../models/Complaint.js');
 var db = require('../models/database.js');
 
 
@@ -268,6 +269,14 @@ var logout = function (req, res) {
 	res.render('.././views/login', {error_message: null});
 }
 
+var complaints = function (req, res) {
+	console.log("complaints");
+	fetch('/get complaints').then(async function(response) {
+			allComplaints = await response.json();
+			res.render('.././views/complaints', {complaints: allComplaints});
+	});
+}
+
 var getUsers = function (req, res) {
 	var userArray = []
 	db.get_users((err, users) => {
@@ -282,6 +291,7 @@ var routes = {
 	check_login: checkLogin,
 	logout: logout,
 	getUsers: getUsers,
+	complaints: complaints,
 
 };
 
