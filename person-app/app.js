@@ -30,6 +30,8 @@ app.post('/updateComplaint', routes.updateComplaint);
 
 app.post('/banUser', routes.banUser);
 
+app.post('/feedback',  routes.feedback);
+
 app.use('/public', express.static('public'));
 
 app.get('/', function(req, res){

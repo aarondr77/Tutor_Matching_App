@@ -257,6 +257,13 @@ function loadData () {
 		status: 'Denied'
 	});
 
+	var complaint3 = new Complaint({
+		target: "petra@gmail.com",
+		submitter: "aaron@gmail.com",
+		content: "Silly",
+		status: 'Pending'
+	});
+
 	complaint1.save( (err) => {
 		if (err) {
 		    console.log(err);
@@ -272,6 +279,30 @@ function loadData () {
 		    res.end();
 		} else {
 			console.log("added complaint")
+		}
+	});
+
+	complaint3.save( (err) => {
+		if (err) {
+		    console.log(err);
+		    res.end();
+		} else {
+			console.log("added complaint")
+		}
+	});
+
+	var feedback1 = new Complaint({
+		target: "admin@adr.com",
+		submitter: "tamir@gmail.com",
+		content: "This app is Dumbbbb",
+	});
+
+	feedback1.save( (err) => {
+		if (err) {
+		    console.log(err);
+		    res.end();
+		} else {
+			console.log("added feedback")
 		}
 	});
 }
@@ -314,6 +345,18 @@ var complaints = function (req, res) {
 		complaintsArray = complaints
 		console.log(complaintsArray);
 		res.render('.././views/complaints', {complaints: complaintsArray});
+	})
+}
+
+var feedback = function (req, res) {
+	console.log("feedback");
+	var complaintsArray = []
+
+	db.get_complaints((err, complaints) => {
+		console.log(err);
+		complaintsArray = complaints
+		console.log(complaintsArray);
+		res.render('.././views/feedback', {complaints: complaintsArray});
 	})
 }
 
@@ -389,6 +432,7 @@ var routes = {
 	deleteSessions: deleteSessions,
 	updateComplaint: updateComplaint,
 	banUser: banUser,
+	feedback: feedback,
 };
 
 module.exports = routes;

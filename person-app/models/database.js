@@ -85,7 +85,8 @@ var updateComplaint = function(target, submitter, content, status, route_callbac
 }
 
 var banUser = function(target, route_callback) {
-	Complaint.findOne( {target: target}, (err, user) => {
+	console.log(target);
+	User.findOne( {email: target}, (err, user) => {
 		if (err) {
 			route_callback(err);
 		} else if (!user) {
