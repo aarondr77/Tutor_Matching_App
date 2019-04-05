@@ -3,6 +3,8 @@ var express = require('express');
 var app = express();
 var routes = require('./routes/routes.js')
 var jsdom = require("jsdom");
+var mongoose = require("mongoose");
+mongoose.connect('mongodb://localhost:27017/appDatabase');
 
 // set up EJS
 app.set('view engine', 'ejs');
