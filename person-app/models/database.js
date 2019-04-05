@@ -3,6 +3,7 @@ var User = require('./User.js');
 var Session = require('./Session.js');
 var Complaint = require('./Complaint.js');
 var _ = require('lodash');
+var dateFounded = new Date('04/02/2019');
 
 // returns all users
 var getUsers = function(route_callback) {
@@ -39,6 +40,26 @@ var getMostPopularCourse = function (route_callback) {
 		}
 	});
 }
+
+var getAverageDailySessions = function (route_callback) {
+	getAllSessions((err, sessionArray) => {
+		if(err) {
+			route_callback(err, null)
+		} else {
+			// get total number of sessions and total number of days
+			var oneDay = 24*60*60*1000;
+			var totalNumSessions = sessionArray.length;
+			var currDate = new Date();
+			console.log("currDate: ", currDate);
+			console.log("dateFounded: " , dateFounded);
+			var totalDays = Math.round(Math.abs((dateFounded.getTime() - currDate.getTime())/(oneDay)));
+			console.log("DATE DIFFERENCE>>>>", totalDays);
+			var avgDailySessions = totalNumSessions/totalDays;
+			route_callback(null, avgDailySessions);
+		}
+	});
+}
+
 
 var getAllSessions = function(route_callback) {
 	Session.find({}, (err, allSessions) => {
@@ -146,6 +167,7 @@ var database = {
 	get_sessions: getAllSessions,
 	get_most_popular_course: getMostPopularCourse,
 	get_complaints: getComplaints,
+	get_avg_daily_sessions: getAverageDailySessions,
 
 	deleteSessionsOfTutor: deleteSessionsOfTutor,
 	deleteSessionsOfStudent: deleteSessionsOfStudent,
