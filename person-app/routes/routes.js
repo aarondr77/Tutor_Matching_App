@@ -267,10 +267,14 @@ var logout = function (req, res) {
 
 var complaints = function (req, res) {
 	console.log("complaints");
-	fetch('/get complaints').then(async function(response) {
-			allComplaints = await response.json();
-			res.render('.././views/complaints', {complaints: allComplaints});
-	});
+	var complaintsArray = []
+
+	db.get_complaints((err, complaints) => {
+		console.log(err);
+		complaintsArray = complaints
+		console.log(complaintsArray);
+		res.render('.././views/complaints', {complaints: complaintsArray});
+	})
 }
 
 var getUsers = function (req, res) {

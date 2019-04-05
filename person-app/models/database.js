@@ -1,6 +1,7 @@
 // import the databases
 var User = require('./User.js');
 var Session = require('./Session.js');
+var Complaint = require('./Complaint.js');
 
 // returns all users
 var getUsers = function(route_callback) {
@@ -28,6 +29,9 @@ var getComplaints = function(route_callback) {
 			route_callback(null,  null)
 		} else {
 			route_callback(null, complaints)
+		}
+	});
+}
 
 
 var deleteSessionsOfTutor = function (email, route_callback) {
