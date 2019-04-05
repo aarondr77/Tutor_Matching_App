@@ -394,10 +394,20 @@ var analytics = function(req, res) {
 		db.get_most_popular_course((err, course) => {
 			if(err) {
 				console.log("err for analytics:" , err)
+				mostPopularCourse = "Error getting most popular course."
 			} else {
 				console.log("MOST POPULAR ------> ", course);
 				mostPopularCourse = course;
-				res.render('.././views/analytics', {stats: {avgSessions: 0, mostPopular: mostPopularCourse}});
+				db.get_avg_daily_sessions((avgDailyErr, average) => {
+					avgDailySessions = "";
+					if(avgDailyErr) {
+						console.log("err for analytics:", avgDailyErr);
+						avgDailySessions = avgDailyErr;
+					} else {
+						avgDailySessions = average;
+						res.render('.././views/analytics', {stats: {avgSessions: avgDailySessions, mostPopular: mostPopularCourse}});
+					}
+				})
 			}
 		});
 	} else {
