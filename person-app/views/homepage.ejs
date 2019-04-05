@@ -36,6 +36,9 @@
 		 	max-width: 330px;
 			padding: 10px;
 		 }
+		 .hidden {
+			 display: none;
+		 }
 	 </style>
 	 <style>
 	 	h1 {
@@ -47,7 +50,7 @@
 <script>
 
 	var users;
-	var usersToSearch;
+	var foundUser;
 
   function getUsers() {
 		console.log("called get users");
@@ -62,6 +65,8 @@
 $(document).ready(function () {
   // Listen to submit event on the <form> itself!
   $('#search').submit(function (e) {
+
+
 		console.log("form submitted");
 
     e.preventDefault();
@@ -70,19 +75,57 @@ $(document).ready(function () {
 		document.getElementById('textBoxID').value = "";
 
 		var length = users.users.length;
-		var user = foundUser;
 
 		for (var i = 0; i < length; i++) {
 			var firstname = users.users[i].firstName;
 			var lastname = users.users[i].lastName;
 			var fullname = firstname + " " + lastname;
-			console.log("examining: " + fullname);
 			if (fullname == searchTerm) {
 				foundUser = users.users[i];
 				console.log("found user!");
+
+				// fill div with user information
+				$('#foundUser').removeClass('hidden');
+    		document.getElementById('name').innerHTML = "Name: " + fullname;
+				document.getElementById('email').innerHTML = "Email: " + foundUser.email;
+				document.getElementById('userType').innerHTML = "User Type: " + foundUser.userType;
+				document.getElementById('rating').innerHTML = "Rating: " + foundUser.rating;
+				document.getElementById('qualifications').innerHTML = "Qualifications: " + foundUser.qualifications;
+
+
+				//deleteSessions(data);
 			}
 		}
   });
+});
+
+
+$(document).ready(function () {
+  // Listen to submit event on the <form> itself!
+  $('#delete_sessions').submit(function (e) {
+
+		e.preventDefault();
+
+
+		var email = foundUser.email;
+		var userType = foundUser.userType;
+
+		console.log("email:" + email);
+		console.log("userType:" + userType);
+
+		var data = {
+			email: email,
+			userType: userType
+		}
+
+		$.ajax({
+			type: "post",
+			url: "/deleteSessions",
+			data: data,
+			success: function(data) {}
+		});
+
+	});
 });
 
 </script>
@@ -123,6 +166,18 @@ $(document).ready(function () {
 		<input type="submit" value="Navigate to Qualifications Page">
 	</form>
 
+	<form action="/analytics" method="get" id="analytics">
+		<button type="analytics" class="btn button btn-lg btn-primary btn-block">Analytics</button><br>
+	</form>
+
+	<form action="/complaints" method="post" id="complaints">
+		<button type="complaints" class="btn button btn-lg btn-primary btn-block">Complaints</button><br>
+	</form>
+
+	<form action="/feedback" method="post" id="feedback">
+		<button type="feedback" class="btn button btn-lg btn-primary btn-block">Feedback</button><br>
+	</form>
+
 	<form action="/logout" method="post">
   	<button type="logout" class="btn button btn-lg btn-primary btn-block">Logout</button><br>
 	</form>
@@ -133,12 +188,22 @@ $(document).ready(function () {
   	<button type="submit" class="btn button btn-primary btn-block">Search</button><br>
 	</form>
 
-	<div class="error">
-	 	<%if (users != null) { %>
-			<font color="red">
-				<br> Error: <%= users %><p>
-		<% } %>
+
+	<div id = "foundUser" class="login-box hidden">
+		<p id = "name"></p>
+		<p id = "email"></p>
+		<p id = "userType"></p>
+		<p id = "rating"></p>
+		<p id = "balance"></p>
+		<p id = "qualifications"></p>
+
+		<form id = "delete_sessions" class = "form-inline">
+			<button type="submit" class="btn button btn-primary btn-block">Delete Sessions</button>
+		</form>
 	</div>
+
+
+
 
 </body>
 </html>
