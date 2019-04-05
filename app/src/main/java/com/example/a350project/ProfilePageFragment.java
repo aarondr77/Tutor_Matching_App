@@ -148,15 +148,7 @@ public class ProfilePageFragment extends Fragment {
                 || String.valueOf(price.getText()).equals("")) {
             errorMessage.setText("Please fill out all fields");
         }
-<<<<<<< Updated upstream
 
-
-
-
-
-=======
-
->>>>>>> Stashed changes
         final AlertDialog dialog = new AlertDialog.Builder(c)
                 .setTitle("Enter New Session Info:")
                 .setView(textEntryView)
@@ -164,10 +156,6 @@ public class ProfilePageFragment extends Fragment {
                 .setNegativeButton("Cancel", null)
                 .create();
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
 
             @Override
@@ -179,7 +167,6 @@ public class ProfilePageFragment extends Fragment {
                     @Override
 
                     public void onClick(View view) {
-<<<<<<< Updated upstream
                         // get subjects
                         boolean qualified = false;
                         try{
@@ -205,13 +192,6 @@ public class ProfilePageFragment extends Fragment {
                         boolean notQualified = !String.valueOf(subject.getText()).equals("") && !qualified;
                         //Dismiss once everything is OK.
                         if(!fieldNotCompleted && !notQualified) {
-=======
-                        boolean fieldNotCompleted = String.valueOf(subject.getText()).equals("") || String.valueOf(duration.getText()).equals("")
-                                || String.valueOf(time.getText()).equals("") || String.valueOf(date.getText()).equals("")
-                                || String.valueOf(price.getText()).equals("");
-                        //Dismiss once everything is OK.
-                        if(!fieldNotCompleted) {
->>>>>>> Stashed changes
                             try {
                                 SessionFunctions.addSession(currUser.getString("firstName"), "unclaimed",
                                         MainActivity.currentUserEmail, "unclaimed",
@@ -223,7 +203,6 @@ public class ProfilePageFragment extends Fragment {
                                 Log.e("jsonerror", e.getMessage());
                             }
                             dialog.dismiss();
-<<<<<<< Updated upstream
                         }
                         if(!String.valueOf(subject.getText()).equals("") && !qualified) {
                             errorMessage.setText("You are not qualified.");
@@ -235,10 +214,6 @@ public class ProfilePageFragment extends Fragment {
                         }
                     }
 
-=======
-                        }
-                    }
->>>>>>> Stashed changes
                 });
             }
         });
