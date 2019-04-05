@@ -19,6 +19,8 @@ app.post('/checkLogin', routes.check_login);
 
 app.post('/logout', routes.logout);
 
+app.post('/deleteSessions', routes.deleteSessions);
+
 app.get('/getUsers', routes.getUsers);
 
 app.use('/public', express.static('public'));

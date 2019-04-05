@@ -61,6 +61,8 @@
 $(document).ready(function () {
   // Listen to submit event on the <form> itself!
   $('#search').submit(function (e) {
+
+
 		console.log("form submitted");
 
     e.preventDefault();
@@ -69,20 +71,36 @@ $(document).ready(function () {
 		document.getElementById('textBoxID').value = "";
 
 		var length = users.users.length;
-		var user = foundUser;
+		var foundUser;
 
 		for (var i = 0; i < length; i++) {
 			var firstname = users.users[i].firstName;
 			var lastname = users.users[i].lastName;
 			var fullname = firstname + " " + lastname;
-			console.log("examining: " + fullname);
 			if (fullname == searchTerm) {
 				foundUser = users.users[i];
 				console.log("found user!");
+				var data = {
+					email: foundUser.email,
+					userType: foundUser.userType
+				}
+				deleteSessions(data);
 			}
 		}
   });
 });
+
+function deleteSessions (data) {
+	$.ajax({
+		type: "post",
+		url: "/deleteSessions",
+		data: data,
+		success: function(data) {
+			console.log("success?")
+		}
+	});
+
+}
 
 </script>
 
@@ -106,12 +124,6 @@ $(document).ready(function () {
   	<button type="submit" class="btn button btn-primary btn-block">Search</button><br>
 	</form>
 
-	<div class="error">
-	 	<%if (users != null) { %>
-			<font color="red">
-				<br> Error: <%= users %><p>
-		<% } %>
-	</div>
 
 </body>
 </html>

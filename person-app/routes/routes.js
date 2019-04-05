@@ -14,7 +14,6 @@ var db = require('../models/database.js');
 
 /***************************************/
 
-
 function clearDB () {
 	User.remove({}, function(err) {
 		console.log('cleared User database');
@@ -44,7 +43,6 @@ function loadData () {
 		rating: 5,
 		balance: 150,
 		qualifications: "Math114",
-		sessions: ["1", "2"]
 	});
 
 	var user2 = new User({
@@ -64,7 +62,6 @@ function loadData () {
 		rating: 5,
 		balance: 150,
 		qualifications: "Math114",
-		sessions: ["3", "4"]
 	});
 
 	var user3 = new User({
@@ -84,7 +81,6 @@ function loadData () {
 		rating: 5,
 		balance: 50,
 		qualifications: "Math114",
-		sessions: ["1", "3"]
 	});
 
 	var user4 = new User({
@@ -104,7 +100,6 @@ function loadData () {
 		rating: 5,
 		balance: 50,
 		qualifications: "Math114",
-		sessions: ["2", "4"]
 	});
 
 	var session1 = new Session({
@@ -243,6 +238,7 @@ function loadData () {
 
 var checkLogin = function(req, res) {
 
+	//clearDB();
 	//loadData();
 
 	var input_email = req.body.email;
@@ -278,11 +274,35 @@ var getUsers = function (req, res) {
 	})
 }
 
+var deleteSessions = function (req, res) {
+	console.log("in Routes!");
+	var email = req.body.email;
+	var userType = req.body.userType;
+
+	if (userType == "student") {
+		db.deleteSessionsOfStudent(email, (err) => {
+			if (err) {
+				console.log("err:" + err);
+			} else {
+				console.log("successful delete");
+			}
+		});
+	} else if (userType == "tutor") {
+		db.deleteSessionsOfTutor(email, (err) => {
+			if (err) {
+				console.log("err:" + err);
+			} else {
+				console.log("successful delete");
+			}
+		});
+	}
+}
+
 var routes = {
 	check_login: checkLogin,
 	logout: logout,
 	getUsers: getUsers,
-
+	deleteSessions: deleteSessions,
 };
 
 module.exports = routes;
