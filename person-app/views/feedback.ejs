@@ -57,15 +57,23 @@
 </div>
 </body>
 
-<li> <p> <font color="red"> Submitter : Content </font> <p> </li>
+<table style="width:100%"cellspacing="30px">
+
+<tr> 
+<th> Submitter </th>
+<th> Content </th>
+</tr>
 
 <% complaints.forEach((complaint)=>{ %>
 	<%if (complaint.target == "admin@adr.com") {%>
-	  <li>
-	    <p> <font color="red"> <%=complaint.submitter%> : <%=complaint.content%> </font> </p>
-	  </li>
+	  <tr>
+	  	<th> <%=complaint.submitter%> </th>
+	  	<th> <%=complaint.content%> </th>
+	  </tr>
 	<%}%>
 <%})%>
+
+</table>
 
 <navbutton>
 
