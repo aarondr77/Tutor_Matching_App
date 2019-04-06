@@ -16,14 +16,14 @@ var getUsers = function(route_callback) {
 			console.log("no users")
 			route_callback(null,  null)
 		} else {
-			route_callback(null, users) 
-		} 
+			route_callback(null, users)
+		}
 	});
 }
 
 
 /* Method to approve a qualification for a single user. Removes that subject
-   from the "pendingQualifications" field in their user object 
+   from the "pendingQualifications" field in their user object
    and adds is to the "qualifications" field */
 var approveQualification = function(email_id, qual, route_callback) {
 	console.log(qual)
@@ -38,7 +38,7 @@ var approveQualification = function(email_id, qual, route_callback) {
 			var count = 0
 			var idx = -1
 			var pendingUserQualif = user.pendingQualifications
-			pendingUserQualif.forEach( (pendingQual) => { 
+			pendingUserQualif.forEach( (pendingQual) => {
 				console.log("hey now")
 				console.log(qual)
 				if (pendingQual.split("-")[0] === qual) {
@@ -47,7 +47,7 @@ var approveQualification = function(email_id, qual, route_callback) {
 				count++
 			})
 
-			
+
 			pendingUserQualif.splice(idx, 1)
 			user.pendingQualifications = pendingUserQualif
 
@@ -85,18 +85,18 @@ var denyQualification = function(email_id, qual, route_callback) {
 		} else if (!user) {
 			route_callback("User does not exist")
 		} else {
-			
+
 			// first delete find the element to delete
 			var count = 0
 			var idx = -1
 			var pendingUserQualif = user.pendingQualifications
-			pendingUserQualif.forEach( (pendingQual) => { 
+			pendingUserQualif.forEach( (pendingQual) => {
 				if (pendingQual.split("-")[0] === qual) {
 					idx = count
 				}
 				count++
 			})
-			
+
 			// remove the element from the list
 			pendingUserQualif.splice(idx, 1)
 			user.pendingQualifications = pendingUserQualif
@@ -165,8 +165,8 @@ var addBalance = function(userEmail, amount, route_callback) {
 		} else {
 			// user found
 			// check for integer overflow
-			if(user.balance + amount >= 0) {
-				user.balance = user.balance + amount;
+			if(parseInt(user.balance) + parseInt(amount) >= 0) {
+				user.balance = parseInt(user.balance) + parseInt(amount);
 			}
 			user.save ((err) => {
 				if (err) {
@@ -267,12 +267,12 @@ var removeQualification = function(email_id, qual, route_callback) {
 		} else if (!user) {
 			route_callback("User does not exist")
 		} else {
-			
+
 			// first delete find the element to delete
 			var count = 0
 			var idx = -1
 			var qualifs = user.qualifications
-			qualifs.forEach( (qualif) => { 
+			qualifs.forEach( (qualif) => {
 				if (qualif.split("-")[0] === qual) {
 					idx = count
 				}
@@ -336,4 +336,3 @@ var database = {
 }
 
 module.exports = database;
-
