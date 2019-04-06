@@ -129,19 +129,48 @@ $(document).ready(function () {
 	<h1 color = "black" >Complaints Page</h1>
 </div>
 </body>
-<li> <p> <font color="red"> Submitter : Content : Target : Status </font> <p> </li>
+
+<table style="width:100%"cellspacing="30px">
+<tr>
+<th> Submitter </th>
+<th> Content </th>
+<th> Target </th>
+<th> Status </th>
+</tr>
 
 <% complaints.forEach((complaint)=>{ %>
 	<%if (complaint.target != "admin@adr.com") {%>
 		<%if (complaint.status != "Approved" && complaint.status != "Denied") {%>
-	  <li>
-	    <p> <font color="red"> <%=complaint.submitter%> : <%=complaint.content%> : <%=complaint.target%> : <%=complaint.status%> </font> </p>
-	    <button class="approve" data-target="<%=complaint.target%>" data-submitter="<%=complaint.submitter%>" data-content="<%=complaint.content%>" data-status="<%=complaint.status%>">Approve</button> <button class="deny" data-target="<%=complaint.target%>" data-submitter="<%=complaint.submitter%>" data-content="<%=complaint.content%>" data-status="<%=complaint.status%>">Deny</button>
-	  </li>
+	  <tr>
+	    <th> <%=complaint.submitter%> </th>
+	    <th> <%=complaint.content%> </th>
+	    <th> <%=complaint.target%> </th>
+	    <th> <%=complaint.status%> </th>
+	    <th> <button class="approve" data-target="<%=complaint.target%>" data-submitter="<%=complaint.submitter%>" data-content="<%=complaint.content%>" data-status="<%=complaint.status%>">Approve</button> <button class="deny" data-target="<%=complaint.target%>" data-submitter="<%=complaint.submitter%>" data-content="<%=complaint.content%>" data-status="<%=complaint.status%>">Deny</button> </th>
+	  </tr>
 		<%} else {%>
-			<li>
-		    <p> <font color="red"> <%=complaint.submitter%> : <%=complaint.content%> : <%=complaint.target%> : <%=complaint.status%> </font> </p>
+			<tr>
+		     <th> <%=complaint.submitter%> </th>
+		     <th> <%=complaint.content%> </th>
+		     <th> <%=complaint.target%> </th>
+		     <th> <%=complaint.status%> </th> 
+			</tr>
   	  </li>
 		<%}%>
 	<%}%>
 <%})%>
+
+</table>
+
+<navbutton>
+
+<form action="/home" method="get">
+  		<button type="logout" class="btn btn-success">Back to Homepage</button><br>
+</form>
+</navbutton>
+
+<navbutton>
+<form action="/logout" method="post">
+  				<button type="logout" class="btn btn-success">Logout</button><br>
+</form>
+</navbutton>
