@@ -225,21 +225,22 @@ $(document).ready(function () {
 		e.preventDefault();
 
 		var newBalance = document.getElementById('newBalance').value;
-
+		var email = foundUser.email;
 		console.log(newBalance);
-		/*
+		document.getElementById('newBalance').value = "";
+
 		var data = {
 			email: email,
-			userType: userType
+			addBalance: newBalance,
 		}
 
 		$.ajax({
 			type: "post",
-			url: "/deleteSessions",
+			url: "/addBalance",
 			data: data,
 			success: function(data) {}
 		});
-		*/
+
 	});
 });
 
@@ -308,8 +309,8 @@ $(document).ready(function () {
 		</form>
 
 		<form id = "update_balance" class = "form-inline">
-			<input type = "newBalance" id = "newBalance" placeholder="Enter New Balance">
-			<button type="submit" class="btn btn-success">Update Balance</button>
+			<input type = "newBalance" id = "newBalance" placeholder="Enter Amount to Add">
+			<button type="submit" class="btn btn-success">Add Balance</button>
 		</form>
 	</div>
 
