@@ -370,7 +370,7 @@ function loadData () {
 
 var checkLogin = function(req, res) {
 
-	
+
 	clearDB();
 	loadData();
 
@@ -390,9 +390,7 @@ var checkLogin = function(req, res) {
 	} else {
 		res.render('.././views/login', {error_message: "invalid email or password"});
 	}
-} 
-
-
+}
 
 
 var logout = function (req, res) {
@@ -429,6 +427,18 @@ var analytics = function(req, res) {
 	} else {
 		res.redirect('/');
 	}
+}
+
+var addBalance = function(req, res) {
+	var userEmail = req.body.email;
+	var addBalance = req.body.addBalance;
+	db.addBalance(userEmail, addBalance, (err, updatedUser) => {
+		if(err) {
+			console.log("ERROR ADDING BALANCE", err);
+		} else {
+			console.log("updated user>>>", updatedUser);
+		}
+	});
 }
 
 var complaints = function (req, res) {
@@ -604,6 +614,7 @@ var routes = {
 	check_login: checkLogin,
 	logout: logout,
 	getUsers: getUsers,
+	addBalance: addBalance,
 	approve_qualification: approveQualification,
 	deny_qualification: denyQualification,
 	get_users_pending_qualifications: getUsersPendingQualifications,
