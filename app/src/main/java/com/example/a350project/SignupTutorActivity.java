@@ -68,54 +68,6 @@ public class SignupTutorActivity extends AppCompatActivity {
 
                 userType = "tutor";
 
-                String days = "-";
-
-                CheckBox mon = (CheckBox) findViewById(R.id.checkbox_mon);
-                if (mon.isChecked()) {
-                    days += "monday-";
-                }
-
-                CheckBox tues = (CheckBox) findViewById(R.id.checkbox_tues);
-                if (tues.isChecked()) {
-                    days += "tuesday-";
-                }
-
-                CheckBox weds = (CheckBox) findViewById(R.id.checkbox_weds);
-                if (weds.isChecked()) {
-                    days += "wednesday-";
-                }
-                CheckBox thurs = (CheckBox) findViewById(R.id.checkbox_thurs);
-                if (thurs.isChecked()) {
-                    days += "thursday-";
-                }
-                CheckBox fri = (CheckBox) findViewById(R.id.checkbox_fri);
-                if (fri.isChecked()) {
-                    days += "friday-";
-                }
-                CheckBox sat = (CheckBox) findViewById(R.id.checkbox_sat);
-                if (sat.isChecked()) {
-                    days += "saturday-";
-                }
-                CheckBox sun = (CheckBox) findViewById(R.id.checkbox_sun);
-                if (sun.isChecked()) {
-                    days += "sunday-";
-                }
-
-                String times = "-";
-
-                CheckBox morning = (CheckBox) findViewById(R.id.checkbox_morning);
-                if (morning.isChecked()) {
-                    times += "morning-";
-                }
-                CheckBox afternoon = (CheckBox) findViewById(R.id.checkbox_afternoon);
-                if (afternoon.isChecked()) {
-                    times += "afternoon-";
-                }
-                CheckBox evening = (CheckBox) findViewById(R.id.checkbox_evening);
-                if (evening.isChecked()) {
-                    times += "evening-";
-                }
-
                 //check that the price is a double
                 try {
                     Double.parseDouble(price);
@@ -143,7 +95,7 @@ public class SignupTutorActivity extends AppCompatActivity {
                     }
                     MainActivity.currentUserEmail = email;
                     DataManagement.registerNewUser(firstName, lastName, email, password, userType,
-                            price, days, times, qualifications, context);
+                            price, qualifications, context);
                     launchMainActivity();
                     finish();
                 }

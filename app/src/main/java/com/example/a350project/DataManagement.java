@@ -105,14 +105,13 @@ public class DataManagement {
     }
 
     public static void registerNewUser(String firstName, String lastName, String email,
-                                       String password, String userType, String price, String days,
-                                       String times, String qualifications, Context context) {
+                                       String password, String userType, String price,
+                                       String qualifications, Context context) {
         String FILENAME = userDatabase;
 
         List<String> allUsers = loadUsers();
         String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + email + ",password:" + password +
-                ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                + times + ",numSessions:" + "0" + ",totalCost:" + "0" +  ",avgCost:"  + "0" +
+                ",userType:" + userType + ",price:" + price +  ",numSessions:" + "0" + ",totalCost:" + "0" +  ",avgCost:"  + "0" +
                 ",rateNum:" + "0" + ",rateTotal:" + "0" + ",rating:" +  "0"  + ",balance:" + "100" +
                 ",qualifications:" + qualifications + "}";
 
