@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html>
+
+
+<head>
+	 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	 <script type = "text/javascript"></script>
+	 <title>ADR Administation App</title>
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	 <style type="text/css">
+		 body{
+		   padding-top: 50px;
+		   padding-bottom: 50px;
+		   background-color: #CEE9FA;
+		}
+		 .login-box {
+			 max-width: 330px;
+			 margin: 0 auto;
+			 background-color: #DBE4EE;
+			 padding: 10px;
+		 }
+		 .login-box .form-control {
+		 	margin-bottom: 10px;
+		 }
+		 .button {
+  	 		background-color: #ce1271;
+		 }
+		 .intro {
+		 	margin: 0 auto;
+		 	text-align: center;
+		 	padding: 5px;
+		 	padding-bottom: 15px;
+		 }
+		 .error {
+		 	margin: 0 auto;
+		 	text-align: center;
+		 	max-width: 330px;
+			padding: 10px;
+		 }
+		 .hidden {
+			 display: none;
+		 }
+
+		 navbutton {
+    		float:left;
+    		margin:5px;
+		}
+	 </style>
+	 <style>
+	 	h1 {
+        color: #FBFBFF;
+			 }
+		</style>
+</head>
+
+
+<script>
+	function getPendingQualifications() {
+		var qualifications_html = "<h5 style=\"color:blue;\">Current Tutor Pending Qualifications: Please Approve or Deny</h5>" + "<table style=\"width:100%\">"
+		qualifications_html += "<tr>" + "<th>Tutor Firstname</th>" + "<th>Tutor Lastname</th>" + "<th>Subject</th>" + "<th>Grade</th>" + "</tr>" + "<br>"
+
+		var userArray = [];
+		fetch('/getUsersPendingQualification').then(async function(response) {
+       		var a = 0
+			var d = 0
+
+			userArray = await response.json();
+			var users = userArray.users
+			var i
+			for (i = 0; i < users.length; i++) {
+				var qualif = users[i].pendingQualifications
+				var j
+				for (j = 0; j < qualif.length; j++) {
+					qualifications_html += "<tr>" + "<th>" + users[i].firstName + "</th>"
+					qualifications_html += "<th>" + users[i].lastName + "</th>"
+					//console.log(users[i].lastName)
+					qualifications_html += "<th>" + qualif[j].split("-")[0] + "</th>"
+					qualifications_html += "<th>" + qualif[j].split("-")[1] + "</th>"
+
+					var email = users[i].email
+
+					qualifications_html +=  "<th><form action=\"/approveQualification?email=" + email + "&qualif=" + qualif[j].split("-")[0] + "&a=" + a + "\"method=\"post\" id=\"denyqualificationform_" + a + "\">"
+		  			qualifications_html += "<button type=\"submit\" class=\"btn btn-success\">Approve this Qualification</button><br>"
+					qualifications_html += "</form>"  + "</th>"
+
+					qualifications_html += "<th><form action=\"/denyQualification?email=" + email + "&qualif=" + qualif[j].split("-")[0] + "&d=" + d + "\"method=\"post\" id=\"denyqualificationform_" + d + "\">"
+		  			qualifications_html += "<button type=\"submit\" class=\"btn btn-success\">Deny this Qualification</button><br>"
+					qualifications_html += "</form>"  + "</th>" + "</tr>" + "<br>"
+
+					a += 1
+					d += 1
+
+
+				}
+			}
+			qualifications_html += "</table>"
+			document.getElementById('pendingQualifications').innerHTML = qualifications_html;
+
+		})
+	}
+
+	function getQualifications() {
+		var users = []
+		fetch('/getUsers').then(async function(response) {
+       		userArray = await response.json();
+			var users = userArray.users
+
+			var qualifications_html = "<h5 style=\"color:blue;\">Current Tutor Qualifications</h5>" + "<table style=\"width:100%\">"
+			qualifications_html += "<tr>" + "<th>Tutor Firstname</th>" + "<th>Tutor Lastname</th>" + "<th>Subject</th>" + "</tr>" + "<br>"
+
+			var i
+			var a = 0
+			for (i = 0; i < users.length; i++) {
+				var qualif = users[i].qualifications
+				console.log(qualif)
+				var j
+				for (j = 0; j < qualif.length; j++) {
+					qualifications_html += "<tr>" + "<th>" + users[i].firstName + "</th>"
+					qualifications_html += "<th>" + users[i].lastName + "</th>"
+					//console.log(users[i].lastName)
+					qualifications_html += "<th>" + qualif[j].split("-")[0] + "</th>"
+
+					var email = users[i].email
+
+					qualifications_html +=  "<th><form action=\"/removeQualification?email=" + email + "&qualif=" + qualif[j].split("-")[0] + "&a=" + a + "\"method=\"post\" id=\"removequalificationform_" + a + "\">"
+		  			qualifications_html += "<button type=\"submit\" class=\"btn btn-success\">Remove this Qualification</button><br>"
+					qualifications_html += "</form>"  + "</th>"
+
+					a += 1
+
+				}
+			}
+			qualifications_html += "</table>"
+			console.log(qualifications_html)
+			document.getElementById('userQualifications').innerHTML = qualifications_html;
+
+		})
+	}
+
+	var users;
+	var foundUser;
+
+    function getUsers() {
+		console.log("called get users");
+    fetch('/getUsers').then(async function(response) {
+       users = await response.json();
+			 //await console.log(users);
+			 //await console.log("called get users");
+		});
+       users
+		getPendingQualifications();
+		getQualifications();
+    }
+
+// this method is used to find a user
+$(document).ready(function () {
+  // Listen to submit event on the <form> itself!
+  $('#search').submit(function (e) {
+
+
+		console.log("form submitted");
+
+    e.preventDefault();
+
+		var searchTerm = document.getElementById('textBoxID').value;
+		document.getElementById('textBoxID').value = "";
+
+		var length = users.users.length;
+
+		for (var i = 0; i < length; i++) {
+			var firstname = users.users[i].firstName;
+			var lastname = users.users[i].lastName;
+			var fullname = firstname + " " + lastname;
+			if (fullname == searchTerm) {
+				foundUser = users.users[i];
+				console.log("found user!");
+
+				// fill div with user information
+				$('#foundUser').removeClass('hidden');
+    		document.getElementById('name').innerHTML = "Name: " + fullname;
+				document.getElementById('email').innerHTML = "Email: " + foundUser.email;
+				document.getElementById('userType').innerHTML = "User Type: " + foundUser.userType;
+				document.getElementById('rating').innerHTML = "Rating: " + foundUser.rating;
+				document.getElementById('qualifications').innerHTML = "Qualifications: " + foundUser.qualifications;
+
+			}
+		}
+  });
+});
+
+$(document).ready(function () {
+  // Listen to submit event on the <form> itself!
+  $('#delete_sessions').submit(function (e) {
+
+		e.preventDefault();
+
+
+		var email = foundUser.email;
+		var userType = foundUser.userType;
+
+		console.log("email:" + email);
+		console.log("userType:" + userType);
+
+		var data = {
+			email: email,
+			userType: userType
+		}
+
+		$.ajax({
+			type: "post",
+			url: "/deleteSessions",
+			data: data,
+			success: function(data) {}
+		});
+
+	});
+});
+
+$(document).ready(function () {
+  // Listen to submit event on the <form> itself!
+  $('#update_balance').submit(function (e) {
+		e.preventDefault();
+
+		var newBalance = document.getElementById('newBalance').value;
+		var email = foundUser.email;
+		console.log(newBalance);
+		document.getElementById('newBalance').value = "";
+
+		var data = {
+			email: email,
+			addBalance: newBalance,
+		}
+
+		$.ajax({
+			type: "post",
+			url: "/addBalance",
+			data: data,
+			success: function(data) {}
+		});
+
+	});
+});
+
+</script>
+
+<body onload="getUsers()">
+
+<body>
+	<navbutton>
+	<form action="/analytics" method="get" id="analytics">
+		<button type="analytics" class="btn btn-success">Analytics</button><br>
+	</form>
+	</navbutton>
+
+	<navbutton>
+	<form action="/complaints" method="post" id="complaints">
+		<button type="complaints" class="btn btn-success">Complaints</button><br>
+	</form>
+	</navbutton>
+
+	<navbutton>
+	<form action="/feedback" method="post" id="feedback">
+		<button type="feedback" class="btn btn-success">Feedback</button><br>
+	</form>
+	</navbutton>
+
+
+	<navbutton>
+		<form action="/logout" method="post">
+  				<button type="logout" class="btn btn-success">Logout</button><br>
+		</form>
+	</navbutton>
+
+	<br>
+	<br>
+	<br>
+
+	<div class="intro">
+		<h1 style="color:green;" >Welcome to the admin app!</h1>
+	</div>
+
+</table>
+
+	<br>
+	<br>
+	<br>
+	<br>
+
+	<form id = "search" class = "form-inline">
+		<input type = "search" id = "textBoxID" placeholder="Search for names...">
+  	<button type="submit" class="btn btn-success">Search</button><br>
+	</form>
+
+
+
+	<div id = "foundUser" class="login-box hidden">
+		<p id = "name"></p>
+		<p id = "email"></p>
+		<p id = "userType"></p>
+		<p id = "rating"></p>
+		<p id = "balance"></p>
+		<p id = "qualifications"></p>
+
+		<form id = "delete_sessions" class = "form-inline">
+			<button type="submit" class="btn btn-success">Delete Sessions</button>
+		</form>
+
+		<form id = "update_balance" class = "form-inline">
+			<input type = "newBalance" id = "newBalance" placeholder="Enter Amount to Add">
+			<button type="submit" class="btn btn-success">Add Balance</button>
+		</form>
+	</div>
+
+	<br><div class="post"id="pendingQualifications"> </div>
+
+	<br><div class="post"id="userQualifications"> </div>
+
+</body>
+</html>

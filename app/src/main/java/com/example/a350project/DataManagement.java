@@ -19,9 +19,9 @@ import org.json.JSONException;
 
 public class DataManagement {
 
-    private static String sessionDatabase = "Sessions67.txt";
-    private static String userDatabase = "UserDatabase67.txt";
-    private static String complaintsDatabase = "ComplaintsFile1.txt";
+    private static String sessionDatabase = "Sessions1000.txt";
+    private static String userDatabase = "UserDatabase1000.txt";
+    private static String complaintsDatabase = "ComplaintsDatabase1000.txt";
 
 
     public DataManagement() { }

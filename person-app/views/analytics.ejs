@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	 <title>ADR Administation App</title>
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	 <style type="text/css">
+		 body{
+		   padding-top: 50px;
+		   padding-bottom: 50px;
+		   background-color: #CEE9FA;
+		}
+		 .login-box {
+			 max-width: 330px;
+			 margin: 0 auto;
+			 background-color: #DBE4EE;
+			 padding: 10px;
+		 }
+		 .login-box .form-control {
+		 	margin-bottom: 10px;
+		 }
+		 .button {
+  	 		background-color: #ce1271;
+		 }
+		 .intro {
+		 	margin: 0 auto;
+		 	text-align: center;
+		 	padding: 5px;
+		 	padding-bottom: 15px;
+		 }
+		 .error {
+		 	margin: 0 auto;
+		 	text-align: center;
+		 	max-width: 330px;
+			padding: 10px;
+		 }
+
+		 navbutton {
+    		float:left;
+    		margin:5px;
+		}
+	 </style>
+	 <style>
+	 	h1 {
+        color: #0;
+			 }
+		</style>
+</head>
+
+
+<body>
+
+	<navbutton>
+
+	<form action="/home" method="get">
+	  		<button type="logout" class="btn btn-success">Back to Homepage</button><br>
+	</form>
+	</navbutton>
+
+	<navbutton>
+	<form action="/logout" method="post">
+	  				<button type="logout" class="btn btn-success">Logout</button><br>
+	</form>
+	</navbutton>
+
+	<br>
+	<br>
+	<br>
+	
+<div class="intro">
+	<h1 color = "black" >Analytics Page</h1>
+</div>
+</body>
+
+
+<font color="black"> Average Number of Sessions per Day: <%=stats.avgSessions%> </font>
+<br>
+<br>
+<font color="black"> Most Popular Subject: <%=stats.mostPopular%> </font> 
+<br>
+<br>
+
+
+
