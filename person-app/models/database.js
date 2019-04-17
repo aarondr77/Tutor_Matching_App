@@ -160,8 +160,8 @@ var addBalance = function(userEmail, amount, route_callback) {
 		if (err) {
 			route_callback(err, null);
 		} else if (!user) {
-			console.log("user could not be found");
-			route_callback("user could not be found", null);
+			console.log("user could not be found" + userEmail);
+			route_callback("user could not be found" + userEmail, null);
 		} else {
 			// user found
 			// check for integer overflow

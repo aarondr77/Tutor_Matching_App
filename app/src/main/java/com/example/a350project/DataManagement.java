@@ -11,16 +11,19 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import org.json.JSONObject;
 import org.json.JSONException;
+import java.net.URL;
+import java.util.Map;
 
 
 public class DataManagement {
 
-    private static String sessionDatabase = "Sessions1000.txt";
-    private static String userDatabase = "UserDatabase1000.txt";
+    private static String sessionDatabase = "Sessions1001.txt";
+    private static String userDatabase = "UserDatabase1001.txt";
     private static String complaintsDatabase = "ComplaintsDatabase1000.txt";
 
 
@@ -107,6 +110,18 @@ public class DataManagement {
     public static void registerNewUser(String firstName, String lastName, String email,
                                        String password, String userType, String price, String days,
                                        String times, String qualifications, Context context) {
+        // make POST request
+        try {
+            // put params in a map format
+            Map<String, String> postParams = new HashMap<>();
+            postParams.put("email", "aaron@gmail.com");
+            postParams.put("addBalance", "10000");
+            AccessWebTaskPost task = new AccessWebTaskPost(postParams);
+            task.execute("http://10.0.2.2:3000/addBalance");
+        } catch(Exception e) {
+            Log.d("error post", e.getMessage());
+        }
+
         String FILENAME = userDatabase;
 
         List<String> allUsers = loadUsers();
@@ -339,6 +354,16 @@ public class DataManagement {
 
     public static boolean userExists(String email) {
         List<String> allUsers = DataManagement.loadUsers();
+
+        try {
+            URL url = new URL("http://10.0.2.2:3000/getUsers/");
+            AccessWebTaskGet task = new AccessWebTaskGet();
+            task.execute(url);
+            String name = task.get();
+            Log.d("Called URL>>>>>>>>>>>>>", name);
+        } catch (Exception e) {
+
+        }
         for (String u: allUsers) {
             String[] info = u.split(",");
             String e = info[2].split(":")[1];
