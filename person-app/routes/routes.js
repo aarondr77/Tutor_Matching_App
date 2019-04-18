@@ -432,6 +432,7 @@ var analytics = function(req, res) {
 var addBalance = function(req, res) {
 	var userEmail = req.body.email;
 	var addBalance = req.body.addBalance;
+	console.log("req.body", req.body)
 	db.addBalance(userEmail, addBalance, (err, updatedUser) => {
 		if(err) {
 			console.log("ERROR ADDING BALANCE", err);
