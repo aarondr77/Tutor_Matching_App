@@ -171,13 +171,16 @@ public class ProfilePageFragment extends Fragment {
                         boolean qualified = false;
                         try{
                             String qualificationString = currUser.getString("qualifications");
+                            qualificationString = qualificationString.substring(1, qualificationString.length() - 1);
+
                             if(qualificationString.equals("~")) {
                                 qualified = true;
                             }
-                            String[] qualificationArray = qualificationString.split("~");
-                            for(int i = 1; i < qualificationArray.length; i++) {
+                            String[] qualificationArray = qualificationString.split(",");
+                            for(int i = 0; i < qualificationArray.length; i++) {
 
                                 String subjectQual = qualificationArray[i].split("-")[0];
+                                subjectQual = subjectQual.substring(1, subjectQual.length() - 1);
                                 if(subject.getText().toString().toLowerCase().equals(subjectQual.toLowerCase())) {
                                     qualified = true;
                                 }

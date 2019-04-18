@@ -371,8 +371,8 @@ function loadData () {
 var checkLogin = function(req, res) {
 
 
-	clearDB();
-	loadData();
+	//clearDB();
+	//loadData();
 
 
 	var input_email = req.body.email;
