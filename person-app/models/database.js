@@ -187,6 +187,7 @@ var claimSession = function(sessionID, studentEmail, studentName, route_callback
 				if (err) {
 					route_callback(err, null);
 				} else {
+					console.log("Success", session);
 					route_callback(null, session);
 				}
 			});

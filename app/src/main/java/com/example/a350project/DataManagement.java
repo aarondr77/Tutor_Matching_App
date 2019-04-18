@@ -399,7 +399,6 @@ public class DataManagement {
             Log.d("error post", e.getMessage());
         }
 
-
         return true;
     }
 
