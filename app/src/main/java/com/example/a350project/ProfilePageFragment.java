@@ -172,12 +172,9 @@ public class ProfilePageFragment extends Fragment {
                         // get subjects
                         boolean qualified = false;
                         try{
-                            JSONArray qualArray = currUser.getJSONArray("qualifications");
-                            Log.e("currUser first qual", qualArray.getString(0));
 
-//                            if(qualificationString.equals("~")) {
-//                                qualified = true;
-//                            }
+                            JSONArray qualArray = currUser.getJSONArray("qualifications");
+
                             for(int i = 0; i < qualArray.length(); i++) {
 
                                 String subjectQual = qualArray.getString(i);
@@ -187,7 +184,6 @@ public class ProfilePageFragment extends Fragment {
                                     qualified = true;
                                 }
                             }
-
                         } catch(JSONException e) {
                             Log.e("get subject error", e.getMessage());
                         }
