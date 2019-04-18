@@ -477,6 +477,21 @@ var addBalance = function(req, res) {
 	res.end();
 }
 
+
+var updateRating = function(req, res) {
+	var userEmail = req.params.email;
+	var addRating = req.params.rating;
+	db.updateRating(userEmail, addRating, (err, updatedUser) => {
+		if(err) {
+			console.log("ERROR ADDING RATING", err);
+		} else {
+			console.log("updated user>>>", updatedUser);
+		}
+	});
+	res.end();
+}
+
+
 var addComplaint = function(req, res) {
 	var content = req.body.content;
 	var target = req.body.target;
@@ -705,6 +720,7 @@ var routes = {
 	getUser: getUser,
 	getUsers: getUsers,
 	addBalance: addBalance,
+	updateRating: updateRating,
 	approve_qualification: approveQualification,
 	deny_qualification: denyQualification,
 	get_users_pending_qualifications: getUsersPendingQualifications,

@@ -39,6 +39,8 @@ app.post('/deleteSessions', routes.deleteSessions);
 
 app.get('/getUser/:email', routes.getUser);
 
+app.get('/updateRating/:email/:rating', routes.updateRating);
+
 app.get('/getUsers', routes.getUsers);
 
 app.post('/addBalance', routes.addBalance);
