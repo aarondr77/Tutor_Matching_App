@@ -57,7 +57,6 @@ public class SignupActivity extends AppCompatActivity {
 
                 userType = "student";
 
-
                 //check if the fields are value
                 if (email.equals("") || password.equals("") || firstName.equals("") || lastName.equals("")) {
                     TextView error = (TextView) findViewById(R.id.error_student_signup);
@@ -69,7 +68,7 @@ public class SignupActivity extends AppCompatActivity {
                     return;
                 } else {
                     MainActivity.currentUserEmail = email;
-                    DataManagement.registerNewUser(firstName, lastName, email, password, userType,"0", "q", context);
+                    DataManagement.registerNewUser(firstName, lastName, email, password, userType,"0", "", context);
                     launchMainActivity();
                     finish();
                 }

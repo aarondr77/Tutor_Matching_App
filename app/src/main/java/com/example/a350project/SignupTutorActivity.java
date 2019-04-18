@@ -90,7 +90,7 @@ public class SignupTutorActivity extends AppCompatActivity {
                     if (!checkQualifications()) {
                         TextView error = (TextView) findViewById(R.id.error_tutor_signup);
                         error.setText("Please re-enter qualifications in the specified format");
-                        qualifications = "~";
+                        qualifications = "";
                         return;
                     }
                     MainActivity.currentUserEmail = email;

@@ -19,6 +19,8 @@ var User = require('./models/User.js');
 
 app.post('/checkLogin', routes.check_login);
 
+app.post('/registerUser', routes.register_user);
+
 app.post('/approveQualification', routes.approve_qualification)
 
 app.post('/denyQualification', routes.deny_qualification)
