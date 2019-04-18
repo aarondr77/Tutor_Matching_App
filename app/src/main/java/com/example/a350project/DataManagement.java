@@ -1,19 +1,19 @@
 package com.example.a350project;
 
 import android.content.Context;
-import android.support.annotation.MainThread;
+import android.se.omapi.Session;
 import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
 import java.net.URL;
@@ -30,27 +30,52 @@ public class DataManagement {
     public DataManagement() { }
 
     public static List<SessionObject> loadSessions () {
-        String FILENAME = sessionDatabase;
-        BufferedReader fos = null;
 
+        String sessionsString = "";
         List<SessionObject> returnVal = new LinkedList<SessionObject>();
 
         try {
-            fos = new BufferedReader(new InputStreamReader(MainActivity.context.openFileInput(FILENAME)));
+            URL url = new URL("http://10.0.2.2:3000/getSessions/");
+            AccessWebTaskGet task = new AccessWebTaskGet();
+            task.execute(url);
+            sessionsString = task.get();
+            Log.d("Called GetSessions>>>>>", sessionsString);
 
-            while (fos.ready()) {
-                String curLine = fos.readLine();
-                returnVal.add(new SessionObject(curLine.split(":")[0], curLine.split(":")[1], curLine.split(":")[2], curLine.split(":")[3],
-                        curLine.split(":")[4], curLine.split(":")[5], curLine.split(":")[6], curLine.split(":")[7], curLine.split(":")[8],  curLine.split(":")[9]));
+
+            JSONObject s = new JSONObject(sessionsString);
+
+            Log.d("ConvertedToJSON>>>>>", s.getString("sessions"));
+
+            JSONArray sa = new JSONArray(s.getString("sessions"));
+            Log.d("ConvertedToArray Size", "length " + sa.length() );
+
+            for (int i = 0; i < sa.length(); i++) {
+
+                JSONObject currentSession = sa.getJSONObject(i);
+
+                String sessionID = currentSession.getString("sessionID");
+                String tutor = currentSession.getString("tutor");
+                String student = currentSession.getString("student");
+                String subject = currentSession.getString("subject");
+                String date = currentSession.getString("date");
+                String duration = currentSession.getString("duration");
+                String price = currentSession.getString("price");
+                String status = currentSession.getString("status");
+                String studentEmail = currentSession.getString("studentEmail");
+                String tutorEmail = currentSession.getString("tutorEmail");
+
+                SessionObject session = new SessionObject(sessionID, tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status);
+
+                Log.d("Added to Return", sessionID);
+                returnVal.add(session);
             }
-            fos.close();
 
-            return returnVal;
-        } catch (IOException e) {
-            Log.d("PRINT", e.toString());
+        } catch (Exception e) {
+            Log.d("FAILED LOADING!", e.getMessage());
         }
 
-        return null;
+        return returnVal;
+
     }
 
     public static void writeSession(Context context, LinkedList<SessionObject> writeSession) {
