@@ -50,7 +50,7 @@ function loadData () {
 		totalCost: 50,
 		avgCost: 25,
 		rateNum: 2,
-		rateToal: 10,
+		rateTotal: 10,
 		rating: 5,
 		balance: 150,
 		qualifications: [],
@@ -72,7 +72,7 @@ function loadData () {
 		totalCost: 50,
 		avgCost: 25,
 		rateNum: 2,
-		rateToal: 10,
+		rateTotal: 10,
 		rating: 5,
 		balance: 150,
 		qualifications: [],
@@ -94,7 +94,7 @@ function loadData () {
 		totalCost: 50,
 		avgCost: 25,
 		rateNum: 2,
-		rateToal: 10,
+		rateTotal: 10,
 		rating: 5,
 		balance: 50,
 		qualifications: [],
@@ -116,7 +116,7 @@ function loadData () {
 		totalCost: 50,
 		avgCost: 25,
 		rateNum: 2,
-		rateToal: 10,
+		rateTotal: 10,
 		rating: 5,
 		balance: 50,
 		qualifications: ["MATH114-A"],
@@ -461,7 +461,6 @@ var getUser = function(req, res) {
 			res.json({userFound: user});
 		}
 	});
-	res.end();
 }
 
 var addBalance = function(req, res) {

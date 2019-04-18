@@ -353,7 +353,8 @@ var updateRating = function(userEmail, addRating, callback) {
 		} else if(!user) {
 			callback("user not found", null);
 		} else {
-			user.rateTotal = user.rateTotal + addRating;
+			console.log("user for rating update>>>>", user);
+			user.rateTotal = parseFloat(user.rateTotal) + parseFloat(addRating);
 			user.rateNum = user.rateNum + 1;
 			user.rating = parseFloat(user.rateTotal)/user.rateNum;
 
@@ -376,9 +377,10 @@ var getUser = function(userEmail, callback) {
 		} else if(!user) {
 			callback("user not found", null);
 		} else {
+			console.log("found user", user);
 			callback(null, user);
 		}
-	})
+	});
 }
 
 var banUser = function(target, route_callback) {
