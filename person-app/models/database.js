@@ -276,13 +276,24 @@ var deleteSessionsOfStudent = function (email, route_callback) {
 	});
 }
 
+var addComplaint = function(target, submitter, content, status, route_callback) {
+	var newComplaint = new Complaint ({target: target, submitter: submitter, content: content, status: status});
+	newComplaint.save( (err) => {
+		if (err) {
+			route_callback(err);
+		} else {
+			route_callback(null)
+		}
+	})
+}
+
 var updateComplaint = function(target, submitter, content, status, route_callback) {
 	console.log(submitter);
 	Complaint.findOne( {target: target, submitter: submitter, content: content}, (err, comp) => {
 		if (err) {
 			route_callback(err);
 		} else if (!comp) {
-			route_callback(200);
+			route_callback("Complaint does not exist")
 		} else {
 			console.log(typeof submitter);
 			comp.status = String(status);
@@ -367,6 +378,7 @@ var database = {
 	claimSession: claimSession,
 
 	updateComplaint: updateComplaint,
+	addComplaint: addComplaint,
 	addBalance: addBalance,
 
 	banUser: banUser,

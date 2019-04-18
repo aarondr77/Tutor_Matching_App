@@ -1,6 +1,7 @@
 package com.example.a350project;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,6 +22,7 @@ public class AccessWebTaskGet extends AsyncTask<URL, String, String> {
         try {
         //get the first URL from the array
             URL url = urls[0];
+            Log.d("Called URL>>>>>>>>>>>>>", url.toString());
             // create connection and sendHttpURLConnectionrequest
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
             conn.setRequestMethod("GET");
