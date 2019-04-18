@@ -610,6 +610,17 @@ var banUser = function (req, res) {
 	});
 }
 
+var registerUser = function(req, res) {
+    db.register_new_user(req.body, (err) => {
+        if (err) {
+       		console.log("err:" + err);
+       	} else {
+        	console.log("successfully reqistered " + req.body.email);
+        	res.end();
+    	}
+    });
+}
+
 
 var routes = {
 	check_login: checkLogin,
@@ -627,6 +638,7 @@ var routes = {
 	feedback: feedback,
 	analytics: analytics,
 	home: homepage,
+	register_user: registerUser,
 };
 
 module.exports = routes;
