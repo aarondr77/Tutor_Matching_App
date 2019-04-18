@@ -49,6 +49,11 @@ public class SessionFunctions {
 
     }
     public static void claimSession(String targetSessionID, String student) {
+
+        String studentEmail = MainActivity.currentUserEmail;
+        DataManagement.claimSession(studentEmail, student, targetSessionID);
+
+        /*
         for (SessionObject currentSession : allSessions) {
 
             if (currentSession.getSessionID().equals(targetSessionID)) {
@@ -58,6 +63,7 @@ public class SessionFunctions {
                 break;
             }
         }
+        */
     }
 
     public static LinkedList<SessionObject> getAllSessions () {

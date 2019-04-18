@@ -170,6 +170,30 @@ var getAverageDailySessions = function (route_callback) {
 	});
 }
 
+var claimSession = function(sessionID, studentEmail, studentName, route_callback) {
+	Session.findOne({sessionID: sessionID}, (err, session) => {
+		if (err) {
+			route_callback(err, null);
+		} else if (!session) {
+			console.log("session could not be found");
+			route_callback("session could not be found", null);
+		} else {
+			// session Found
+			session.studentEmail = studentEmail;
+			session.student = studentName;
+			session.status = "accepted";
+
+			session.save ((err) => {
+				if (err) {
+					route_callback(err, null);
+				} else {
+					route_callback(null, session);
+				}
+			});
+		}
+	});
+}
+
 var addBalance = function(userEmail, amount, route_callback) {
 	User.findOne( {email: userEmail}, (err, user) => {
 		if (err) {
@@ -340,6 +364,7 @@ var database = {
 	deleteSessionsOfTutor: deleteSessionsOfTutor,
 	deleteSessionsOfStudent: deleteSessionsOfStudent,
 	getSessions: getSessions,
+	claimSession: claimSession,
 
 	updateComplaint: updateComplaint,
 	addBalance: addBalance,

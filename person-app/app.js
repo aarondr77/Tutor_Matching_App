@@ -33,6 +33,8 @@ app.get('/getUsersPendingQualification', routes.get_users_pending_qualifications
 
 app.get('/getSessions', routes.getSessions);
 
+app.post('/claimSession', routes.claimSession);
+
 app.post('/deleteSessions', routes.deleteSessions);
 
 app.get('/getUsers', routes.getUsers);

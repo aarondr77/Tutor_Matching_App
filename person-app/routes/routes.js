@@ -392,10 +392,8 @@ function loadData () {
 
 var checkLogin = function(req, res) {
 
-
 	clearDB();
 	loadData();
-
 
 	var input_email = req.body.email;
 	var input_password = req.body.password;
@@ -416,7 +414,6 @@ var checkLogin = function(req, res) {
 
 
 var logout = function (req, res) {
-	
 	console.log("loggedout");
 	logged_in = false;
 	res.render('.././views/login', {error_message: null});
@@ -460,6 +457,19 @@ var addBalance = function(req, res) {
 			console.log("ERROR ADDING BALANCE", err);
 		} else {
 			console.log("updated user>>>", updatedUser);
+		}
+	});
+}
+
+var claimSession = function(req, res) {
+	var sessionID = req.body.sessionID;
+	var studentEmail = req.body.studentEmail;
+	var studentName = req.body.studentName;
+	db.claimSession(sessionID, studentEmail, studentName, (err, updatedSession) => {
+		if(err) {
+			console.log("ERROR CLAIMING SESSION", err);
+		} else {
+			console.log("updated session>>>", updatedSession);
 		}
 	});
 }
@@ -659,6 +669,7 @@ var routes = {
 	analytics: analytics,
 	home: homepage,
 	getSessions: getSessions,
+	claimSession: claimSession,
 };
 
 module.exports = routes;

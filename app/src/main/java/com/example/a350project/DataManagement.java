@@ -377,6 +377,27 @@ public class DataManagement {
         return null;
     }
 
+    public static boolean claimSession(String studentEmail, String studentName, String sessionID) {
+
+        // make POST request
+        try {
+            // put params in a map format
+            Map<String, String> postParams = new HashMap<>();
+            postParams.put("sessionID", sessionID);
+            postParams.put("studentEmail", studentEmail);
+            postParams.put("studentName", studentName);
+
+            AccessWebTaskPost task = new AccessWebTaskPost(postParams);
+            task.execute("http://10.0.2.2:3000/claimSession");
+        } catch(Exception e) {
+            Log.d("error post", e.getMessage());
+        }
+
+
+        return true;
+    }
+
+
     public static boolean userExists(String email) {
         List<String> allUsers = DataManagement.loadUsers();
 
