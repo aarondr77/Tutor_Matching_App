@@ -346,6 +346,29 @@ var removeQualification = function(email_id, qual, route_callback) {
 		}
 	})
 }
+var updateRating = function(userEmail, addRating, callback) {
+	User.findOne({email: userEmail}, (err, user) => {
+		if (err) {
+			callback(err, null);
+		} else if(!user) {
+			callback("user not found", null);
+		} else {
+			console.log("user for rating update>>>>", user);
+			user.rateTotal = parseFloat(user.rateTotal) + parseFloat(addRating);
+			user.rateNum = user.rateNum + 1;
+			user.rating = parseFloat(user.rateTotal)/user.rateNum;
+
+			user.save( (err) => {
+				if (err) {
+					console.log("unable to update user rating")
+					callback(err, null);
+				} else {
+					callback(null, user);
+				}
+			})
+		}
+	});
+}
 
 var getUser = function(userEmail, callback) {
 	User.findOne({email: userEmail}, (err, user) => {
@@ -354,9 +377,10 @@ var getUser = function(userEmail, callback) {
 		} else if(!user) {
 			callback("user not found", null);
 		} else {
+			console.log("found user", user);
 			callback(null, user);
 		}
-	})
+	});
 }
 
 var banUser = function(target, route_callback) {
@@ -391,6 +415,7 @@ var database = {
 	getSessions: getSessions,
 	claimSession: claimSession,
 
+	updateRating: updateRating,
 	updateComplaint: updateComplaint,
 	addComplaint: addComplaint,
 	addBalance: addBalance,

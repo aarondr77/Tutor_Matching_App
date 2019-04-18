@@ -103,18 +103,19 @@ public class DataManagement {
     }
 
 
-    public static JSONObject addRating(String userEmail, float rating) {
-        JSONObject user = findUser(userEmail);
-        try{
-            user.put("rateTotal", user.getDouble("rateTotal") + rating);
-            user.put("rateNum", user.getInt("rateNum") + 1);
-            user.put("rating", user.getDouble("rateTotal")/user.getInt("rateNum"));
-        } catch(JSONException e) {
-            Log.e("jsonerror", e.getMessage());
+    public static void addRating(String userEmail, float rating) {
+
+        String result = "";
+        try {
+            URL url = new URL("http://10.0.2.2:3000/updateRating/" + userEmail + "/" + Float.toString(rating));
+            AccessWebTaskGet task = new AccessWebTaskGet();
+            task.execute(url);
+            result = task.get();
+            Log.d("Called URL>>>>>>>>>>>>>", result);
+
+        } catch (Exception e) {
+
         }
-
-        return user;
-
     }
 
     public static void writeComplaint(Context context, ComplaintsObject newComplaint) {
@@ -185,7 +186,7 @@ public class DataManagement {
             AccessWebTaskGet task = new AccessWebTaskGet();
             task.execute(url);
             result = task.get();
-            Log.d("Called URL>>>>>>>>>>>>>", result);
+            Log.d("Called URL>>>>>>>>>>>>>", email);
             foundUser = new JSONObject(result);
             finalFoundUser = foundUser.getJSONObject("userFound");
         } catch (Exception e) {
@@ -195,60 +196,6 @@ public class DataManagement {
         return finalFoundUser;
     }
 
-    public static void updateRating (String emailAddress, double newRating, double newRateTotal, int newRateNum, Context context) {
-        String FILENAME = userDatabase;
-
-        // get up to date list of allUsers as String
-        List<String> allUsers = loadUsers();
-        List<String> updatedUsers =  new LinkedList<String>();
-        for (String currentUser : allUsers) {
-            try {
-                JSONObject userJson = new JSONObject(currentUser);
-                if (userJson.getString("email").equals(emailAddress)) {
-                    String firstName = userJson.getString("firstName");
-                    String lastName = userJson.getString("lastName");
-                    String password = userJson.getString("password");
-                    String userType = userJson.getString("userType");
-                    String price = userJson.getString("price");
-                    String days = userJson.getString("days");
-                    String times = userJson.getString("times");
-                    String totalCost = userJson.getString("totalCost");
-                    String avgCost = userJson.getString("avgCost");
-                    String rating = Double.toString(newRating);
-                    String rateTotal = Double.toString(newRateTotal);
-                    String rateNum = Integer.toString(newRateNum);
-                    String numSessions = userJson.getString("numSessions");
-                    String balance = userJson.getString("balance");
-                    String qualifications = userJson.getString("qualifications");
-
-                    String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + emailAddress + ",password:" + password +
-                            ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                            + times + ",numSessions:"+ numSessions + ",rateNum:" + rateNum + ",rating:"
-                            + rating + ",rateTotal:" + rateTotal + ",totalCost:" + totalCost + ",avgCost:"
-                            + avgCost + ",balance:" + balance + ",qualifications:" + qualifications + "}";
-
-                    updatedUsers.add(JSONobj);
-                } else {
-                    updatedUsers.add(currentUser);
-                }
-            } catch (JSONException e) {
-                Log.e("JSONException", e.getStackTrace().toString());
-            }
-        }
-        // overwrite old file and rewrite all new users
-        BufferedWriter  w = null;
-        try {
-            w = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
-            for (String user : updatedUsers) {
-                w.write(user + "\n");
-            }
-            w.close();
-        } catch (IOException e) {
-            Log.e("IOException", e.getStackTrace().toString());
-        }
-
-
-    }
 
     public static void updateBalance (String emailAddress, double newBalance, double sessionPrice, Context context) {
         String FILENAME = userDatabase;
