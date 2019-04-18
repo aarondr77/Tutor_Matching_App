@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.util.Log;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
@@ -170,14 +172,17 @@ public class ProfilePageFragment extends Fragment {
                         // get subjects
                         boolean qualified = false;
                         try{
-                            String qualificationString = currUser.getString("qualifications");
-                            if(qualificationString.equals("~")) {
-                                qualified = true;
-                            }
-                            String[] qualificationArray = qualificationString.split("~");
-                            for(int i = 1; i < qualificationArray.length; i++) {
+                            JSONArray qualArray = currUser.getJSONArray("qualifications");
+                            Log.e("currUser first qual", qualArray.getString(0));
 
-                                String subjectQual = qualificationArray[i].split("-")[0];
+//                            if(qualificationString.equals("~")) {
+//                                qualified = true;
+//                            }
+                            for(int i = 0; i < qualArray.length(); i++) {
+
+                                String subjectQual = qualArray.getString(i);
+                                Log.e("subject of new", subject.getText().toString());
+                                Log.e("curr qual", subjectQual);
                                 if(subject.getText().toString().toLowerCase().equals(subjectQual.toLowerCase())) {
                                     qualified = true;
                                 }

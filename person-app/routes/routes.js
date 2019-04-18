@@ -50,7 +50,7 @@ function loadData () {
 		totalCost: 50,
 		avgCost: 25,
 		rateNum: 2,
-		rateToal: 10,
+		rateTotal: 10,
 		rating: 5,
 		balance: 150,
 		qualifications: [],
@@ -72,7 +72,7 @@ function loadData () {
 		totalCost: 50,
 		avgCost: 25,
 		rateNum: 2,
-		rateToal: 10,
+		rateTotal: 10,
 		rating: 5,
 		balance: 150,
 		qualifications: [],
@@ -94,7 +94,7 @@ function loadData () {
 		totalCost: 50,
 		avgCost: 25,
 		rateNum: 2,
-		rateToal: 10,
+		rateTotal: 10,
 		rating: 5,
 		balance: 50,
 		qualifications: [],
@@ -116,7 +116,7 @@ function loadData () {
 		totalCost: 50,
 		avgCost: 25,
 		rateNum: 2,
-		rateToal: 10,
+		rateTotal: 10,
 		rating: 5,
 		balance: 50,
 		qualifications: ["MATH114-A"],
@@ -126,7 +126,7 @@ function loadData () {
 	});
 
 	var session1 = new Session({
-		sessionID: 1,
+		sessionID: "1",
 		tutor: "Aaron",
 		student: "Petra",
 		subject: 'Math114',
@@ -139,7 +139,7 @@ function loadData () {
 	});
 
 	var session2 = new Session({
-		sessionID: 2,
+		sessionID: "2",
 		tutor: "Aaron",
 		student: "Chris",
 		subject: 'Bio001',
@@ -152,7 +152,7 @@ function loadData () {
 	});
 
 	var session3 = new Session({
-		sessionID: 1,
+		sessionID: "3",
 		tutor: "Tamir",
 		student: "Petra",
 		subject: 'Phys100',
@@ -165,7 +165,7 @@ function loadData () {
 	});
 
 	var session4 = new Session({
-		sessionID: 1,
+		sessionID: "4",
 		tutor: "Tamir",
 		student: "Chris",
 		subject: 'Bio001',
@@ -178,7 +178,7 @@ function loadData () {
 	});
 
 	var session5 = new Session({
-		sessionID: 1,
+		sessionID: "5",
 		tutor: "Tamir",
 		student: "Chris",
 		subject: 'Bio001',
@@ -191,7 +191,7 @@ function loadData () {
 	});
 
 	var session6 = new Session({
-		sessionID: 1,
+		sessionID: "6",
 		tutor: "Tamir",
 		student: "Chris",
 		subject: 'Math114',
@@ -200,6 +200,19 @@ function loadData () {
 		price: "25",
 		status: "accepted",
 		studentEmail: "chris@gmail.com",
+		tutorEmail: "tamir@gmail.com",
+	});
+
+	var session7 = new Session({
+		sessionID: "7",
+		tutor: "Tamir",
+		student: "unclaimed",
+		subject: 'Math114',
+		date: "3/12/19",
+		duration: 60,
+		price: "25",
+		status: "unclaimed",
+		studentEmail: "unclaimed",
 		tutorEmail: "tamir@gmail.com",
 	});
 
@@ -302,6 +315,15 @@ function loadData () {
 		}
 	});
 
+	session7.save( (err) => {
+		if (err) {
+		    console.log(err);
+		    res.end();
+		} else {
+			console.log("added user")
+		}
+	});
+
 	var complaint1 = new Complaint({
 		target: "aaron@gmail.com",
 		submitter: "chris@gmail.com",
@@ -354,6 +376,7 @@ function loadData () {
 		target: "admin@adr.com",
 		submitter: "tamir@gmail.com",
 		content: "This app is Dumbbbb",
+		status: "What a silly Idea",
 	});
 
 	feedback1.save( (err) => {
@@ -370,10 +393,8 @@ function loadData () {
 
 var checkLogin = function(req, res) {
 
-
 	clearDB();
 	loadData();
-
 
 	var input_email = req.body.email;
 	var input_password = req.body.password;
@@ -394,6 +415,7 @@ var checkLogin = function(req, res) {
 
 
 var logout = function (req, res) {
+
 	console.log("loggedout");
 	logged_in = false;
 	res.render('.././views/login', {error_message: null});
@@ -429,6 +451,18 @@ var analytics = function(req, res) {
 	}
 }
 
+var getUser = function(req, res) {
+	console.log("getUser>>>", req.params.email);
+	var userEmail = req.params.email;
+	db.getUser(userEmail, (err, user) => {
+		if(err) {
+			console.log("Error finding user", err);
+		} else {
+			res.json({userFound: user});
+		}
+	});
+}
+
 var addBalance = function(req, res) {
 	var userEmail = req.body.email;
 	var addBalance = req.body.addBalance;
@@ -439,6 +473,70 @@ var addBalance = function(req, res) {
 			console.log("updated user>>>", updatedUser);
 		}
 	});
+	res.end();
+}
+
+var addSession = function(req, res) {
+	var tutor = req.body.tutor;
+	var student = req.body.student;
+	var subject = req.body.subject;
+	var date = req.body.date;
+	var duration = req.body.duration;
+	var price = req.body.price;
+	var status = req.body.status;
+	var studentEmail = req.body.studentEmail;
+	var tutorEmail = req.body.tutorEmail;
+	db.addSession(tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status, (err, session) => {
+		if(err) {
+			console.log("ERROR ADDING SESSION", err);
+		} else {
+			console.log("updated session", session);
+		}
+	});
+	res.end();
+}
+
+
+var updateRating = function(req, res) {
+	var userEmail = req.params.email;
+	var addRating = req.params.rating;
+	db.updateRating(userEmail, addRating, (err, updatedUser) => {
+		if(err) {
+			console.log("ERROR ADDING RATING", err);
+		} else {
+			console.log("updated user>>>", updatedUser);
+		}
+	});
+	res.end();
+}
+
+
+var addComplaint = function(req, res) {
+	var content = req.body.content;
+	var target = req.body.target;
+	var submitter = req.body.submitter;
+	var status = req.body.status;
+	console.log("req.body", req.body)
+	db.addComplaint(target, submitter, content, status, (err) => {
+		if (err) {
+			console.log("err:" + err);
+		} else {
+			console.log("successful Update!");
+		}
+	})
+	res.end();
+}
+
+var getComplaints = function (req, res) {
+	console.log("getting complaints");
+	var complaintsArray = []
+
+	db.get_complaints((err, complaints) => {
+		console.log(err);
+		complaintsArray = complaints;
+		console.log(complaintsArray);
+		res.json({complaints: complaintsArray});
+	})
 }
 
 var complaints = function (req, res) {
@@ -448,7 +546,7 @@ var complaints = function (req, res) {
 	if (logged_in) {
 		db.get_complaints((err, complaints) => {
 			console.log(err);
-			complaintsArray = complaints
+			complaintsArray = complaints;
 			console.log(complaintsArray);
 			res.render('.././views/complaints', {complaints: complaintsArray});
 		})
@@ -491,6 +589,30 @@ var getUsers = function (req, res) {
 		res.json({users: userArray});
 	})
 }
+
+
+var getSessions = function (req, res) {
+	var sessionArray = [];
+	db.getSessions((err, sessions) => {
+		console.log(err);
+		sessionArray = sessions;
+		res.json({sessions: sessionArray});
+	})
+}
+
+var claimSession = function(req, res) {
+	var sessionID = req.body.sessionID;
+	var studentEmail = req.body.studentEmail;
+	var studentName = req.body.studentName;
+	db.claimSession(sessionID, studentEmail, studentName, (err, updatedSession) => {
+		if(err) {
+			console.log("ERROR CLAIMING SESSION", err);
+		} else {
+			console.log("updated session>>>", updatedSession);
+		}
+	});
+}
+
 
 var getUsersPendingQualifications = function(req, res) {
 	db.get_users((err, users) => {
@@ -556,6 +678,7 @@ var removeQualification = function(req, res) {
 
 
 
+
 var deleteSessions = function (req, res) {
 	console.log("in Routes!");
 	var email = req.body.email;
@@ -613,19 +736,26 @@ var banUser = function (req, res) {
 var routes = {
 	check_login: checkLogin,
 	logout: logout,
+	getUser: getUser,
 	getUsers: getUsers,
+	addSession: addSession,
 	addBalance: addBalance,
+	updateRating: updateRating,
 	approve_qualification: approveQualification,
 	deny_qualification: denyQualification,
 	get_users_pending_qualifications: getUsersPendingQualifications,
 	remove_qualification: removeQualification,
 	complaints: complaints,
+	getComplaints: getComplaints,
+	addComplaint: addComplaint,
 	deleteSessions: deleteSessions,
 	updateComplaint: updateComplaint,
 	banUser: banUser,
 	feedback: feedback,
 	analytics: analytics,
 	home: homepage,
+	getSessions: getSessions,
+	claimSession: claimSession,
 };
 
 module.exports = routes;

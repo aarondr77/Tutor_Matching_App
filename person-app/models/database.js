@@ -21,6 +21,21 @@ var getUsers = function(route_callback) {
 	});
 }
 
+// returns all users
+var getSessions = function(route_callback) {
+	Session.find({}, (err, sessions) => {
+		if (err) {
+			console.log("err: " + err)
+			route_callback(err, null)
+		} else if (!sessions) {
+			console.log("no sessions")
+			route_callback(null,  null)
+		} else {
+			route_callback(null, sessions)
+		}
+	});
+}
+
 
 /* Method to approve a qualification for a single user. Removes that subject
    from the "pendingQualifications" field in their user object
@@ -155,6 +170,45 @@ var getAverageDailySessions = function (route_callback) {
 	});
 }
 
+var claimSession = function(sessionID, studentEmail, studentName, route_callback) {
+	Session.findOne({sessionID: sessionID}, (err, session) => {
+		if (err) {
+			route_callback(err, null);
+		} else if (!session) {
+			console.log("session could not be found");
+			route_callback("session could not be found", null);
+		} else {
+			// session Found
+			session.studentEmail = studentEmail;
+			session.student = studentName;
+			session.status = "accepted";
+
+			session.save ((err) => {
+				if (err) {
+					route_callback(err, null);
+				} else {
+					console.log("Success", session);
+					route_callback(null, session);
+				}
+			});
+		}
+	});
+}
+
+var addSession = function(tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status, route_callback) {
+	var sessionID = Math.random().toString();
+	var newSession = new Session({sessionID: sessionID, tutor: tutor, student: student, tutorEmail: tutorEmail, studentEmail: studentEmail, subject: subject,
+	date: date, duration: duration, price: price, status: status});
+	newSession.save((err) => {
+		if(err) {
+			route_callback(err, null);
+		} else {
+			route_callback(null, newSession);
+		}
+	})
+
+}
+
 var addBalance = function(userEmail, amount, route_callback) {
 	User.findOne( {email: userEmail}, (err, user) => {
 		if (err) {
@@ -237,13 +291,24 @@ var deleteSessionsOfStudent = function (email, route_callback) {
 	});
 }
 
+var addComplaint = function(target, submitter, content, status, route_callback) {
+	var newComplaint = new Complaint ({target: target, submitter: submitter, content: content, status: status});
+	newComplaint.save( (err) => {
+		if (err) {
+			route_callback(err);
+		} else {
+			route_callback(null)
+		}
+	})
+}
+
 var updateComplaint = function(target, submitter, content, status, route_callback) {
 	console.log(submitter);
 	Complaint.findOne( {target: target, submitter: submitter, content: content}, (err, comp) => {
 		if (err) {
 			route_callback(err);
 		} else if (!comp) {
-			route_callback(200);
+			route_callback("Complaint does not exist")
 		} else {
 			console.log(typeof submitter);
 			comp.status = String(status);
@@ -295,6 +360,43 @@ var removeQualification = function(email_id, qual, route_callback) {
 		}
 	})
 }
+var updateRating = function(userEmail, addRating, callback) {
+	User.findOne({email: userEmail}, (err, user) => {
+		if (err) {
+			callback(err, null);
+		} else if(!user) {
+			callback("user not found", null);
+		} else {
+			console.log("user for rating update>>>>", user);
+			user.rateTotal = parseFloat(user.rateTotal) + parseFloat(addRating);
+			user.rateNum = user.rateNum + 1;
+			user.rating = parseFloat(user.rateTotal)/user.rateNum;
+
+			user.save( (err) => {
+				if (err) {
+					console.log("unable to update user rating")
+					callback(err, null);
+				} else {
+					callback(null, user);
+				}
+			})
+		}
+	});
+}
+
+var getUser = function(userEmail, callback) {
+	User.findOne({email: userEmail}, (err, user) => {
+		if (err) {
+			callback(err, null);
+		} else if(!user) {
+			callback("user not found", null);
+		} else {
+			console.log("found user", user);
+			callback(null, user);
+		}
+	});
+}
+
 var banUser = function(target, route_callback) {
 	User.findOne( {email: target}, (err, user) => {
 		if (err) {
@@ -324,10 +426,15 @@ var database = {
 
 	deleteSessionsOfTutor: deleteSessionsOfTutor,
 	deleteSessionsOfStudent: deleteSessionsOfStudent,
+	getSessions: getSessions,
+	claimSession: claimSession,
+	addSession: addSession,
 
+	updateRating: updateRating,
 	updateComplaint: updateComplaint,
+	addComplaint: addComplaint,
 	addBalance: addBalance,
-
+	getUser: getUser,
 	banUser: banUser,
 
 	approve_qualification: approveQualification,
