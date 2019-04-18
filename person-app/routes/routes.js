@@ -415,6 +415,7 @@ var checkLogin = function(req, res) {
 
 
 var logout = function (req, res) {
+
 	console.log("loggedout");
 	logged_in = false;
 	res.render('.././views/login', {error_message: null});
@@ -450,6 +451,19 @@ var analytics = function(req, res) {
 	}
 }
 
+var getUser = function(req, res) {
+	console.log("getUser>>>", req.params.email);
+	var userEmail = req.params.email;
+	db.getUser(userEmail, (err, user) => {
+		if(err) {
+			console.log("Error finding user", err);
+		} else {
+			res.json({userFound: user});
+		}
+	});
+	res.end();
+}
+
 var addBalance = function(req, res) {
 	var userEmail = req.body.email;
 	var addBalance = req.body.addBalance;
@@ -460,6 +474,7 @@ var addBalance = function(req, res) {
 			console.log("updated user>>>", updatedUser);
 		}
 	});
+	res.end();
 }
 
 var addComplaint = function(req, res) {
@@ -540,6 +555,7 @@ var getUsers = function (req, res) {
 		res.json({users: userArray});
 	})
 }
+
 
 var getSessions = function (req, res) {
 	var sessionArray = [];
@@ -628,6 +644,7 @@ var removeQualification = function(req, res) {
 
 
 
+
 var deleteSessions = function (req, res) {
 	console.log("in Routes!");
 	var email = req.body.email;
@@ -685,6 +702,7 @@ var banUser = function (req, res) {
 var routes = {
 	check_login: checkLogin,
 	logout: logout,
+	getUser: getUser,
 	getUsers: getUsers,
 	addBalance: addBalance,
 	approve_qualification: approveQualification,
