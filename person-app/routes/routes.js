@@ -564,11 +564,11 @@ var claimSession = function(req, res) {
 	res.end();
 }
 
-var updateBalance = function(req, res) {
+var updateBalanceAndCost = function(req, res) {
 	var email = req.body.email;
-	var increase = req.body.increase;
-	var amount = req.body.amount;
-	db.claimSession(email, increase, amount, (err, updatedUser) => {
+	var isIncrease = req.body.isIncrease;
+	var amount = req.body.sessionPrice;
+	db.claimSession(email, isIncrease, amount, (err, updatedUser) => {
 		if(err) {
 			console.log("error updating balance", err);
 		} else {
@@ -717,7 +717,7 @@ var routes = {
 	home: homepage,
 	getSessions: getSessions,
 	claimSession: claimSession,
-	updateBalance: updateBalance,
+	updateBalanceAndCost: updateBalanceAndCost,
 };
 
 module.exports = routes;

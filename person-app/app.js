@@ -41,6 +41,8 @@ app.get('/getUsers', routes.getUsers);
 
 app.post('/addBalance', routes.addBalance);
 
+app.post('/updateBalanceAndCost', routes.updateBalanceAndCost);
+
 app.get('/home', routes.home);
 
 app.get('/getComplaints',  routes.getComplaints);

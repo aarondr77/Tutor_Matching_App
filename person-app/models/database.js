@@ -195,27 +195,39 @@ var claimSession = function(sessionID, studentEmail, studentName, route_callback
 	});
 }
 
-var updateBalance = function (email, increase, amount, route_callback) {
+var updateBalanceAndCost = function (email, isIncrease, amount, route_callback) {
 	User.findOne({email: email}, (err, user) => {
 		if (err) {
-			route_callback(err, null)
+			console.log("err finding user");
+			route_callback(err, null);
 		} else if (!user) {
-			route_callback("no user found", null)
+			route_callback("no user found", null);
 		} else {
+			// update balance
 			var balance = user.balance;
-			if (increase == 1) {
+			if (isIncrease == 1) {
 				balance += amount;
-			} else (
+			} else {
 				balance -= amount;
-			)
+			}
 			user.balance = balance;
+
+			// update average cost
+			var numSessions = user.numSessions + 1;
+			var totalCost = user.totalCost + amount;
+			var avgCost = totalCost / numSessions;
+
+			user.numSession = numSessions;
+			user.totalCost = totalCost;
+			user.avgCost = avgCost;
 
 			user.save((err) => {
 				if (err) {
+					console.log("err saving user");;
 					route_callback(err, null);
 				} else {
-					console.log("Successfully updated balance", user)
-					route_callback(null, user)
+					console.log("Successfully updated balance", user);
+					route_callback(null, user);
 				}
 			});
 		}
@@ -408,6 +420,7 @@ var database = {
 	updateComplaint: updateComplaint,
 	addComplaint: addComplaint,
 	addBalance: addBalance,
+	updateBalanceAndCost: updateBalanceAndCost,
 
 	banUser: banUser,
 
