@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import org.json.JSONException;
 import java.net.URL;
 import java.util.Map;
+import org.json.JSONArray;
 
 
 public class DataManagement {
@@ -93,16 +94,18 @@ public class DataManagement {
 
     public static void writeComplaint(Context context, ComplaintsObject newComplaint) {
 
-        String FILENAME = complaintsDatabase;
-        String string = newComplaint.getContent() + ":" + newComplaint.getSubmitter() + ":" + newComplaint.getStatus() + ":" + newComplaint.getTarget() + "\n";
 
-        BufferedWriter fos = null;
         try {
-            fos = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_APPEND)));
-            fos.write(string);
-            fos.close();
-        } catch (IOException e) {
-            Log.d("PRINT", e.toString());
+            // put params in a map format
+            Map<String, String> postParams = new HashMap<>();
+            postParams.put("content", newComplaint.getContent());
+            postParams.put("target", newComplaint.getTarget());
+            postParams.put("submitter", newComplaint.getSubmitter());
+            postParams.put("status", newComplaint.getStatus());
+            AccessWebTaskPost task = new AccessWebTaskPost(postParams);
+            task.execute("http://10.0.2.2:3000/addComplaint");
+        } catch(Exception e) {
+            Log.d("error post", e.getMessage());
         }
 
     }
@@ -327,16 +330,19 @@ public class DataManagement {
         //Log.d("DATA MANAG", MainActivity.context.getDir(complaintsDatabase, Context.MODE_PRIVATE);
         //complaints.delete();
 
-        try {
-            fos = new BufferedReader(new InputStreamReader(MainActivity.context.openFileInput(FILENAME)));
 
-            while (fos.ready()) {
-                String curLine = fos.readLine();
-                Log.d("DATA MANAG", String.valueOf(curLine));
-                if (curLine.split(":").length == 4)
-                    tempList.add(new ComplaintsObject(curLine.split(":")[0], curLine.split(":")[1], curLine.split(":")[2], curLine.split(":")[3]));
+        try {
+            URL url = new URL("http://10.0.2.2:3000/getComplaints/");
+            AccessWebTaskGet task = new AccessWebTaskGet();
+            task.execute(url);
+            String complaints = task.get();
+            Log.d("Called URL>>>>>>>>>>>>>", complaints);
+            JSONArray  complaintsArray = (JSONArray) new JSONObject(complaints).get("complaints");
+            for (int i = 0; i < complaintsArray.length(); i++) {
+                JSONObject curComplaint = complaintsArray.getJSONObject(i);
+                tempList.add(new ComplaintsObject((String) curComplaint.get("content"), (String) curComplaint.get("submitter"), (String) curComplaint.get("status"), (String) curComplaint.get("target")));
+
             }
-            fos.close();
 
             for (ComplaintsObject curComplaint : tempList) {
                 if (curComplaint.getSubmitter().equals(MainActivity.currentUserEmail)) {
@@ -345,7 +351,7 @@ public class DataManagement {
             }
 
             return returnVal;
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.d("PRINT", e.toString());
         }
 

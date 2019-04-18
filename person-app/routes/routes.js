@@ -354,6 +354,7 @@ function loadData () {
 		target: "admin@adr.com",
 		submitter: "tamir@gmail.com",
 		content: "This app is Dumbbbb",
+		status: "What a silly Idea",
 	});
 
 	feedback1.save( (err) => {
@@ -370,9 +371,6 @@ function loadData () {
 
 var checkLogin = function(req, res) {
 
-
-	clearDB();
-	loadData();
 
 
 	var input_email = req.body.email;
@@ -442,6 +440,34 @@ var addBalance = function(req, res) {
 	});
 }
 
+var addComplaint = function(req, res) {
+	var content = req.body.content;
+	var target = req.body.target;
+	var submitter = req.body.submitter;
+	var status = req.body.status;
+	console.log("req.body", req.body)
+	db.addComplaint(target, submitter, content, status, (err) => {
+		if (err) {
+			console.log("err:" + err);
+		} else {
+			console.log("successful Update!");
+		}
+	})
+	res.end();
+}
+
+var getComplaints = function (req, res) {
+	console.log("getting complaints");
+	var complaintsArray = []
+
+	db.get_complaints((err, complaints) => {
+		console.log(err);
+		complaintsArray = complaints;
+		console.log(complaintsArray);
+		res.json({complaints: complaintsArray});
+	})
+}
+
 var complaints = function (req, res) {
 	console.log("complaints");
 	var complaintsArray = []
@@ -449,7 +475,7 @@ var complaints = function (req, res) {
 	if (logged_in) {
 		db.get_complaints((err, complaints) => {
 			console.log(err);
-			complaintsArray = complaints
+			complaintsArray = complaints;
 			console.log(complaintsArray);
 			res.render('.././views/complaints', {complaints: complaintsArray});
 		})
@@ -621,6 +647,8 @@ var routes = {
 	get_users_pending_qualifications: getUsersPendingQualifications,
 	remove_qualification: removeQualification,
 	complaints: complaints,
+	getComplaints: getComplaints,
+	addComplaint: addComplaint,
 	deleteSessions: deleteSessions,
 	updateComplaint: updateComplaint,
 	banUser: banUser,

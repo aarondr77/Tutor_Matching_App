@@ -39,6 +39,10 @@ app.post('/addBalance', routes.addBalance);
 
 app.get('/home', routes.home);
 
+app.get('/getComplaints',  routes.getComplaints);
+
+app.post('/addComplaint',  routes.addComplaint);
+
 app.get('/complaints',  routes.complaints);
 app.post('/complaints',  routes.complaints);
 

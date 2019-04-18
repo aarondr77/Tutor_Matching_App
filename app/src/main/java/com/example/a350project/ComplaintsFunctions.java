@@ -12,7 +12,7 @@ public class ComplaintsFunctions {
     public static void loadComplaints() {
         //DataManagement.writeComplaint(MainActivity.context ,new ComplaintsObject("'Hahaha, you suck'","chris@gmail.com","Approved","Aaron"));
         //DataManagement.writeComplaint(MainActivity.context ,new ComplaintsObject("'What a terrible tutor!'","aaron@gmail.com","Denied","Chris"));
-        DataManagement.writeComplaint(MainActivity.context , new ComplaintsObject("'What a terrible tutor!'","DUMMY","Denied","Chris"));
+        //DataManagement.writeComplaint(MainActivity.context , new ComplaintsObject("'What a terrible tutor!'","DUMMY","Denied","Chris"));
         //DataManagement.writeComplaint(MainActivity.context , new ComplaintsObject("'Hahaha, you suck'","No Show","Approved","Aaron"));
         allComplaints.clear();
         allComplaints.addAll(DataManagement.loadComplaints());
