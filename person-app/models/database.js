@@ -346,6 +346,19 @@ var removeQualification = function(email_id, qual, route_callback) {
 		}
 	})
 }
+
+var getUser = function(userEmail, callback) {
+	User.findOne({email: userEmail}, (err, user) => {
+		if (err) {
+			callback(err, null);
+		} else if(!user) {
+			callback("user not found", null);
+		} else {
+			callback(null, user);
+		}
+	})
+}
+
 var banUser = function(target, route_callback) {
 	User.findOne( {email: target}, (err, user) => {
 		if (err) {
@@ -381,7 +394,7 @@ var database = {
 	updateComplaint: updateComplaint,
 	addComplaint: addComplaint,
 	addBalance: addBalance,
-
+	getUser: getUser,
 	banUser: banUser,
 
 	approve_qualification: approveQualification,

@@ -37,6 +37,8 @@ app.post('/claimSession', routes.claimSession);
 
 app.post('/deleteSessions', routes.deleteSessions);
 
+app.get('/getUser/:email', routes.getUser);
+
 app.get('/getUsers', routes.getUsers);
 
 app.post('/addBalance', routes.addBalance);
@@ -48,6 +50,7 @@ app.get('/getComplaints',  routes.getComplaints);
 app.post('/addComplaint',  routes.addComplaint);
 
 app.get('/complaints',  routes.complaints);
+
 app.post('/complaints',  routes.complaints);
 
 app.post('/complaints/updateComplaint', routes.updateComplaint);

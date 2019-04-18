@@ -24,7 +24,7 @@ import org.json.JSONArray;
 public class DataManagement {
 
     private static String sessionDatabase = "Sessions1001.txt";
-    private static String userDatabase = "UserDatabase1001.txt";
+    private static String userDatabase = "UserDatabase1002.txt";
     private static String complaintsDatabase = "ComplaintsDatabase1000.txt";
 
 
@@ -176,23 +176,23 @@ public class DataManagement {
 
     // find user by email, used for finding current user
     public static JSONObject findUser(String email) {
-        List<String> allUsers = loadUsers();
-        for (String e: allUsers) Log.d("u", e);
 
-        JSONObject result = null;
-        try{
-            // loop through users and find matching email
-            for(String user : allUsers) {
-                JSONObject userJson = new JSONObject(user);
-                if (userJson.getString("email").equals(email)) {
-                    result = userJson;
-                }
-            }
-        } catch(JSONException e) {
-            Log.e("json error", e.getMessage());
+        String result = "";
+        JSONObject foundUser = null;
+        JSONObject finalFoundUser = null;
+        try {
+            URL url = new URL("http://10.0.2.2:3000/getUser/" + email);
+            AccessWebTaskGet task = new AccessWebTaskGet();
+            task.execute(url);
+            result = task.get();
+            Log.d("Called URL>>>>>>>>>>>>>", result);
+            foundUser = new JSONObject(result);
+            finalFoundUser = foundUser.getJSONObject("userFound");
+        } catch (Exception e) {
+
         }
-        // return matching json object
-        return result;
+
+        return finalFoundUser;
     }
 
     public static void updateRating (String emailAddress, double newRating, double newRateTotal, int newRateNum, Context context) {
