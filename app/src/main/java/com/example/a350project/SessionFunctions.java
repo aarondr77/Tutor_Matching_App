@@ -10,12 +10,16 @@ public class SessionFunctions {
 
     public SessionFunctions() { }
 
-    public static void loadSessions() {
+    public static List<SessionObject> loadSessions() {
         allSessions.clear();
+
         List<SessionObject> loadedSessions = DataManagement.loadSessions();
         if (loadedSessions != null) {
+            Log.d("LOADING SESSIONS", "yay!");
             allSessions.addAll(loadedSessions);
+            Log.d("LOADING SESSIONS SIZE", "size " + allSessions.size());
         }
+        return allSessions;
     }
 
 

@@ -21,6 +21,21 @@ var getUsers = function(route_callback) {
 	});
 }
 
+// returns all users
+var getSessions = function(route_callback) {
+	Session.find({}, (err, sessions) => {
+		if (err) {
+			console.log("err: " + err)
+			route_callback(err, null)
+		} else if (!sessions) {
+			console.log("no sessions")
+			route_callback(null,  null)
+		} else {
+			route_callback(null, sessions)
+		}
+	});
+}
+
 
 /* Method to approve a qualification for a single user. Removes that subject
    from the "pendingQualifications" field in their user object
@@ -160,8 +175,8 @@ var addBalance = function(userEmail, amount, route_callback) {
 		if (err) {
 			route_callback(err, null);
 		} else if (!user) {
-			console.log("user could not be found" + userEmail);
-			route_callback("user could not be found" + userEmail, null);
+			console.log("user could not be found");
+			route_callback("user could not be found", null);
 		} else {
 			// user found
 			// check for integer overflow
@@ -335,6 +350,7 @@ var database = {
 
 	deleteSessionsOfTutor: deleteSessionsOfTutor,
 	deleteSessionsOfStudent: deleteSessionsOfStudent,
+	getSessions: getSessions,
 
 	updateComplaint: updateComplaint,
 	addComplaint: addComplaint,

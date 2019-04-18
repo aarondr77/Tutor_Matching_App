@@ -1,6 +1,8 @@
 package com.example.a350project;
 
 import java.util.LinkedList;
+import java.util.List;
+
 import android.view.View;
 import android.widget.Toast;
 import android.util.Log;
@@ -10,15 +12,15 @@ import org.json.JSONObject;
 
 public class MarketplaceFunctions {
 
-    private static LinkedList<SessionObject> allSessions = new LinkedList<SessionObject>();
+    private static List<SessionObject> allSessions = new LinkedList<SessionObject>();
     private static LinkedList<SessionObject> foundSessions = new LinkedList<SessionObject>();
 
     public MarketplaceFunctions() { }
 
     public static void onSearchButtonClick(View view, String searchString) {
-        SessionFunctions.loadSessions();
         foundSessions.clear();
-        allSessions = SessionFunctions.getAllSessions();
+        allSessions = SessionFunctions.loadSessions();
+        Log.d("ALL SESSIONS ", "SIZE " + allSessions.size());
         if (allSessions != null) {
             for (SessionObject currentSession : allSessions) {
                 if (currentSession.getSubject().equals(searchString) && currentSession.getStudent().equals("unclaimed")) {

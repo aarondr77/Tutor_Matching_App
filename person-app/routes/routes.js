@@ -126,7 +126,7 @@ function loadData () {
 	});
 
 	var session1 = new Session({
-		sessionID: 1,
+		sessionID: "1",
 		tutor: "Aaron",
 		student: "Petra",
 		subject: 'Math114',
@@ -139,7 +139,7 @@ function loadData () {
 	});
 
 	var session2 = new Session({
-		sessionID: 2,
+		sessionID: "2",
 		tutor: "Aaron",
 		student: "Chris",
 		subject: 'Bio001',
@@ -152,7 +152,7 @@ function loadData () {
 	});
 
 	var session3 = new Session({
-		sessionID: 1,
+		sessionID: "3",
 		tutor: "Tamir",
 		student: "Petra",
 		subject: 'Phys100',
@@ -165,7 +165,7 @@ function loadData () {
 	});
 
 	var session4 = new Session({
-		sessionID: 1,
+		sessionID: "4",
 		tutor: "Tamir",
 		student: "Chris",
 		subject: 'Bio001',
@@ -178,7 +178,7 @@ function loadData () {
 	});
 
 	var session5 = new Session({
-		sessionID: 1,
+		sessionID: "5",
 		tutor: "Tamir",
 		student: "Chris",
 		subject: 'Bio001',
@@ -191,7 +191,7 @@ function loadData () {
 	});
 
 	var session6 = new Session({
-		sessionID: 1,
+		sessionID: "6",
 		tutor: "Tamir",
 		student: "Chris",
 		subject: 'Math114',
@@ -200,6 +200,19 @@ function loadData () {
 		price: "25",
 		status: "accepted",
 		studentEmail: "chris@gmail.com",
+		tutorEmail: "tamir@gmail.com",
+	});
+
+	var session7 = new Session({
+		sessionID: "6",
+		tutor: "Tamir",
+		student: "unclaimed",
+		subject: 'Math114',
+		date: "3/12/19",
+		duration: 60,
+		price: "25",
+		status: "unclaimed",
+		studentEmail: "unclaimed",
 		tutorEmail: "tamir@gmail.com",
 	});
 
@@ -302,6 +315,15 @@ function loadData () {
 		}
 	});
 
+	session7.save( (err) => {
+		if (err) {
+		    console.log(err);
+		    res.end();
+		} else {
+			console.log("added user")
+		}
+	});
+
 	var complaint1 = new Complaint({
 		target: "aaron@gmail.com",
 		submitter: "chris@gmail.com",
@@ -392,6 +414,7 @@ var checkLogin = function(req, res) {
 
 
 var logout = function (req, res) {
+	
 	console.log("loggedout");
 	logged_in = false;
 	res.render('.././views/login', {error_message: null});
@@ -430,7 +453,6 @@ var analytics = function(req, res) {
 var addBalance = function(req, res) {
 	var userEmail = req.body.email;
 	var addBalance = req.body.addBalance;
-	console.log("req.body", req.body)
 	db.addBalance(userEmail, addBalance, (err, updatedUser) => {
 		if(err) {
 			console.log("ERROR ADDING BALANCE", err);
@@ -516,6 +538,15 @@ var getUsers = function (req, res) {
 		console.log(err);
 		userArray = users
 		res.json({users: userArray});
+	})
+}
+
+var getSessions = function (req, res) {
+	var sessionArray = [];
+	db.getSessions((err, sessions) => {
+		console.log(err);
+		sessionArray = sessions;
+		res.json({sessions: sessionArray});
 	})
 }
 
@@ -655,6 +686,7 @@ var routes = {
 	feedback: feedback,
 	analytics: analytics,
 	home: homepage,
+	getSessions: getSessions,
 };
 
 module.exports = routes;
