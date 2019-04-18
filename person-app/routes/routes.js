@@ -550,6 +550,20 @@ var getSessions = function (req, res) {
 	})
 }
 
+var claimSession = function(req, res) {
+	var sessionID = req.body.sessionID;
+	var studentEmail = req.body.studentEmail;
+	var studentName = req.body.studentName;
+	db.claimSession(sessionID, studentEmail, studentName, (err, updatedSession) => {
+		if(err) {
+			console.log("ERROR CLAIMING SESSION", err);
+		} else {
+			console.log("updated session>>>", updatedSession);
+		}
+	});
+}
+
+
 var getUsersPendingQualifications = function(req, res) {
 	db.get_users((err, users) => {
 		if (err) {
