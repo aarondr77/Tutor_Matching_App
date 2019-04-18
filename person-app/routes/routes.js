@@ -561,6 +561,21 @@ var claimSession = function(req, res) {
 			console.log("updated session>>>", updatedSession);
 		}
 	});
+	res.end();
+}
+
+var updateBalance = function(req, res) {
+	var email = req.body.email;
+	var increase = req.body.increase;
+	var amount = req.body.amount;
+	db.claimSession(email, increase, amount, (err, updatedUser) => {
+		if(err) {
+			console.log("error updating balance", err);
+		} else {
+			console.log("updated balance>>>", updatedUser);
+		}
+	});
+	res.end();
 }
 
 
@@ -702,6 +717,7 @@ var routes = {
 	home: homepage,
 	getSessions: getSessions,
 	claimSession: claimSession,
+	updateBalance: updateBalance,
 };
 
 module.exports = routes;

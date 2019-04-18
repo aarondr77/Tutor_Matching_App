@@ -49,21 +49,8 @@ public class SessionFunctions {
 
     }
     public static void claimSession(String targetSessionID, String student) {
-
         String studentEmail = MainActivity.currentUserEmail;
         DataManagement.claimSession(studentEmail, student, targetSessionID);
-
-        /*
-        for (SessionObject currentSession : allSessions) {
-
-            if (currentSession.getSessionID().equals(targetSessionID)) {
-                Log.i("FOUND SESSION TO CLAIM", "FOUND");
-                allSessions.remove(currentSession);
-                addSession(targetSessionID, currentSession.getTutor(), student, currentSession.getTutorEmail(), MainActivity.currentUserEmail, currentSession.getSubject(), currentSession.getDate(), currentSession.getDuration(), currentSession.getPrice(), "accepted");
-                break;
-            }
-        }
-        */
     }
 
     public static LinkedList<SessionObject> getAllSessions () {

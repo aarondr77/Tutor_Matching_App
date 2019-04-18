@@ -187,8 +187,35 @@ var claimSession = function(sessionID, studentEmail, studentName, route_callback
 				if (err) {
 					route_callback(err, null);
 				} else {
-					console.log("Success", session);
+					console.log("Successfully claimed session", session);
 					route_callback(null, session);
+				}
+			});
+		}
+	});
+}
+
+var updateBalance = function (email, increase, amount, route_callback) {
+	User.findOne({email: email}, (err, user) => {
+		if (err) {
+			route_callback(err, null)
+		} else if (!user) {
+			route_callback("no user found", null)
+		} else {
+			var balance = user.balance;
+			if (increase == 1) {
+				balance += amount;
+			} else (
+				balance -= amount;
+			)
+			user.balance = balance;
+
+			user.save((err) => {
+				if (err) {
+					route_callback(err, null);
+				} else {
+					console.log("Successfully updated balance", user)
+					route_callback(null, user)
 				}
 			});
 		}
