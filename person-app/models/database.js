@@ -196,7 +196,7 @@ var claimSession = function(sessionID, studentEmail, studentName, route_callback
 }
 
 var addSession = function(tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status, route_callback) {
-	var sessionID = Double.toString(Math.random())
+	var sessionID = Math.random().toString();
 	var newSession = new Session({sessionID: sessionID, tutor: tutor, student: student, tutorEmail: tutorEmail, studentEmail: studentEmail, subject: subject,
 	date: date, duration: duration, price: price, status: status});
 	newSession.save((err) => {

@@ -36,6 +36,8 @@ public class SessionFunctions {
 //        SessionObject newSession = new SessionObject(sessionID, tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status);
 //        allSessions.add(newSession);
 //        DataManagement.writeSession(MainActivity.context , allSessions);
+
+
         // make POST request
         try {
             // put params in a map format
@@ -55,20 +57,20 @@ public class SessionFunctions {
             Log.d("error post add session", e.getMessage());
         }
     }
-
-    public static void addSession(String sessionID, String tutor, String student, String tutorEmail, String studentEmail, String subject, String date, String duration, String price, String status) {
-        // remove the session to update
-        for (SessionObject currentSession : allSessions) {
-            if (currentSession.getSessionID().equals(sessionID)) {
-                Log.e("addSession", "removing" + sessionID);
-                allSessions.remove(currentSession);
-            }
-        }
-        SessionObject newSession = new SessionObject(sessionID, tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status);
-        allSessions.add(newSession);
-        DataManagement.writeSession(MainActivity.context , allSessions);
-
-    }
+//
+//    public static void addSession(String sessionID, String tutor, String student, String tutorEmail, String studentEmail, String subject, String date, String duration, String price, String status) {
+//        // remove the session to update
+//        for (SessionObject currentSession : allSessions) {
+//            if (currentSession.getSessionID().equals(sessionID)) {
+//                Log.e("addSession", "removing" + sessionID);
+//                allSessions.remove(currentSession);
+//            }
+//        }
+//        SessionObject newSession = new SessionObject(sessionID, tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status);
+//        allSessions.add(newSession);
+//        DataManagement.writeSession(MainActivity.context , allSessions);
+//
+//    }
     public static void claimSession(String targetSessionID, String student) {
 
         String studentEmail = MainActivity.currentUserEmail;

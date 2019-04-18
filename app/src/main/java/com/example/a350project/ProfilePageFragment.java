@@ -178,9 +178,11 @@ public class ProfilePageFragment extends Fragment {
 //                            if(qualificationString.equals("~")) {
 //                                qualified = true;
 //                            }
-                            for(int i = 1; i < qualArray.length(); i++) {
+                            for(int i = 0; i < qualArray.length(); i++) {
 
                                 String subjectQual = qualArray.getString(i);
+                                Log.e("subject of new", subject.getText().toString());
+                                Log.e("curr qual", subjectQual);
                                 if(subject.getText().toString().toLowerCase().equals(subjectQual.toLowerCase())) {
                                     qualified = true;
                                 }
