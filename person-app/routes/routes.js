@@ -476,6 +476,26 @@ var addBalance = function(req, res) {
 	res.end();
 }
 
+var addSession = function(req, res) {
+	var tutor = req.body.tutor;
+	var student = req.body.student;
+	var subject = req.body.subject;
+	var date = req.body.date;
+	var duration = req.body.duration;
+	var price = req.body.price;
+	var status = req.body.pending;
+	var studentEmail = req.body.studentEmail;
+	var tutorEmail = req.body.tutorEmail;
+	db.addSession(tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status, (err, session) => {
+		if(err) {
+			console.log("ERROR ADDING SESSION", err);
+		} else {
+			console.log("updated session", session);
+		}
+	});
+	res.end();
+}
+
 
 var updateRating = function(req, res) {
 	var userEmail = req.params.email;
@@ -718,6 +738,7 @@ var routes = {
 	logout: logout,
 	getUser: getUser,
 	getUsers: getUsers,
+	addSession: addSession,
 	addBalance: addBalance,
 	updateRating: updateRating,
 	approve_qualification: approveQualification,
