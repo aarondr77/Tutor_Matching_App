@@ -113,7 +113,7 @@ public class DataManagement {
             AccessWebTaskGet task = new AccessWebTaskGet();
             task.execute(url);
             result = task.get();
-            Log.d("Called URL>>>>>>>>>>>>>", result);
+            Log.d("Called URL>>>addRate>>>", result);
 
         } catch (Exception e) {
 

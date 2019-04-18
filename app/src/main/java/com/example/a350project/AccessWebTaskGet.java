@@ -39,12 +39,17 @@ public class AccessWebTaskGet extends AsyncTask<URL, String, String> {
             while((line = reader.readLine()) != null){
                 msg += line;
             }
+
             // use Android JSON library to parseJSON
-            JSONObject jo = new JSONObject(msg);
+            if(!msg.equals("")) {
+                JSONObject jo = new JSONObject(msg);
+                return jo.toString();
+            } else {
+                return msg;
+            }
 
             // assumes that JSON object contains a "name" field
             // this will be passed to onPostExecute method
-            return jo.toString();
         } catch (Exception e) {
             return e.toString();
         }
