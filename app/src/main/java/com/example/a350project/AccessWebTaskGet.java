@@ -6,6 +6,8 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
@@ -29,9 +31,14 @@ public class AccessWebTaskGet extends AsyncTask<URL, String, String> {
             conn.connect();
 
             // read first line of data that is returned
-            Scanner in = new Scanner(url.openStream());
-            String msg = in.nextLine();
-
+//            Scanner in = new Scanner(url.openStream());
+//            String msg = in.nextLine();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            String msg = "";
+            String line;
+            while((line = reader.readLine()) != null){
+                msg += line;
+            }
             // use Android JSON library to parseJSON
             JSONObject jo = new JSONObject(msg);
 

@@ -195,6 +195,20 @@ var claimSession = function(sessionID, studentEmail, studentName, route_callback
 	});
 }
 
+var addSession = function(tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status, route_callback) {
+	var sessionID = Math.random().toString();
+	var newSession = new Session({sessionID: sessionID, tutor: tutor, student: student, tutorEmail: tutorEmail, studentEmail: studentEmail, subject: subject,
+	date: date, duration: duration, price: price, status: status});
+	newSession.save((err) => {
+		if(err) {
+			route_callback(err, null);
+		} else {
+			route_callback(null, newSession);
+		}
+	})
+
+}
+
 var addBalance = function(userEmail, amount, route_callback) {
 	User.findOne( {email: userEmail}, (err, user) => {
 		if (err) {
@@ -414,6 +428,7 @@ var database = {
 	deleteSessionsOfStudent: deleteSessionsOfStudent,
 	getSessions: getSessions,
 	claimSession: claimSession,
+	addSession: addSession,
 
 	updateRating: updateRating,
 	updateComplaint: updateComplaint,
