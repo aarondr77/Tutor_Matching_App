@@ -19,6 +19,8 @@ var User = require('./models/User.js');
 
 app.post('/checkLogin', routes.check_login);
 
+app.post('/registerUser', routes.register_user);
+
 app.post('/approveQualification', routes.approve_qualification)
 
 app.post('/denyQualification', routes.deny_qualification)
@@ -37,6 +39,12 @@ app.post('/claimSession', routes.claimSession);
 
 app.post('/deleteSessions', routes.deleteSessions);
 
+app.get('/getUser/:email', routes.getUser);
+
+app.post('/addSession', routes.addSession);
+
+app.get('/updateRating/:email/:rating', routes.updateRating);
+
 app.get('/getUsers', routes.getUsers);
 
 app.post('/addBalance', routes.addBalance);
@@ -50,6 +58,7 @@ app.get('/getComplaints',  routes.getComplaints);
 app.post('/addComplaint',  routes.addComplaint);
 
 app.get('/complaints',  routes.complaints);
+
 app.post('/complaints',  routes.complaints);
 
 app.post('/complaints/updateComplaint', routes.updateComplaint);

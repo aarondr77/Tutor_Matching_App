@@ -19,7 +19,7 @@ var userSchema = new Schema({
 	totalCost: Number,
 	avgCost: Number,
 	rateNum: Number,
-	rateToal: Number,
+	rateTotal: Number,
 	rating: Number,
 	balance: Number,
 	qualifications: [String],
