@@ -171,6 +171,8 @@ public class ProfilePageFragment extends Fragment {
                     public void onClick(View view) {
                         // get subjects
                         boolean qualified = false;
+                        findCurrentUser();
+
                         try{
 
                             JSONArray qualArray = currUser.getJSONArray("qualifications");
