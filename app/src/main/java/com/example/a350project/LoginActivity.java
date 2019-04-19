@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.List;
 
 
@@ -51,18 +54,21 @@ public class  LoginActivity extends AppCompatActivity {
                     error.setText("Please fill out all fields");
                     return;
                 } else {
-                    List<String> users = DataManagement.loadUsers();
+                    JSONArray users = DataManagement.loadUsers();
                     Log.e("LoginActivity", "users" + users);
-                    Log.e("LoginActivity", "users.length" + users.size());
-                    for (String user: users) {
-                        String[] info = user.split(",");
-                        String userEmail = info[2].split(":")[1];
-                        String userPassword = info[3].split(":")[1];
-                        Log.d("email", userEmail);
-                        Log.d("input_email", email);
+                    Log.e("LoginActivity", "users.length" + users.length());
+                    for (int i = 0; i < users.length(); i++) {
+                        String userEmail = "";
+                        String userPassword = "";
+                        try {
+                            JSONObject user = users.getJSONObject(i);
+                            userEmail = user.getString("email");
+                            userPassword = user.getString("password");
+                            Log.d("user", user.toString());
+                        } catch (Exception e) {
+                            Log.e("getting user info >>> ", "failed");
+                        }
 
-                        Log.d("password", userPassword);
-                        Log.d("input_password", password);
                         if (email.equals(userEmail) && password.equals(userPassword)) {
                             MainActivity.currentUserEmail = email;
                             emailField.setText("");

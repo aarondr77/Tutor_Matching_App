@@ -9,6 +9,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,7 +26,7 @@ import org.json.JSONArray;
 public class DataManagement {
 
     private static String sessionDatabase = "Sessions1001.txt";
-    private static String userDatabase = "UserDatabase1001.txt";
+    private static String userDatabase = "UserDatabase1002.txt";
     private static String complaintsDatabase = "ComplaintsDatabase1000.txt";
 
 
@@ -103,18 +105,19 @@ public class DataManagement {
     }
 
 
-    public static JSONObject addRating(String userEmail, float rating) {
-        JSONObject user = findUser(userEmail);
-        try{
-            user.put("rateTotal", user.getDouble("rateTotal") + rating);
-            user.put("rateNum", user.getInt("rateNum") + 1);
-            user.put("rating", user.getDouble("rateTotal")/user.getInt("rateNum"));
-        } catch(JSONException e) {
-            Log.e("jsonerror", e.getMessage());
+    public static void addRating(String userEmail, float rating) {
+
+        String result = "";
+        try {
+            URL url = new URL("http://10.0.2.2:3000/updateRating/" + userEmail + "/" + Float.toString(rating));
+            AccessWebTaskGet task = new AccessWebTaskGet();
+            task.execute(url);
+            result = task.get();
+            Log.d("Called URL>>>addRate>>>", result);
+
+        } catch (Exception e) {
+
         }
-
-        return user;
-
     }
 
     public static void writeComplaint(Context context, ComplaintsObject newComplaint) {
@@ -136,54 +139,48 @@ public class DataManagement {
     }
 
     public static void registerNewUser(String firstName, String lastName, String email,
-                                       String password, String userType, String price, String days,
-                                       String times, String qualifications, Context context) {
+                                       String password, String userType, String price,
+                                       String pendingQualifications, Context context) {
+
         // make POST request
         try {
             // put params in a map format
             Map<String, String> postParams = new HashMap<>();
-            postParams.put("email", "aaron@gmail.com");
-            postParams.put("addBalance", "10000");
+            postParams.put("email", email);
+            postParams.put("firstName", firstName);
+            postParams.put("lastName", lastName);
+            postParams.put("password", password);
+            postParams.put("userType", userType);
+            postParams.put("price", price);
+            postParams.put("numSessions", "0");
+            postParams.put("totalCost", "0");
+            postParams.put("avgCost", "0");
+            postParams.put("rateNum", "0");
+            postParams.put("rateTotal", "0");
+            postParams.put("rating", "0");
+            postParams.put("balance", "100");
+            postParams.put("qualifications", "");
+            postParams.put("pendingQualifications", pendingQualifications);
+            postParams.put("sessions", "");
+            postParams.put("banned", "false");
+
             AccessWebTaskPost task = new AccessWebTaskPost(postParams);
-            task.execute("http://10.0.2.2:3000/addBalance");
+            task.execute("http://10.0.2.2:3000/registerUser");
+            Log.d("register_user", "successfully registered new user?");
         } catch(Exception e) {
             Log.d("error post", e.getMessage());
         }
-
-        String FILENAME = userDatabase;
-
-        List<String> allUsers = loadUsers();
-        String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + email + ",password:" + password +
-                ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                + times + ",numSessions:" + "0" + ",totalCost:" + "0" +  ",avgCost:"  + "0" +
-                ",rateNum:" + "0" + ",rateTotal:" + "0" + ",rating:" +  "0"  + ",balance:" + "100" +
-                ",qualifications:" + qualifications + "}";
-
-        allUsers.add(JSONobj);
-
-        BufferedWriter  w = null;
-        try {
-            w = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
-            for (String user : allUsers) {
-                w.write(user + "\n");
-            }
-            w.close();
-        } catch (IOException e) {
-            Log.d("PRINT", e.toString());
-        }
-
     }
 
-    // find user by email, used for finding current user
+    // find user by email
     public static JSONObject findUser(String email) {
-        List<String> allUsers = loadUsers();
-        for (String e: allUsers) Log.d("u", e);
-
+        JSONArray allUsers = loadUsers();
         JSONObject result = null;
         try{
             // loop through users and find matching email
-            for(String user : allUsers) {
-                JSONObject userJson = new JSONObject(user);
+            for (int i = 0; i < allUsers.length(); i++) {
+                JSONObject userJson = allUsers.getJSONObject(i);
+                Log.d("email", userJson.getString("email"));
                 if (userJson.getString("email").equals(email)) {
                     result = userJson;
                 }
@@ -195,15 +192,16 @@ public class DataManagement {
         return result;
     }
 
-    public static void updateRating (String emailAddress, double newRating, double newRateTotal, int newRateNum, Context context) {
+    public static void updateRating (String emailAddress, double newRating, double newRateTotal,
+                                     int newRateNum, Context context) {
         String FILENAME = userDatabase;
 
         // get up to date list of allUsers as String
-        List<String> allUsers = loadUsers();
-        List<String> updatedUsers =  new LinkedList<String>();
-        for (String currentUser : allUsers) {
+        JSONArray allUsers = loadUsers();
+        List<String> updatedUsers = new LinkedList<String>();
+        for (int i = 0; i < allUsers.length(); i++) {
             try {
-                JSONObject userJson = new JSONObject(currentUser);
+                JSONObject userJson = allUsers.getJSONObject(i);
                 if (userJson.getString("email").equals(emailAddress)) {
                     String firstName = userJson.getString("firstName");
                     String lastName = userJson.getString("lastName");
@@ -223,42 +221,44 @@ public class DataManagement {
 
                     String JSONobj = "{ firstName:" + firstName + ",lastName:" + lastName + ",email:" + emailAddress + ",password:" + password +
                             ",userType:" + userType + ",price:" + price + ",days:" + days + ",times:"
-                            + times + ",numSessions:"+ numSessions + ",rateNum:" + rateNum + ",rating:"
+                            + times + ",numSessions:" + numSessions + ",rateNum:" + rateNum + ",rating:"
                             + rating + ",rateTotal:" + rateTotal + ",totalCost:" + totalCost + ",avgCost:"
                             + avgCost + ",balance:" + balance + ",qualifications:" + qualifications + "}";
 
                     updatedUsers.add(JSONobj);
                 } else {
-                    updatedUsers.add(currentUser);
+                    updatedUsers.add(userJson.toString());
                 }
             } catch (JSONException e) {
                 Log.e("JSONException", e.getStackTrace().toString());
             }
         }
-        // overwrite old file and rewrite all new users
-        BufferedWriter  w = null;
-        try {
-            w = new BufferedWriter( new OutputStreamWriter(context.openFileOutput(FILENAME, Context.MODE_PRIVATE)));
-            for (String user : updatedUsers) {
-                w.write(user + "\n");
-            }
-            w.close();
-        } catch (IOException e) {
-            Log.e("IOException", e.getStackTrace().toString());
+    }
+     /*   try {
+            URL url = new URL("http://10.0.2.2:3000/getUser/" + email);
+            AccessWebTaskGet task = new AccessWebTaskGet();
+            task.execute(url);
+            result = task.get();
+            Log.d("Called URL>>>>>>>>>>>>>", email);
+            foundUser = new JSONObject(result);
+            finalFoundUser = foundUser.getJSONObject("userFound");
+        } catch (Exception e) {
+
         }
 
+        return finalFoundUser;
+    }*/
 
-    }
 
     public static void updateBalance (String emailAddress, double newBalance, double sessionPrice, Context context) {
         String FILENAME = userDatabase;
 
         // get up to date list of allUsers as String
-        List<String> allUsers = loadUsers();
+        JSONArray allUsers = loadUsers();
         List<String> updatedUsers =  new LinkedList<String>();
-        for (String currentUser : allUsers) {
+        for (int i = 0; i < allUsers.length(); i++) {
             try {
-                JSONObject userJson = new JSONObject(currentUser);
+                JSONObject userJson = allUsers.getJSONObject(i);
                 if (userJson.get("email").equals(emailAddress)) {
 
                     String firstName = userJson.getString("firstName");
@@ -297,7 +297,7 @@ public class DataManagement {
 
                     updatedUsers.add(JSONobj);
                 } else {
-                    updatedUsers.add(currentUser);
+                    updatedUsers.add(userJson.toString());
                 }
             } catch (JSONException e) {
                 Log.e("JSONException", e.getStackTrace().toString());
@@ -319,28 +319,21 @@ public class DataManagement {
 
     }
 
-    public static List<String> loadUsers() {
-        String FILENAME = userDatabase;
-
-        BufferedReader w;
-
-
-
-
-        List<String> tempList = new LinkedList<>();
-
+    public static JSONArray loadUsers() {
+        JSONArray users = new JSONArray();
         try {
-            w = new BufferedReader(new InputStreamReader(LoginActivity.context.openFileInput(FILENAME)));
-
-            while (w.ready()) {
-                String curLine = w.readLine();
-                tempList.add(curLine);
-            }
-            w.close();
-        } catch (IOException e) {
-            Log.d("PRINT", e.toString());
+            URL url = new URL("http://10.0.2.2:3000/getUsers/");
+            AccessWebTaskGet task = new AccessWebTaskGet();
+            task.execute(url);
+            String info = task.get();
+            Log.d("info", info);
+            JSONObject json = new JSONObject(info);
+            users = json.getJSONArray("users");
+        } catch (Exception e) {
+            Log.e("error", e.toString());
+            Log.e("Loading Users >>>>", "failed");
         }
-        return tempList;
+        return users;
     }
 
 
@@ -404,7 +397,7 @@ public class DataManagement {
 
 
     public static boolean userExists(String email) {
-        List<String> allUsers = DataManagement.loadUsers();
+        JSONArray allUsers = DataManagement.loadUsers();
 
         try {
             URL url = new URL("http://10.0.2.2:3000/getUsers/");
@@ -412,13 +405,12 @@ public class DataManagement {
             task.execute(url);
             String name = task.get();
             Log.d("Called URL>>>>>>>>>>>>>", name);
+            for (int i = 0; i < allUsers.length(); i++) {
+                String e = allUsers.getJSONObject(i).getString("email");
+                if (email.equals(e)) return true;
+            }
         } catch (Exception e) {
 
-        }
-        for (String u: allUsers) {
-            String[] info = u.split(",");
-            String e = info[2].split(":")[1];
-            if (email.equals(e)) return true;
         }
         return false;
     }

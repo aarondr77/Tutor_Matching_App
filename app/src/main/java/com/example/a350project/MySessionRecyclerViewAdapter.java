@@ -83,15 +83,8 @@ public class MySessionRecyclerViewAdapter extends RecyclerView.Adapter<MySession
                 .setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        JSONObject newUser = DataManagement.addRating(ratedPersonEmail, rating.getRating());
-                        try{
-                            Double newRating = newUser.getDouble("rating");
-                            Double newRateTotal = newUser.getDouble("rateTotal");
-                            Integer newRateNum = newUser.getInt("rateNum");
-                            DataManagement.updateRating(ratedPersonEmail, newRating, newRateTotal, newRateNum, c);
-                        } catch(JSONException e) {
-                            Log.e("jsonerror", e.getMessage());
-                        }
+                        DataManagement.addRating(ratedPersonEmail, rating.getRating());
+
                     }
 
 

@@ -83,96 +83,13 @@
 
             <Button
                 android:id="@+id/qualifications"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="Enter Subject Qualifications" />
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:text="Enter the days you are most available" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-
-            <CheckBox
-                android:id="@+id/checkbox_mon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Monday" />
-
-            <CheckBox
-                android:id="@+id/checkbox_tues"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tuesday" />
-            <CheckBox
-                android:id="@+id/checkbox_weds"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Wednesday" />
-            <CheckBox
-                android:id="@+id/checkbox_thurs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Thursday" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-            <CheckBox
-                android:id="@+id/checkbox_fri"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Friday" />
-            <CheckBox
-                android:id="@+id/checkbox_sat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Saturday" />
-
-            <CheckBox
-                android:id="@+id/checkbox_sun"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sunday" />
-        </LinearLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:text="Enter the times you are most available" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-            <CheckBox
-                android:id="@+id/checkbox_morning"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Morning" />
-            <CheckBox
-                android:id="@+id/checkbox_afternoon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Afternoon" />
-
-            <CheckBox
-                android:id="@+id/checkbox_evening"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Evening" />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -186,22 +103,16 @@
                 android:text="Sign Up"
                 tools:layout_editor_absoluteX="161dp"
                 tools:layout_editor_absoluteY="434dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/login_button"
                 style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
+                android:layout_width="158dp"
                 android:layout_height="wrap_content"
                 android:text="Back to Login In"
                 android:textColorHighlight="#F00"
                 tools:layout_editor_absoluteX="161dp"
                 tools:layout_editor_absoluteY="434dp" />
-
         </LinearLayout>
 
         <TextView

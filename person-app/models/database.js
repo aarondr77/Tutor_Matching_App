@@ -220,6 +220,18 @@ var updateBalance = function (email, increase, amount, route_callback) {
 			});
 		}
 	});
+
+var addSession = function(tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status, route_callback) {
+	var sessionID = Math.random().toString();
+	var newSession = new Session({sessionID: sessionID, tutor: tutor, student: student, tutorEmail: tutorEmail, studentEmail: studentEmail, subject: subject,
+	date: date, duration: duration, price: price, status: status});
+	newSession.save((err) => {
+		if(err) {
+			route_callback(err, null);
+		} else {
+			route_callback(null, newSession);
+		}
+	})
 }
 
 var addBalance = function(userEmail, amount, route_callback) {
@@ -362,7 +374,7 @@ var removeQualification = function(email_id, qual, route_callback) {
 			user.qualifications = qualifs
 
 			//update that user's object
-			user.save( (err) => {
+			user.save((err) => {
 				if (err) {
 					console.log("unable to remove user qualification")
 					route_callback(err)
@@ -373,6 +385,43 @@ var removeQualification = function(email_id, qual, route_callback) {
 		}
 	})
 }
+var updateRating = function(userEmail, addRating, callback) {
+	User.findOne({email: userEmail}, (err, user) => {
+		if (err) {
+			callback(err, null);
+		} else if(!user) {
+			callback("user not found", null);
+		} else {
+			console.log("user for rating update>>>>", user);
+			user.rateTotal = parseFloat(user.rateTotal) + parseFloat(addRating);
+			user.rateNum = user.rateNum + 1;
+			user.rating = parseFloat(user.rateTotal)/user.rateNum;
+
+			user.save( (err) => {
+				if (err) {
+					console.log("unable to update user rating")
+					callback(err, null);
+				} else {
+					callback(null, user);
+				}
+			})
+		}
+	});
+}
+
+var getUser = function(userEmail, callback) {
+	User.findOne({email: userEmail}, (err, user) => {
+		if (err) {
+			callback(err, null);
+		} else if(!user) {
+			callback("user not found", null);
+		} else {
+			console.log("found user", user);
+			callback(null, user);
+		}
+	});
+}
+
 var banUser = function(target, route_callback) {
 	User.findOne( {email: target}, (err, user) => {
 		if (err) {
@@ -392,6 +441,40 @@ var banUser = function(target, route_callback) {
 	})
 }
 
+var registerNewUser = function(userObj, route_callback) {
+    console.log(typeof(userObj))
+    console.log(userObj.email)
+
+    var user = new User({
+        email: userObj.email,
+        firstName: userObj.firstName,
+        lastName: userObj.lastName,
+        password: userObj.password,
+        userType: userObj.userType,
+        price: userObj.price,
+        numSessions: userObj.numSessions,
+        totalCost: userObj.totalCost,
+        avgCost: userObj.avgCost,
+        rateNum: userObj.rateNum,
+        rateTotal: userObj.rateTotal,
+        rating: userObj.rating,
+        balance: userObj.balance,
+        qualifications: userObj.qualifications,
+        pendingQualifications: userObj.pendingQualifications,
+        sessions: userObj.sessions,
+        banned: userObj.banned
+    })
+
+    user.save ((err) => {
+    	if (err) {
+   			route_callback(err);
+    	} else {
+    	    console.log("successfully added user")
+   			route_callback(null)
+   		}
+   	})
+}
+
 
 var database = {
 	get_users: getUsers,
@@ -404,16 +487,20 @@ var database = {
 	deleteSessionsOfStudent: deleteSessionsOfStudent,
 	getSessions: getSessions,
 	claimSession: claimSession,
+	addSession: addSession,
 
+	updateRating: updateRating,
 	updateComplaint: updateComplaint,
 	addComplaint: addComplaint,
 	addBalance: addBalance,
-
+	getUser: getUser,
 	banUser: banUser,
 
 	approve_qualification: approveQualification,
 	deny_qualification: denyQualification,
 	remove_qualification: removeQualification,
+
+	register_new_user: registerNewUser,
 }
 
 module.exports = database;

@@ -50,7 +50,7 @@ function loadData () {
 		totalCost: 50,
 		avgCost: 25,
 		rateNum: 2,
-		rateToal: 10,
+		rateTotal: 10,
 		rating: 5,
 		balance: 150,
 		qualifications: [],
@@ -72,7 +72,7 @@ function loadData () {
 		totalCost: 50,
 		avgCost: 25,
 		rateNum: 2,
-		rateToal: 10,
+		rateTotal: 10,
 		rating: 5,
 		balance: 150,
 		qualifications: [],
@@ -94,7 +94,7 @@ function loadData () {
 		totalCost: 50,
 		avgCost: 25,
 		rateNum: 2,
-		rateToal: 10,
+		rateTotal: 10,
 		rating: 5,
 		balance: 50,
 		qualifications: [],
@@ -116,7 +116,7 @@ function loadData () {
 		totalCost: 50,
 		avgCost: 25,
 		rateNum: 2,
-		rateToal: 10,
+		rateTotal: 10,
 		rating: 5,
 		balance: 50,
 		qualifications: ["MATH114-A"],
@@ -396,6 +396,7 @@ var checkLogin = function(req, res) {
 	clearDB();
 	loadData();
 
+
 	var input_email = req.body.email;
 	var input_password = req.body.password;
 
@@ -415,6 +416,7 @@ var checkLogin = function(req, res) {
 
 
 var logout = function (req, res) {
+
 	console.log("loggedout");
 	logged_in = false;
 	res.render('.././views/login', {error_message: null});
@@ -450,6 +452,18 @@ var analytics = function(req, res) {
 	}
 }
 
+var getUser = function(req, res) {
+	console.log("getUser>>>", req.params.email);
+	var userEmail = req.params.email;
+	db.getUser(userEmail, (err, user) => {
+		if(err) {
+			console.log("Error finding user", err);
+		} else {
+			res.json({userFound: user});
+		}
+	});
+}
+
 var addBalance = function(req, res) {
 	var userEmail = req.body.email;
 	var addBalance = req.body.addBalance;
@@ -460,7 +474,43 @@ var addBalance = function(req, res) {
 			console.log("updated user>>>", updatedUser);
 		}
 	});
+	res.end();
 }
+
+var addSession = function(req, res) {
+	var tutor = req.body.tutor;
+	var student = req.body.student;
+	var subject = req.body.subject;
+	var date = req.body.date;
+	var duration = req.body.duration;
+	var price = req.body.price;
+	var status = req.body.status;
+	var studentEmail = req.body.studentEmail;
+	var tutorEmail = req.body.tutorEmail;
+	db.addSession(tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status, (err, session) => {
+		if(err) {
+			console.log("ERROR ADDING SESSION", err);
+		} else {
+			console.log("updated session", session);
+		}
+	});
+	res.end();
+}
+
+
+var updateRating = function(req, res) {
+	var userEmail = req.params.email;
+	var addRating = req.params.rating;
+	db.updateRating(userEmail, addRating, (err, updatedUser) => {
+		if(err) {
+			console.log("ERROR ADDING RATING", err);
+		} else {
+			console.log("updated user>>>", updatedUser);
+		}
+	});
+	res.end();
+}
+
 
 var addComplaint = function(req, res) {
 	var content = req.body.content;
@@ -540,6 +590,7 @@ var getUsers = function (req, res) {
 		res.json({users: userArray});
 	})
 }
+
 
 var getSessions = function (req, res) {
 	var sessionArray = [];
@@ -643,6 +694,7 @@ var removeQualification = function(req, res) {
 
 
 
+
 var deleteSessions = function (req, res) {
 	console.log("in Routes!");
 	var email = req.body.email;
@@ -696,12 +748,26 @@ var banUser = function (req, res) {
 	});
 }
 
+var registerUser = function(req, res) {
+    db.register_new_user(req.body, (err) => {
+        if (err) {
+       		console.log("err:" + err);
+       	} else {
+        	console.log("successfully reqistered " + req.body.email);
+        	res.end();
+    	}
+    });
+}
+
 
 var routes = {
 	check_login: checkLogin,
 	logout: logout,
+	getUser: getUser,
 	getUsers: getUsers,
+	addSession: addSession,
 	addBalance: addBalance,
+	updateRating: updateRating,
 	approve_qualification: approveQualification,
 	deny_qualification: denyQualification,
 	get_users_pending_qualifications: getUsersPendingQualifications,
@@ -715,9 +781,11 @@ var routes = {
 	feedback: feedback,
 	analytics: analytics,
 	home: homepage,
+
 	getSessions: getSessions,
 	claimSession: claimSession,
 	updateBalance: updateBalance,
+	register_user: registerUser,
 };
 
 module.exports = routes;
