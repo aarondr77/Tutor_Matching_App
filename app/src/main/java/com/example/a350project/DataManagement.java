@@ -250,7 +250,7 @@ public class DataManagement {
     }*/
 
 
-    public static void updateBalance (String emailAddress, int isIncreasing, double sessionPrice, Context context) {
+    public static void updateBalance (String emailAddress, int isIncreasing, double sessionPrice) {
         String FILENAME = userDatabase;
 
         // make POST request

@@ -205,19 +205,20 @@ var updateBalanceAndCost = function (email, isIncrease, amount, route_callback) 
 		} else {
 			// update balance
 			var balance = user.balance;
+			var amountDouble = parseFloat(amount);
 			if (isIncrease == 1) {
-				balance += amount;
+				balance += amountDouble;
 			} else {
-				balance -= amount;
+				balance -= amountDouble;
 			}
 			user.balance = balance;
 
 			// update average cost
 			var numSessions = user.numSessions + 1;
-			var totalCost = user.totalCost + amount;
+			var totalCost = user.totalCost + amountDouble;
 			var avgCost = totalCost / numSessions;
 
-			user.numSession = numSessions;
+			user.numSessions = numSessions;
 			user.totalCost = totalCost;
 			user.avgCost = avgCost;
 
@@ -232,6 +233,7 @@ var updateBalanceAndCost = function (email, isIncrease, amount, route_callback) 
 			});
 		}
 	});
+}
 
 var addSession = function(tutor, student, tutorEmail, studentEmail, subject, date, duration, price, status, route_callback) {
 	var sessionID = Math.random().toString();

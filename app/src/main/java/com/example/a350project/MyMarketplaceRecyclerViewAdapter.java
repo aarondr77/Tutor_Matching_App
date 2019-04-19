@@ -85,10 +85,9 @@ public class MyMarketplaceRecyclerViewAdapter extends RecyclerView.Adapter<MyMar
                 public void onClick(View v) {
                     double studentBalance = MarketplaceFunctions.getBalance(MainActivity.currentUserEmail);
                     Log.e("onBindViewHolder", "tutorEmail " + tutorEmail);
-                    //double tutorBalance = MarketplaceFunctions.getBalance(tutorEmail);
                     if (studentBalance >= price) {
-                        DataManagement.updateBalance(MainActivity.currentUserEmail, studentBalance - price, price, context);
-                        // DataManagement.updateBalance(tutorEmail, studentBalance + price, price, context);
+                        DataManagement.updateBalance(MainActivity.currentUserEmail, 0, price);
+                        DataManagement.updateBalance(tutorEmail, 1, price);
                         Log.i("CLAIM CLICKED", sessionID);
                         try {
                             SessionFunctions.claimSession(sessionID, ProfilePageFragment.currUser.getString("firstName"));

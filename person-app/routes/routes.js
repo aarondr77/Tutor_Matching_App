@@ -619,7 +619,7 @@ var updateBalanceAndCost = function(req, res) {
 	var email = req.body.email;
 	var isIncrease = req.body.isIncreasing;
 	var amount = req.body.sessionPrice;
-	db.claimSession(email, isIncrease, amount, (err, updatedUser) => {
+	db.updateBalanceAndCost(email, isIncrease, amount, (err, updatedUser) => {
 		if(err) {
 			console.log("error updating balance", err);
 		} else {
