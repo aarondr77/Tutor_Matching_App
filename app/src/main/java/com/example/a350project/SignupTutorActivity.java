@@ -24,7 +24,7 @@ public class SignupTutorActivity extends AppCompatActivity {
     private String password = "";
     private String userType = "";
     private String price = "";
-    private String qualifications = "~";
+    private String qualifications = "";
     public static Context context;
 
 
@@ -126,7 +126,6 @@ public class SignupTutorActivity extends AppCompatActivity {
     }
 
     private boolean checkQualifications() {
-        Log.d("q", qualifications);
         String[] q = qualifications.split("~");
 
         if (q.length == 0) return true;
@@ -175,6 +174,9 @@ public class SignupTutorActivity extends AppCompatActivity {
 
                         for (int i = 0; i < subjects.length; i++) {
                             qualifications += subjects[i] + "-"  + grades[i] + "~";
+                        }
+                        if (qualifications.length() > 0) {
+                            qualifications = qualifications.substring(0, qualifications.length() - 1);
                         }
 
                     }

@@ -118,6 +118,7 @@
 				console.log(qualif)
 				var j
 				for (j = 0; j < qualif.length; j++) {
+					if (qualif[j] === "") continue
 					qualifications_html += "<tr>" + "<th>" + users[i].firstName + "</th>"
 					qualifications_html += "<th>" + users[i].lastName + "</th>"
 					//console.log(users[i].lastName)

@@ -459,6 +459,9 @@ var registerNewUser = function(userObj, route_callback) {
     console.log(typeof(userObj))
     console.log(userObj.email)
 
+    var pendingQualifs = userObj.pendingQualifications.split("~")
+
+
     var user = new User({
         email: userObj.email,
         firstName: userObj.firstName,
@@ -473,9 +476,9 @@ var registerNewUser = function(userObj, route_callback) {
         rateTotal: userObj.rateTotal,
         rating: userObj.rating,
         balance: userObj.balance,
-        qualifications: userObj.qualifications,
-        pendingQualifications: userObj.pendingQualifications,
-        sessions: userObj.sessions,
+        qualifications: [],
+        pendingQualifications: pendingQualifs,
+        sessions: [],
         banned: userObj.banned
     })
 
