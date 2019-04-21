@@ -60,16 +60,24 @@ public class  LoginActivity extends AppCompatActivity {
                     for (int i = 0; i < users.length(); i++) {
                         String userEmail = "";
                         String userPassword = "";
+                        Boolean userBanned = false;
                         try {
                             JSONObject user = users.getJSONObject(i);
                             userEmail = user.getString("email");
                             userPassword = user.getString("password");
+                            userBanned = user.getBoolean("banned");
+
                             Log.d("user", user.toString());
                         } catch (Exception e) {
                             Log.e("getting user info >>> ", "failed");
                         }
 
                         if (email.equals(userEmail) && password.equals(userPassword)) {
+                            if (userBanned) {
+                                TextView error = (TextView) findViewById(R.id.error_login);
+                                error.setText("You are Banned!");
+                                return;
+                            }
                             MainActivity.currentUserEmail = email;
                             emailField.setText("");
                             passwordField.setText("");
