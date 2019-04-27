@@ -5,7 +5,6 @@ var Complaint = require('./Complaint.js');
 var _ = require('lodash');
 var dateFounded = new Date('04/02/2019');
 
-
 // returns all users
 var getUsers = function(route_callback) {
 	User.find({}, (err, users) => {
@@ -455,6 +454,25 @@ var banUser = function(target, route_callback) {
 	})
 }
 
+var unbanUser = function(email, route_callback) {
+	User.findOne( {email: email}, (err, user) => {
+		if (err) {
+			route_callback(err);
+		} else if (!user) {
+			route_callback(200);
+		} else {
+			user.banned = false;
+			user.save ((err) => {
+				if (err) {
+					route_callback(err);
+				} else {
+					route_callback(null)
+				}
+			})
+		}
+	})
+}
+
 var registerNewUser = function(userObj, route_callback) {
     console.log(typeof(userObj))
     console.log(userObj.email)
@@ -512,6 +530,7 @@ var database = {
 	addBalance: addBalance,
 	getUser: getUser,
 	banUser: banUser,
+	unbanUser: unbanUser,
 
 	updateBalanceAndCost: updateBalanceAndCost,
 

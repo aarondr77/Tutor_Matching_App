@@ -61,9 +61,15 @@ app.get('/complaints',  routes.complaints);
 
 app.post('/complaints',  routes.complaints);
 
+app.get('/bannedUsers',  routes.bannedUsers);
+
+app.post('/bannedUsers',  routes.bannedUsers);
+
 app.post('/complaints/updateComplaint', routes.updateComplaint);
 
 app.post('/complaints/banUser', routes.banUser);
+
+app.post('/bannedUsers/unbanUser', routes.unbanUser);
 
 app.get('/analytics', routes.analytics);
 

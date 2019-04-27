@@ -556,6 +556,22 @@ var complaints = function (req, res) {
 	}
 }
 
+var bannedUsers = function (req, res) {
+	console.log("bannedUsers");
+	var usersArray = []
+
+	if (logged_in) {
+		db.get_users((err, users) => {
+			console.log(err);
+			usersArray = users;
+			console.log(usersArray);
+			res.render('.././views/bannedUsers', {users: usersArray});
+		})
+	} else {
+		res.redirect('/');
+	}
+}
+
 var homepage = function(req,res) {
 	// check if logged in, if not redirect to login page, which currently we have as '/'
 	if(logged_in) {
@@ -748,6 +764,20 @@ var banUser = function (req, res) {
 	});
 }
 
+var unbanUser = function (req, res) {
+	console.log("in Routes! unBanning User");
+	var email = req.body.email;
+	console.log(email);
+
+	db.unbanUser(email, (err) => {
+		if (err) {
+			console.log("err:" + err);
+		} else {
+			console.log("successful Banning");
+		}
+	});
+}
+
 var registerUser = function(req, res) {
     db.register_new_user(req.body, (err) => {
         if (err) {
@@ -773,11 +803,13 @@ var routes = {
 	get_users_pending_qualifications: getUsersPendingQualifications,
 	remove_qualification: removeQualification,
 	complaints: complaints,
+	bannedUsers: bannedUsers,
 	getComplaints: getComplaints,
 	addComplaint: addComplaint,
 	deleteSessions: deleteSessions,
 	updateComplaint: updateComplaint,
 	banUser: banUser,
+	unbanUser: unbanUser,
 	feedback: feedback,
 	analytics: analytics,
 	home: homepage,
