@@ -51,7 +51,7 @@ function loadData () {
 		avgCost: 25,
 		rateNum: 2,
 		rateTotal: 10,
-		rating: 5,
+		rating: 3,
 		balance: 150,
 		qualifications: [],
 		pendingQualifications: ["MATH114-C"],
@@ -95,7 +95,7 @@ function loadData () {
 		avgCost: 25,
 		rateNum: 2,
 		rateTotal: 10,
-		rating: 5,
+		rating: 1,
 		balance: 50,
 		qualifications: [],
 		pendingQualifications: ["CIS110-B+"],
@@ -117,7 +117,7 @@ function loadData () {
 		avgCost: 25,
 		rateNum: 2,
 		rateTotal: 10,
-		rating: 5,
+		rating: 2,
 		balance: 50,
 		qualifications: ["MATH114-A"],
 		pendingQualifications: [],
@@ -442,7 +442,27 @@ var analytics = function(req, res) {
 						avgDailySessions = avgDailyErr;
 					} else {
 						avgDailySessions = average;
-						res.render('.././views/analytics', {stats: {avgSessions: avgDailySessions, mostPopular: mostPopularCourse}});
+						db.getHighestRatedTutor((highTutorError, highTutor) => {
+							var highestRatedTutor = "";
+							if(highTutorError) {
+								console.log("err for highest tutor", highTutorError);
+								highestRatedTutor = highTutorError;
+							} else {
+								highestRatedTutor = highTutor;
+								db.getHighestRatedStudent((highStudentError, highStudent) => {
+									var highestRatedStudent = "";
+									if(highStudentError) {
+										highestRatedStudent = highStudentError;
+										console.log("err for highest student", highStudentError);
+									} else {
+										highestRatedStudent = highStudent;
+										res.render('.././views/analytics', {stats: {avgSessions: avgDailySessions, mostPopular: mostPopularCourse, highestTutor: highestRatedTutor
+											, highestStudent: highestRatedStudent}});
+									}
+								});
+							}
+						});
+
 					}
 				})
 			}

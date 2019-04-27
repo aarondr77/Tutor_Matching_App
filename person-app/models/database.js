@@ -150,6 +150,48 @@ var getMostPopularCourse = function (route_callback) {
 	});
 }
 
+var getHighestRatedTutor = function (route_callback) {
+	getUsers((err, usersArray) => {
+		if(err) {
+			route_callback(err, null);
+		} else {
+			console.log("highestRatedTutor found all users", usersArray);
+			var tutorArray = [];
+			usersArray.forEach((user) => {
+				console.log("curruser>>", user);
+				if(user.userType === 'tutor') {
+					console.log('tutor', user);
+					tutorArray.push(user);
+				}
+			});
+			var sortedTutor = _.orderBy(tutorArray, ['rating'], ['desc']);
+			console.log("sortedTutors", sortedTutor);
+			route_callback(null, sortedTutor[0])
+		}
+	})
+}
+
+var getHighestRatedStudent = function (route_callback) {
+	getUsers((err, usersArray) => {
+		if(err) {
+			route_callback(err, null);
+		} else {
+			console.log("highestRatedStudent found all users", usersArray);
+			var studentArray = [];
+			usersArray.forEach((user) => {
+				console.log("curruser>>", user);
+				if(user.userType === 'student') {
+					console.log('student', user);
+					studentArray.push(user);
+				}
+			});
+			var sortedStudent = _.orderBy(studentArray, ['rating'], ['desc']);
+			console.log("sortedStudents", sortedStudent);
+			route_callback(null, sortedStudent[0])
+		}
+	})
+}
+
 var getAverageDailySessions = function (route_callback) {
 	getAllSessions((err, sessionArray) => {
 		if(err) {
@@ -537,7 +579,8 @@ var database = {
 	approve_qualification: approveQualification,
 	deny_qualification: denyQualification,
 	remove_qualification: removeQualification,
-
+	getHighestRatedTutor: getHighestRatedTutor,
+	getHighestRatedStudent: getHighestRatedStudent,
 	register_new_user: registerNewUser,
 }
 
