@@ -440,6 +440,34 @@ var removeQualification = function(email_id, qual, route_callback) {
 		}
 	})
 }
+
+var addNewQualification = function(email_id, qual, route_callback) {
+
+	User.findOne({email: email_id}, (err, user) => {
+		if (err) {
+			console.log("Unable to find user to update qualifications")
+			route_callback(err)
+		} else if (!user) {
+			route_callback("User does not exist")
+		} else {
+		    console.log(qual)
+
+		    user.pendingQualifications.push(qual)
+
+
+			//update that user's object
+			user.save((err) => {
+				if (err) {
+					console.log("unable to remove user qualification")
+					route_callback(err)
+				} else {
+					route_callback(null)
+				}
+			})
+		}
+	})
+}
+
 var updateRating = function(userEmail, addRating, callback) {
 	User.findOne({email: userEmail}, (err, user) => {
 		if (err) {
@@ -579,6 +607,7 @@ var database = {
 	approve_qualification: approveQualification,
 	deny_qualification: denyQualification,
 	remove_qualification: removeQualification,
+	add_new_qualification: addNewQualification,
 	getHighestRatedTutor: getHighestRatedTutor,
 	getHighestRatedStudent: getHighestRatedStudent,
 	register_new_user: registerNewUser,

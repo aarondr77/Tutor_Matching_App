@@ -116,9 +116,25 @@ public class DataManagement {
             Log.d("Called URL>>>addRate>>>", result);
 
         } catch (Exception e) {
+            Log.d("exception", e.toString());
+        }
+    }
+
+    public static void addQualification(String email, String qual) {
+
+        String result = "";
+        try {
+            URL url = new URL("http://10.0.2.2:3000/addPendingQualification/?email=" + email + "&qual=" + qual);
+            AccessWebTaskGet task = new AccessWebTaskGet();
+            task.execute(url);
+            result = task.get();
+            Log.d("Called URL>>addQualif>", result);
+
+        } catch (Exception e) {
 
         }
     }
+
 
     public static void writeComplaint(Context context, ComplaintsObject newComplaint) {
 

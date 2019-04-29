@@ -78,7 +78,12 @@
 					qualifications_html += "<th>" + users[i].lastName + "</th>"
 					//console.log(users[i].lastName)
 					qualifications_html += "<th>" + qualif[j].split("-")[0] + "</th>"
-					qualifications_html += "<th>" + qualif[j].split("-")[1] + "</th>"
+
+					var grade = qualif[j].split("-")[1]
+					if (qualif[j].charAt(qualif[j].length - 1) === "-") {
+					    grade = qualif[j].split("-")[1] + "-"
+					}
+					qualifications_html += "<th>" + grade + "</th>"
 
 					var email = users[i].email
 

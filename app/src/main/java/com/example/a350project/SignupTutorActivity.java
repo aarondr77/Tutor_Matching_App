@@ -15,6 +15,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class SignupTutorActivity extends AppCompatActivity {
 
@@ -95,7 +98,7 @@ public class SignupTutorActivity extends AppCompatActivity {
                     }
                     MainActivity.currentUserEmail = email;
                     DataManagement.registerNewUser(firstName, lastName, email, password, userType,
-                            price, qualifications, context);
+                            price, qualifications.substring(0, qualifications.length() - 1), context);
                     launchMainActivity();
                     finish();
                 }
@@ -126,17 +129,51 @@ public class SignupTutorActivity extends AppCompatActivity {
     }
 
     private boolean checkQualifications() {
-        String[] q = qualifications.split("~");
+        Set<String> grades = new HashSet<String>();
+        grades.add("A");
+        grades.add("A+");
+        grades.add("A-");
+        grades.add("B+");
+        grades.add("B");
+        grades.add("B-");
+        grades.add("C+");
+        grades.add("C");
+        grades.add("C-");
+        grades.add("D+");
+        grades.add("D");
+        grades.add("D-");
+        grades.add("F");
 
-        if (q.length == 0) return true;
-        qualifications = qualifications.replaceAll(" ", "");
-        for (int i = 0; i < qualifications.length(); i++) {
-            int c = (int) qualifications.charAt(i);
-            if (!(c >= 48 && c <= 57) && !(c >= 65 && c <= 90) && !(c >= 97 && c <= 122) && c != 44 && c != 45 && c != 126) {
-                return false;
+        String[] quals = qualifications.substring(0, qualifications.length() - 1).split("~");
+
+        for (String q: quals) {
+            String subject = q.split("-")[0];
+            String grade = q.split("-")[1];
+
+            if (subject.length() > 7) return false;
+
+            if (!grades.contains(grade)) return false;
+            if (!isLetter(subject.charAt(0)) || !isLetter(subject.charAt(1)) || !isLetter(subject.charAt(2))) return false;
+            if (!isNumberOrLetter(subject.charAt(3))) return false;
+            if (!isNumber(subject.charAt(4)) || !isNumber(subject.charAt(5))) return false;
+            if (subject.length() == 7) {
+                if (!isNumberOrLetter(subject.charAt(6))) return false;
             }
         }
         return true;
+
+    }
+
+    private boolean isLetter(int c) {
+        return (c >= 65 && c <= 90);
+    }
+
+    private boolean isNumberOrLetter(int c) {
+        return (c >= 48 && c <= 57) || (c >= 65 && c <= 90);
+    }
+
+    private boolean isNumber(int c) {
+        return (c >= 48 && c <= 57);
     }
 
 
@@ -148,8 +185,8 @@ public class SignupTutorActivity extends AppCompatActivity {
         //text_entry is an Layout XML file containing two text field to display in alert dialog
         final EditText subject = (EditText) textEntryView.findViewById(R.id.enterSubject);
         final EditText grade = (EditText) textEntryView.findViewById(R.id.enterGrade);
-        subject.setHint("MATH114,CIS110,PHYS140");
-        grade.setHint("A,B+,C,A-");
+        subject.setHint("MATH114");
+        grade.setHint("A");
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(c);
 
@@ -161,10 +198,10 @@ public class SignupTutorActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Editable subjectsEditable = subject.getText();
-                        String[] subjects = subjectsEditable.toString().split(",");
+                        String subject = subjectsEditable.toString();
 
                         Editable gradesEditable = grade.getText();
-                        String[] grades = gradesEditable.toString().split(",");
+                        String grade = gradesEditable.toString();
 
                         if (subjectsEditable.toString().equals("") || gradesEditable.toString().equals("")) {
                             TextView error = (TextView) findViewById(R.id.error_tutor_signup);
@@ -172,12 +209,7 @@ public class SignupTutorActivity extends AppCompatActivity {
                             return;
                         }
 
-                        for (int i = 0; i < subjects.length; i++) {
-                            qualifications += subjects[i] + "-"  + grades[i] + "~";
-                        }
-                        if (qualifications.length() > 0) {
-                            qualifications = qualifications.substring(0, qualifications.length() - 1);
-                        }
+                        qualifications += subject + "-"  + grade + "~";
 
                     }
 

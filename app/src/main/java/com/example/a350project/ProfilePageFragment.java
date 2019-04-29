@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -122,11 +126,118 @@ public class ProfilePageFragment extends Fragment {
                 }
             });
         }
+
+        Button newQualificationBtn = (Button) v.findViewById(R.id.newQualification);
+        if (currUserPosition.equals("student")) {
+            newQualificationBtn.setClickable(false);
+            newQualificationBtn.setVisibility(View.INVISIBLE);
+        } else {
+            newQualificationBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showAddQualificationsDialog(v.getContext());
+                }
+            });
+        }
         return v;
     }
 
     public void findCurrentUser() {
         currUser = DataManagement.findUser(MainActivity.currentUserEmail);
+    }
+
+
+    private void showAddQualificationsDialog(Context c) {
+
+        LayoutInflater factory = LayoutInflater.from(c);
+        final View textEntryView = factory.inflate(R.layout.qualifications_single_entry_popup, null);
+        //text_entry is an Layout XML file containing two text field to display in alert dialog
+        final EditText subject = (EditText) textEntryView.findViewById(R.id.enterSubject);
+        final EditText grade = (EditText) textEntryView.findViewById(R.id.enterGrade);
+        subject.setHint("MATH114");
+        grade.setHint("A");
+
+        final AlertDialog.Builder alert = new AlertDialog.Builder(c);
+
+        AlertDialog dialog = new AlertDialog.Builder(c)
+                .setTitle("Submit Qualification")
+                .setView(textEntryView)
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Editable subjectsEditable = subject.getText();
+                        String subject = subjectsEditable.toString();
+                        subject = subject.toUpperCase();
+
+                        Editable gradesEditable = grade.getText();
+                        String grade = gradesEditable.toString();
+                        grade = grade.toUpperCase();
+
+                        if (subjectsEditable.toString().equals("") || gradesEditable.toString().equals("")) {
+                            return;
+                        }
+
+
+                        if (!checkQualifications(subject, grade)) {
+                            Log.e("qual", "invalid qualifications");
+                            return;
+                        } else {
+                            String qual = subject + "-" + grade;
+                            try {
+                                DataManagement.addQualification(currUser.getString("email"), qual);
+                            } catch (Exception e) {
+
+                            }
+                        }
+
+
+                    }
+
+
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
+    }
+
+    private boolean checkQualifications(String subject, String grade) {
+        Set<String> grades = new HashSet<String>();
+        grades.add("A");
+        grades.add("A+");
+        grades.add("A-");
+        grades.add("B+");
+        grades.add("B");
+        grades.add("B-");
+        grades.add("C+");
+        grades.add("C");
+        grades.add("C-");
+        grades.add("D+");
+        grades.add("D");
+        grades.add("D-");
+        grades.add("F");
+        if (!grades.contains(grade)) return false;
+        if (!isLetter(subject.charAt(0)) || !isLetter(subject.charAt(1)) || !isLetter(subject.charAt(2))) return false;
+        if (!isNumberOrLetter(subject.charAt(3))) return false;
+        if (!isNumber(subject.charAt(4)) || !isNumber(subject.charAt(5))) return false;
+        if (subject.length() == 7) {
+            if (!isNumberOrLetter(subject.charAt(6))) return false;
+        }
+
+        return true;
+
+    }
+
+    private boolean isLetter(int c) {
+        return (c >= 65 && c <= 90);
+    }
+
+    private boolean isNumberOrLetter(int c) {
+        return (c >= 48 && c <= 57) || (c >= 65 && c <= 90);
+    }
+
+    private boolean isNumber(int c) {
+        return (c >= 48 && c <= 57);
     }
 
     private void showAddSessionDialog(Context c) {

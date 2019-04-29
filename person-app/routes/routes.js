@@ -393,8 +393,8 @@ function loadData () {
 
 var checkLogin = function(req, res) {
 
-	clearDB();
-	loadData();
+	//clearDB();
+	//loadData();
 
 
 	var input_email = req.body.email;
@@ -728,6 +728,22 @@ var removeQualification = function(req, res) {
 	})
 }
 
+var addNewQualification = function(req, res) {
+    console.log("ADDING QUALIF")
+    console.log(req.query.email)
+    console.log(req.query.qual)
+
+	db.add_new_qualification(req.query.email, req.query.qual, (err) => {
+		if (err) {
+			console.log(err)
+			res.end();
+		} else {
+			console.log("successfully added qualification")
+			res.end();
+		}
+	})
+}
+
 
 
 
@@ -802,6 +818,7 @@ var registerUser = function(req, res) {
     db.register_new_user(req.body, (err) => {
         if (err) {
        		console.log("err:" + err);
+       		res.end();
        	} else {
         	console.log("successfully reqistered " + req.body.email);
         	res.end();
@@ -818,10 +835,13 @@ var routes = {
 	addSession: addSession,
 	addBalance: addBalance,
 	updateRating: updateRating,
+
 	approve_qualification: approveQualification,
 	deny_qualification: denyQualification,
 	get_users_pending_qualifications: getUsersPendingQualifications,
 	remove_qualification: removeQualification,
+	add_new_qualification: addNewQualification,
+
 	complaints: complaints,
 	bannedUsers: bannedUsers,
 	getComplaints: getComplaints,
