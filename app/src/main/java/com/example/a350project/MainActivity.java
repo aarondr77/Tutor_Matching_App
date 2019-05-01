@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements ComplaintsListFra
                     return true;
                 case R.id.navigation_marketplace:
                     ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.frame_container, MarketplaceFragment.newInstance("This", "Marketplace"));
+                    ft.replace(R.id.frame_container, MarketplaceFragment.newInstance("This", "Marketplace", context));
                     ft.addToBackStack(null);
                     ft.commit();
                     return true;

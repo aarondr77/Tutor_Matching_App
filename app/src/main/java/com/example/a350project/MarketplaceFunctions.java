@@ -14,6 +14,7 @@ public class MarketplaceFunctions {
 
     private static List<SessionObject> allSessions = new LinkedList<SessionObject>();
     private static LinkedList<SessionObject> foundSessions = new LinkedList<SessionObject>();
+    private static LinkedList<String> allSubjects = new LinkedList<String>();
 
     public MarketplaceFunctions() { }
 
@@ -26,6 +27,10 @@ public class MarketplaceFunctions {
                 if (currentSession.getSubject().equals(searchString) && currentSession.getStudent().equals("unclaimed")) {
                     foundSessions.add(currentSession);
                     Toast.makeText(view.getContext(), "FOUND " + searchString, Toast.LENGTH_SHORT).show();
+                }
+
+                if (!allSubjects.contains(currentSession.getSubject()) && currentSession.getStatus().equals("unclaimed") || currentSession.getStatus().equals("pending")) {
+                    allSubjects.add(currentSession.getSubject());
                 }
             }
         }
@@ -57,6 +62,11 @@ public class MarketplaceFunctions {
     public static LinkedList<SessionObject> getFoundSessions () {
         return foundSessions;
     }
+
+    public static LinkedList<String> getAllSubjects () {
+        return allSubjects;
+    }
+
 
 
 }

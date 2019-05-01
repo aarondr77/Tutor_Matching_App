@@ -1,15 +1,23 @@
 package com.example.a350project;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import java.util.LinkedList;
 
 
 /**
@@ -25,6 +33,8 @@ public class MarketplaceFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static Context context;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -45,12 +55,13 @@ public class MarketplaceFragment extends Fragment {
      * @return A new instance of fragment Complaints.
      */
     // TODO: Rename and change types and number of parameters
-    public static MarketplaceFragment newInstance(String param1, String param2) {
+    public static MarketplaceFragment newInstance(String param1, String param2, Context context) {
         MarketplaceFragment fragment = new MarketplaceFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+        context = context;
         return fragment;
     }
 
@@ -76,12 +87,45 @@ public class MarketplaceFragment extends Fragment {
             public void onClick(View v) {
                 String searchString = searchInput.getText().toString();
                 MarketplaceFunctions.onSearchButtonClick(v, searchString);
-                insertNestedFragment();
-                marketplaceList.updateSessions();
+                LinkedList<SessionObject> foundSessions = MarketplaceFunctions.getFoundSessions();
+                if (foundSessions.size() > 0 ) {
+                    insertNestedFragment();
+                    marketplaceList.updateSessions();
+                } else {
+                    showUnclaimedSubjectsDialog(v.getContext(), MarketplaceFunctions.getAllSubjects());
+                }
             }
         });
         return v;
 
+    }
+
+    private void showUnclaimedSubjectsDialog(Context c, LinkedList<String> subjects) {
+
+        LayoutInflater factory = LayoutInflater.from(c);
+        final View textEntryView = factory.inflate(R.layout.opencourses_popup, null);
+        //text_entry is an Layout XML file containing two text field to display in alert dialog
+        final TextView allSubjects = textEntryView.findViewById(R.id.availableCourses);
+
+        String subjectsText = "";
+        Log.d("SUBJECT SIZE", "SIZE: " + subjects.size());
+        for (int i = 0; i < subjects.size(); i++) {
+            subjectsText += subjects.get(i) + "\n\n";
+        }
+
+        Log.d("SUBJECTS", subjectsText);
+
+        allSubjects.setText(subjectsText);
+        allSubjects.setGravity(Gravity.CENTER);
+
+        final AlertDialog.Builder alert = new AlertDialog.Builder(c);
+
+        AlertDialog dialog = new AlertDialog.Builder(c)
+                .setTitle("No Matches!")
+                .setView(textEntryView)
+                .setNegativeButton("Back To Search", null)
+                .create();
+        dialog.show();
     }
 
     private void insertNestedFragment() {
