@@ -186,18 +186,16 @@ public class ProfilePageFragment extends Fragment {
                             String qual = subject + "-" + grade;
                             try {
                                 DataManagement.addQualification(currUser.getString("email"), qual);
+                                return;
                             } catch (Exception e) {
 
                             }
                         }
-
-
                     }
-
-
                 })
                 .setNegativeButton("Cancel", null)
                 .create();
+
         dialog.show();
     }
 
@@ -216,14 +214,14 @@ public class ProfilePageFragment extends Fragment {
         grades.add("D");
         grades.add("D-");
         grades.add("F");
+        if (subject.length() > 7) return false;
         if (!grades.contains(grade)) return false;
         if (!isLetter(subject.charAt(0)) || !isLetter(subject.charAt(1)) || !isLetter(subject.charAt(2))) return false;
         if (!isNumberOrLetter(subject.charAt(3))) return false;
         if (!isNumber(subject.charAt(4)) || !isNumber(subject.charAt(5))) return false;
         if (subject.length() == 7) {
-            if (!isNumberOrLetter(subject.charAt(6))) return false;
+            if (!isNumber(subject.charAt(6))) return false;
         }
-
         return true;
 
     }
